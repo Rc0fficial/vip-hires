@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
 
-        <div className="bg-white shadow-md px-6 md:px-10 lg:px-32 ">
+        <div className="bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50">
             <nav className="flex items-center justify-between p-4   container mx-auto">
                 <div className="flex items-center gap-20">
 
@@ -47,7 +47,7 @@ const Navbar = () => {
                     <GlobeIcon/>
                     </div>
                     <div className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full relative">
-                    <BellIcon/>
+                    <BellIcon height={20} width={21} stroke={"#C7C7C7"}/>
                     <div className="absolute w-[14px] h-[14px] rounded-full mont text-[9px] text-white bg-[#FF6B6B] flex justify-center items-center right-2 top-2">
                         2
                     </div>

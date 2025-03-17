@@ -1,4 +1,4 @@
-import {  Poppins,Montserrat,DM_Sans } from "next/font/google";
+import {  Poppins,Montserrat,DM_Sans,Raleway } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -8,6 +8,10 @@ const poppins = Poppins({
   subsets:['latin']
 })
 
+const raleway = Raleway({
+  weight:['300','400','500','600','700','800'],
+  subsets:['latin']
+})
 const montserrat=Montserrat({
   weight:['300','400','500','600','700','800'],
   subsets:['latin']
@@ -26,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={poppins.className}
+        className={`${poppins.className} relative`}
       >
         <Navbar/>
         {children}
