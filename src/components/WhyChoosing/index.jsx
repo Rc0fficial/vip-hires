@@ -20,7 +20,7 @@ const features = [
         
     },
     {
-        icon: <LinkedinIcon />,
+        icon: <LinkedinIcon color={"#ffffff"} height={24} width={24} />,
         title: "Personalized LinkedIn Posts",
         description: "Stay active & grow your network.",
         color: "border-purple-600 text-purple-600 bg-[#7950FF]",

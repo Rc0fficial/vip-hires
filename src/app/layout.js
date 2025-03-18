@@ -1,4 +1,4 @@
-import {  Poppins,Montserrat,DM_Sans,Raleway } from "next/font/google";
+import {  Poppins,Montserrat,DM_Sans,Raleway,Manrope,Roboto,Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -12,6 +12,9 @@ const raleway = Raleway({
   weight:['300','400','500','600','700','800'],
   subsets:['latin']
 })
+const inter = Inter({
+  weight:['300','400','500','600','700','800']
+})
 const montserrat=Montserrat({
   weight:['300','400','500','600','700','800'],
   subsets:['latin']
@@ -20,6 +23,13 @@ const montserrat=Montserrat({
 const dm_sans =DM_Sans({
   weight:['300','400','500','600','700','800'],
   subsets:['latin']
+})
+const man_rop =Manrope({
+  weight:['300','400','500','600','700','800'],
+  subsets:['latin']
+})
+const roboto =Roboto({
+  weight:['300','400','500','600','700','800']
 })
 export const metadata = {
   title: "Vip hires",
