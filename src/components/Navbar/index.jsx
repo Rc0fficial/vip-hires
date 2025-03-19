@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 const pathname = usePathname()
-const ishidden = pathname === "/login"
+const ishidden = pathname === "/login" || "/login/create-account"
     const navLinks = ["Jobs", "Posts", "Subscription", "Help & Support"];
 
     return (

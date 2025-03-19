@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import LinkedinIcon from "@/components/Icons/LinkedinIcon.svg";
+import { useRouter } from "next/navigation";
 
 const MODE = {
   LOGIN: "LOGIN",
@@ -12,7 +13,7 @@ const MODE = {
 
 const LoginLayout = () => {
   const [mode, setMode] = useState(MODE.LOGIN);
-
+const router = useRouter()
   const handleSubmit =(e)=>{
     e.preventDefault()
     if(mode === "RESET_PASSWORD"){
@@ -22,6 +23,8 @@ const LoginLayout = () => {
       
     }else if(mode ==="CREATE_NEW_PASSWORD"){
       setMode("LOGIN")
+    }else if(mode ==="LOGIN"){
+      router.push('/login/create-account')
     }
   }
 
