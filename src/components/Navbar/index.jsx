@@ -7,15 +7,17 @@ import { AiOutlineClose } from "react-icons/ai";
 import Image from "next/image";
 import BellIcon from "../Icons/BellIcon.svg";
 import GlobeIcon from "../Icons/GlobeIcon.svg";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+const pathname = usePathname()
+const ishidden = pathname === "/login"
     const navLinks = ["Jobs", "Posts", "Subscription", "Help & Support"];
 
     return (
 
-        <div className="bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50">
+        <div className={`${ishidden && "hidden"} bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50`}>
             <nav className="flex items-center justify-between p-4   container mx-auto">
                 <div className="flex items-center gap-20">
 

@@ -68,13 +68,13 @@ const Whychoosing = () => {
                             {/* Text Content */}
                             <div className='flex flex-col gap-[42px]'>
                                 <h3 className="text-[32px] leading-none text-wrap md:text-nowrap  font-medium text-cad">{feature.title}</h3>
-                                <p className={` text-cad mt-1 flex items-center gap-4`}>
+                                <div className={` text-cad mt-1 flex items-center gap-4`}>
                                     <div className={`${feature.iconbg} w-[25px] h-[25px] rounded-full flex justify-center items-center `}>
 
                                     <CheckIcon color={feature?.checkColor}/> 
                                     </div>
                                     {feature.description}
-                                </p>
+                                </div>
                             </div>
                         </div>
                     ))}

@@ -3,9 +3,9 @@ import LinkedinIcon from '../Icons/LinkedinIcon.svg'
 import FacecookIcon from '../Icons/FacebookIcon.svg'
 import InstagramIcon from '../Icons/InstagramIcon'
 
-const Footer = () => {
+const Footer = ({bg}) => {
     return (
-        <div className='py-8 bg-bggreen border-t'>
+        <div className={`py-8 ${bg} border-t border-gray`}>
             <div className='container mx-auto px-6 md:px-10 lg:px-32 flex justify-between flex-wrap gap-10 items-center'>
                 <div className='flex items-center gap-3'>
                     <h1 className='text-[32px] font-semibold mont text-green'>Pro</h1>

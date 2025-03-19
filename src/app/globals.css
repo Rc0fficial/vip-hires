@@ -70,6 +70,9 @@ body {
 .mapbg {
   background-image: url('/assets/map.png');
 }
+.loginbg {
+  background-image: url('/assets/loginbg.png');
+}
 
 .desk {
   background-image: url('/assets/desktop.png');
