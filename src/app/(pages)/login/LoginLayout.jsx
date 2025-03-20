@@ -29,7 +29,7 @@ const router = useRouter()
   }
 
   return (
-    <div className="loginbg min-h-screen overflow-y-auto w-screen overflow-x-hidden bg-no-repeat bg-cover bg-bottom">
+    <div className="">
       <div className="container mx-auto px-6 py-8 flex gap-12 justify-center ">
         {/* Left Section */}
         <div className="py-32 hidden lg:flex flex-col gap-4 text-white">

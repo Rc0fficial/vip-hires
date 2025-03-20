@@ -7,9 +7,9 @@ import InstagramIcon from '@/components/Icons/InstagramIcon'
 
 const LoginPage = () => {
   return (
-    <div className=' flex flex-col justify-between relative'>
+    <div className=' flex flex-col justify-between loginbg min-h-screen overflow-y-auto w-screen overflow-hidden bg-no-repeat bg-cover bg-bottom'>
       <LoginLayout/>
-      <div className={`py-8 absolute bottom-0 bg-[#FFFFFF1A] w-full border-t border-gray`}>
+      <div className={`py-8  bg-[#FFFFFF1A]  border-t border-gray w-screen overflow-x-hidden`}>
             <div className='container mx-auto px-6 md:px-10 lg:px-32 flex justify-between flex-wrap gap-10 items-center'>
                 <div className='flex items-center gap-3'>
                     <h1 className='text-[32px] font-semibold mont text-green'>Pro</h1>

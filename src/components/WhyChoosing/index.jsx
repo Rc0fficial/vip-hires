@@ -54,14 +54,15 @@ const Whychoosing = () => {
                     {features.map((feature, index) => (
                         <div key={index} className="flex items-start space-x-4">
                             {/* Vertical Line */}
-                            <div className='flex flex-col items-center '>
+                            <div className='flex flex-col items-center relative'>
 
 
                                 {/* Icon Container */}
-                                <div className="flex flex-col items-center g">
+                                <div className="flex flex-col items-center relative">
                                     <div className={`w-10 h-10 flex justify-center items-center rounded-full ${feature.color}`}>{feature?.icon}</div>
                                 </div>
-                                <div className={`border h-[96px] shad rounded-full ${feature.color}`} />
+                                <div className={`border h-[96px] blur-xs shad rounded-full ${feature.color}`} />
+                                <div className={`border h-[96px] absolute top-10 shad rounded-full ${feature.color}`} />
                             </div>
                             
 

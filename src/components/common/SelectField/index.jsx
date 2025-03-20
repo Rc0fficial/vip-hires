@@ -2,7 +2,7 @@ import React from 'react';
 
 const SelectField = ({ label, value, onChange, options }) => {
     return (
-        <div className='flex flex-col gap-3 mb-4'>
+        <div className='flex flex-col gap-3'>
             <label htmlFor={label} className='text-525 leading-none text-center'>{label}</label>
             <select
                 value={value}

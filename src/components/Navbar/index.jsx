@@ -18,15 +18,15 @@ const ishidden = pathname === "/login" || pathname === "/login/create-account";
 console.log(ishidden)
     return (
 
-        <div className={`${ishidden ? "hidden":"block"} bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50`}>
-            <nav className="flex items-center justify-between p-4   container mx-auto">
+        <div className={`${ishidden ? "hidden":"block"} bg-white/80 shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50`}>
+            <nav className="flex items-center justify-between p-8   container mx-auto">
                 <div className="flex items-center gap-20">
 
                     {/* Left Section */}
-                    <img src="/assets/logo.png" alt="logo" className="h-6 w-auto" />
+                    <img src="/assets/logo.png" alt="logo" className="h-8 -mb-2 w-auto" />
 
                     {/* Desktop Navigation Links */}
-                    <ul className="hidden xl:flex items-center gap-6 text-gray">
+                    <ul className="hidden xl:flex items-center gap-6 2xl:gap-8 text-gray">
                         {navLinks.map((link, index) => (
                             <li key={index} className="hover:text-black text-xl font-medium cursor-pointer">
                                 {link}

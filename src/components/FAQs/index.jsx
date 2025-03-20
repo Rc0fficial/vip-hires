@@ -3,9 +3,9 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 const FAQs = () => {
     const faqData = [
         { id: 1, question: 'How does ApplyPro work?' },
-        { id: 2, question: 'Is my personal information and CV secure?',ml:"ml-[70px]" },
-        { id: 3, question: 'How do you create LinkedIn posts for me?' ,ml:"ml-[166px]"},
-        { id: 4, question: 'Can I track the jobs applied for on my behalf?' ,ml:"ml-[70px]"},
+        { id: 2, question: 'Is my personal information and CV secure?',ml:"ml-[70px] -mr-[70px]" },
+        { id: 3, question: 'How do you create LinkedIn posts for me?' ,ml:"ml-[166px] -mr-[166px]"},
+        { id: 4, question: 'Can I track the jobs applied for on my behalf?' ,ml:"ml-[70px] -mr-[70px]"},
         { id: 5, question: 'What if I want to reapply for a job?' },
     ];
     return (
@@ -20,7 +20,7 @@ const FAQs = () => {
                     </div>
                     <div className="mt-8 flex flex-col justify-between  gap-4 h-[600px]">
                         {faqData.map((faq) => (
-                            <details key={faq.id} className={ `${faq.ml} bg-[#FFFFFF80] text-3d3 flex items-center px-6 robo rounded-lg shad h-[75px] cursor-pointer`}>
+                            <details key={faq.id} className={ `${faq.ml} bg-[#FFFFFF80] text-3d3 flex flex-col items-center px-6 robo rounded-lg py-3 shad min-h-[75px] cursor-pointer`}>
                                 <summary className=" text-2xl flex justify-between items-center gap-3">
                                     <span className='h-10 w-10 bgshad rounded-full bg-[#D9D9D9] text-black flex justify-center items-center'>{faq.id}</span>
                                      {faq.question}
