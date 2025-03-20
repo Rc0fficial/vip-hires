@@ -12,12 +12,13 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 const pathname = usePathname()
-const ishidden = pathname === "/login" || "/login/create-account"
-    const navLinks = ["Jobs", "Posts", "Subscription", "Help & Support"];
+const ishidden = pathname === "/login" || pathname === "/login/create-account";
 
+    const navLinks = ["Jobs", "Posts", "Subscription", "Help & Support"];
+console.log(ishidden)
     return (
 
-        <div className={`${ishidden && "hidden"} bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50`}>
+        <div className={`${ishidden ? "hidden":"block"} bg-white shadow-md px-6 md:px-10 lg:px-32 sticky top-0 z-50`}>
             <nav className="flex items-center justify-between p-4   container mx-auto">
                 <div className="flex items-center gap-20">
 
