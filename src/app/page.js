@@ -14,7 +14,7 @@ export default function Home() {
     <OurFamily/>
     <Plan/>
     <FAQs/>
-    <Footer bg={"bg-bggreen"}/>
+    {/* <Footer bg={"bg-bggreen"}/> */}
     </>
   );
 }

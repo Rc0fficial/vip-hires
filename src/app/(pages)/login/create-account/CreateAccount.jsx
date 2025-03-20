@@ -10,7 +10,7 @@ const CreateAccount = () => {
 
     const [step, setStep] = useState("first")
     return (
-        <div className='bg-bggreen h-[calc(100vh-113px)] overflow-y-auto py-12 px-6 '>
+        <div className='bg-bggreen  overflow-y-auto py-12 px-6 '>
             <div className='w-full max-w-[862px]  mx-auto flex flex-col justify-center items-center '>
                 <div className='flex items-center '>
                     <div onClick={() => setStep("first")} className='cursor-pointer h-12 w-12 rounded-full bg-green flex items-center justify-center mont text-2xl font-medium text-white'>1</div>
@@ -20,7 +20,7 @@ const CreateAccount = () => {
                     <div onClick={() => setStep("third")} className={`cursor-pointer ${(step === "third") ? "bg-green text-white" : "bg-e5e text-525"} h-12 w-12 rounded-full  flex items-center justify-center mont text-2xl font-medium `}>3</div>
                 </div>
 
-                <div className='pt-8 pb-8 bg-white mt-6 px-10 rounded-3xl shad w-full flex flex-col gap-4'>
+                <div className='pt-8 pb-8 bg-white mt-6 px-10 rounded-3xl shad w-full  flex flex-col gap-4'>
                     {step === "first" &&
                         <FirstStep setStep={setStep} />
                     }
