@@ -3,7 +3,9 @@ import Button from '@/components/common/Button';
 import InputField from '@/components/common/InputField';
 import SelectField from '@/components/common/SelectField';
 import CameraIcon from '@/components/Icons/Camera.svg'
+import SearchIcon from '@/components/Icons/SearchIcon.svg';
 import UploadIcon from '@/components/Icons/UploadIcon.svg';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const CreateAccount = () => {
@@ -26,6 +28,9 @@ const CreateAccount = () => {
                     }
                     {step === "second" &&
                         <SecondStep setStep={setStep} />
+                    }
+                    {step === "third" &&
+                        <ThirdStep setStep={setStep} />
                     }
 
 
@@ -58,7 +63,7 @@ const FirstStep = ({ setStep }) => {
                         Upload Image
                     </div>
                 </div>
-                <div className='col-span-3'>
+                <div className='col-span-3 flex flex-col gap-4'>
                     <InputField
                         label="First Name"
                         placeholder="Enter First Name"
@@ -133,84 +138,154 @@ const SecondStep = ({ setStep }) => {
     return (
         <>
             <h1 className='text-xl font-medium mb-8 text-3d3'>Professional Information</h1>
-            <div className='flex flex-col gap-3'>
-                <label htmlFor="Phone" className='text-525  leading-none'>Add Resume</label>
-                <div className=' h-[56px] px-3 bg-[#F6F6F6] rounded-md flex justify-center gap-2  items-center'>
-                    <div className='h-10 px-4 flex justify-center gap-2 bg-white items-center border-[0.5px] border-[#BDBDBD] rounded-md'>
-                        <UploadIcon/> <span className='text-sm text-[#989898]'>Upload CV</span>
+            <div className='flex flex-col gap-6 h-full max-h-[570px] overflow-y-auto'>
+
+
+                <div className='flex flex-col gap-3'>
+                    <label htmlFor="Phone" className='text-525  leading-none'>Add Resume</label>
+                    <div className=' h-[56px] px-3 bg-[#F6F6F6] rounded-md flex justify-center gap-2  items-center'>
+                        <div className='h-10 px-4 flex justify-center gap-2 bg-white items-center border-[0.5px] border-[#BDBDBD] rounded-md'>
+                            <UploadIcon /> <span className='text-sm text-[#989898]'>Upload CV</span>
+                        </div>
+                        <input type="text" placeholder='No File Choosen' className='h-12 px-4 flex-1 rounded-md  placeholder:text-[#989898] ' disabled name="" id="" />
                     </div>
-                    <input type="text" placeholder='No File Choosen' className='h-12 px-4 flex-1 rounded-md  placeholder:text-[#989898] ' disabled name="" id="" />
                 </div>
-            </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-            <InputField
-                label="Job Title"
-                placeholder="Enter Job Title"
-                type="text"
-                // value={formData.lastName}
-                // onChange={handleInputChange}
-                name="email"
-            />
-                <InputField
-                label="Years Of Experiencce"
-                placeholder="Enter Years Of Experiencce"
-                type="text"
-                // value={formData.lastName}
-                // onChange={handleInputChange}
-                name="email"
-            />
-            </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                <SelectField
-                    label="Job Category"
-                    // value={formData.country}
-                    // onChange={handleInputChange}
-                    options={countryOptions}
-                    name="categoryy"
-                />
-                <SelectField
-                    label="Sub Category"
-                    // value={formData.country}
-                    // onChange={handleInputChange}
-                    options={countryOptions}
-                    name="sub"
-                />
-            </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                    <InputField
+                        label="Job Title"
+                        placeholder="Enter Job Title"
+                        type="text"
+                        // value={formData.lastName}
+                        // onChange={handleInputChange}
+                        name="email"
+                    />
+                    <InputField
+                        label="Years Of Experiencce"
+                        placeholder="Enter Years Of Experiencce"
+                        type="text"
+                        // value={formData.lastName}
+                        // onChange={handleInputChange}
+                        name="email"
+                    />
+                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                    <SelectField
+                        label="Job Category"
+                        // value={formData.country}
+                        // onChange={handleInputChange}
+                        options={countryOptions}
+                        name="categoryy"
+                    />
+                    <SelectField
+                        label="Sub Category"
+                        // value={formData.country}
+                        // onChange={handleInputChange}
+                        options={countryOptions}
+                        name="sub"
+                    />
+                </div>
 
-           
-            <div className='flex flex-col gap-3'>
-                <h1 className='text-525 leading-none capitalize'>When are you available to work?</h1>
-                <div className='flex gap-2.5'>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>immediately</div>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>Within a month</div>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>Partially available</div>
-                </div>
-                
-            </div>
-            <div className='flex flex-col gap-3'>
-                <h1      className='text-525 leading-none capitalize'>what employment type you prefer ?</h1>
-                <div className='flex gap-2.5'>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>full time</div>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>part time</div>
-                    <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>freelancing</div>
-                </div>
-                
-            </div>
-            <div className='flex justify-between items-center'>
 
-            <Button
-                label="Back"
-                onClick={() => setStep("first")}
-                // disabled={true}
-                className="border-green bg-white border text-green" // Override background color for disabled state
-                />
-            <Button
-                label="Next"
-                onClick={() => setStep("second")}
-                // disabled={true}
-                className="bg-green text-white" // Override background color for disabled state
-                />
+                <div className='flex flex-col gap-3'>
+                    <h1 className='text-525 leading-none capitalize'>When are you available to work?</h1>
+                    <div className='flex gap-2.5'>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>immediately</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>Within a month</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>Partially available</div>
+                    </div>
+
                 </div>
+                <div className='flex flex-col gap-3'>
+                    <h1 className='text-525 leading-none capitalize'>what employment type you prefer ?</h1>
+                    <div className='flex gap-2.5'>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>full time</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>part time</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>freelancing</div>
+                    </div>
+
+                </div>
+                <div className='flex flex-col gap-3'>
+                    <h1 className='text-525 leading-none capitalize'>what employment type you prefer ?</h1>
+                    <div className='flex gap-2.5'>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>full time</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>part time</div>
+                        <div className='h-[44px] px-4 text-[#989898] rounded-full border border-[#BDBDBD] flex justify-center items-center'>freelancing</div>
+                    </div>
+
+                </div>
+            </div>
+            <div className='flex justify-between items-center mt-4'>
+
+                <Button
+                    label="Back"
+                    onClick={() => setStep("first")}
+                    // disabled={true}
+                    className="border-green bg-white border text-green" // Override background color for disabled state
+                />
+                <Button
+                    label="Next"
+                    onClick={() => setStep("third")}
+                    // disabled={true}
+                    className="bg-green text-white" // Override background color for disabled state
+                />
+            </div>
+        </>
+    )
+}
+
+const ThirdStep = ({ setStep }) => {
+    const skills = [
+        "wireframing",
+        "react",
+        "product mangment",
+        "ui/ux design",
+        "digital markting",
+        "node js",
+        "data analysis",
+        "java script",
+        "angiler",
+        "python",
+        "C#",
+        ".net",
+        "DevOpp",
+        "Next",
+    ]
+    const router = useRouter()
+    return (
+        <>
+        <div>
+
+            <h1 className='text-xl font-medium mb-2 text-3d3'>Professional Information</h1>
+            <p className='capitalize text-525 mb-10 '>select at least 3 skills</p>
+        </div>
+            <div className='border-[#0000001A] border py-3 px-4 flex items-center gap-2  rounded-md'>
+                <SearchIcon />
+                <input type="text" className='border-none outline-0  focus:outline-0 placeholder:text-[#939393] flex-1' placeholder='Search' />
+            </div>
+            <div className='border border-[#BDBDBD] rounded-md p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 h-full max-h-[484px] overflow-y-auto'>
+                {skills.map((skill, i) => (
+                    <div className='border border-[#BDBDBD] bg-[#FAFAFA] p-4 rounded-md mont text-sm text-[#888888]'>
+
+                        {skill}
+                    </div>
+                ))}
+
+            </div>
+            <div className='flex justify-between items-center mt-4'>
+
+                <Button
+                    label="Back"
+                    onClick={() => setStep("second")}
+                    // disabled={true}
+                    className="border-green bg-white border text-green" // Override background color for disabled state
+                />
+                <Button
+                    label="Start"
+                    onClick={() => router.push('/')}
+                    // disabled={true}
+                    className="bg-green text-white" // Override background color for disabled state
+                />
+            </div>
         </>
     )
 }
