@@ -9,8 +9,8 @@ const Footer = ({bg}) => {
 const pathname = usePathname()
 
     return (
-        <div className={`py-8 ${pathname ==="/login"&& "hidden"} ${bg} border-t border-gray px-6 md:px-10 lg:px-32`}>
-            <div className='container mx-auto px-6 flex justify-between flex-wrap gap-10 items-center'>
+        <div className={`py-8 ${pathname ==="/login"&& "hidden"} ${bg} border-t border-gray px-6 md:px-10 `}>
+            <div className=' mx-auto px-6 flex justify-between flex-wrap gap-10 items-center'>
                 <div className='flex items-center gap-3'>
                     <h1 className='text-[32px] font-semibold mont text-green'>Pro</h1>
                     <img src="/assets/logoArrow.png" alt="" className='w-6 h-6' />

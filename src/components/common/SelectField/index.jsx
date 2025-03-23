@@ -7,7 +7,7 @@ const SelectField = ({ label, value, onChange, options }) => {
             <select
                 value={value}
                 onChange={onChange}
-                className='h-12 bg-[#FAFAFA] px-4 rounded-md text-[#989898] border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]'
+                className='h-12 bg-[rgb(250,250,250)] px-4 rounded-md text-[#989898] border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]'
                 id={label}
             >
                 <option value="">Select {label}</option>

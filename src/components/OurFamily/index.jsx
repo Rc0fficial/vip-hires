@@ -17,19 +17,19 @@ const OurFamily = () => {
         },
     ]
     return (
-        <div className='pt-[86px] pb-[107px] px-6 md:px-10 lg:px-32 relative overflow-hidden bg-bggreen'>
-            <div className='container mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
+        <div className='pt-[86px] pb-[107px] px-6 md:px-10  relative overflow-hidden bg-bggreen'>
+            <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
                 <h1 className='text-6xl lg:text-[72px] font-bold rale text-center'>Be A Part Of Our Family</h1>
                 <p className='max-w-[683px] mx-auto text-[22px] rale'>Land your dream job effortlessly – we apply, update, and keep you ahead in your career</p>
-                <div className='mapbg bg-center h-[651px]  w-full grid grid-cols-1 xl:grid-cols-2 gap-10 items-center '>
-                    <div className='w-full h-fit max-w-[598px] bg-white/70 rounded-[60px] py-[36px] px-[81px] relative'>
+                <div className='mapbg bg-center h-[651px]  w-full grid grid-cols-1 xl:grid-cols-2 gap-10 justify-center items-center '>
+                    <div className='w-full h-fit max-w-[598px] mx-auto bg-white/70 rounded-[60px] py-[36px] px-[81px] relative'>
                         <p className='mont text-525 leading-[42px] '>  I landed my dream job in just 3 weeks thanks to ApplyPro! The LinkedIn posts were a game-changer</p>
                         <h1 className='text-525 font-semibold mont -ml-7'>Ahmed, Marketing Manager</h1>
                         <img src="/assets/comma.png" alt="comma" className='absolute top-6 left-6' />
                         <img src="/assets/comma.png" alt="comma" className='absolute rotate-180 right-6 bottom-6' />
 
                     </div>
-                    <div className='w-full h-fit max-w-[556px] relative'>
+                    <div className='w-full mx-auto h-fit max-w-[556px] relative'>
                         <img src="/assets/familyCircle.png" alt="circle" />
                         <div className='absolute top-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 z-20'>
 

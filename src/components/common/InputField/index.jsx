@@ -4,7 +4,7 @@ import React from 'react';
 const InputField = ({ label, placeholder, value, onChange, type,labelClass  }) => {
     return (
         <div className='flex flex-col gap-3 '>
-            <label htmlFor={label} className={`${labelClass} text-525 leading-none`}>{label}</label>
+            <label htmlFor={label} className={`${labelClass} capitalize text-525 leading-none`}>{label}</label>
             <input
                 type={type}
                 placeholder={placeholder}

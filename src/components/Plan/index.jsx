@@ -56,8 +56,8 @@ const Plan = () => {
         },
     ];
     return (
-        <div className='pt-[86px] pb-[107px] px-6 md:px-10 lg:px-32 relative overflow-hidden bg-white'>
-            <div className='container mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
+        <div className='pt-[86px] pb-[107px] px-6 md:px-10 relative overflow-hidden bg-white'>
+            <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
                 <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2' /></span> made just for you</h1>
                 <p className=' mx-auto text-[22px] robo text-0f1'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
 
