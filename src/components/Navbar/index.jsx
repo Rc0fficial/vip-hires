@@ -8,6 +8,7 @@ import Image from "next/image";
 import BellIcon from "../Icons/BellIcon.svg";
 import GlobeIcon from "../Icons/GlobeIcon.svg";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -34,8 +35,8 @@ const Navbar = () => {
             <nav className="flex items-center justify-between p-8 mx-auto">
                 {/* Left Section */}
                 <div className="flex items-center gap-20">
-                    <img src="/assets/logo.png" alt="logo" className="h-8 -mb-2 w-auto" />
-
+                    <Link href={'/'}><img src="/assets/logo.png" alt="logo" className="h-8 cursor-pointer -mb-2 w-auto" />
+                    </Link>
                     {/* Desktop Navigation Links */}
                     <ul className="hidden xl:flex items-center gap-6 2xl:gap-8 text-gray">
                         {navLinks.map((link, index) => (
@@ -74,13 +75,15 @@ const Navbar = () => {
                             2
                         </div>
                     </div>
+                    <Link href={'/profile'}>
                     <Image
                         src="/assets/profile.png" // Replace with actual profile image URL
                         alt="Profile"
                         width={45}
                         height={45}
                         className="rounded-full cursor-pointer"
-                    />
+                        />
+                        </Link>
                     {/* Mobile Menu Icon */}
                     <RxHamburgerMenu
                         size={24}

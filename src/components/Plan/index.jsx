@@ -1,74 +1,27 @@
+'use client'
 import React from 'react'
 import CheckIcon from '../Icons/CheckIcon.svg';
+import { usePathname } from 'next/navigation';
+import { plans } from './planData';
+import Link from 'next/link';
 
-const Plan = () => {
-    const plans = [
-        {
-            name: "Basic Plan",
-            price: "$0",
-            description: "per editor/month billed monthly",
-            features: [
-                "30h Fast generations",
-                "Unlimited Relaxed generations",
-                "General commercial terms",
-                "Access to member gallery",
-                "Optional credit top ups",
-                "3 concurrent fast jobs",
-                "12 concurrent fast jobs",
-                "Access to member gallery",
-                "Optional credit top ups",
-            ],
-            buttonText: "Current Plan",
-            isPopular: false,
-        },
-        {
-            name: "Stander Plan",
-            price: "$30",
-            description: "per editor/month billed monthly",
-            features: [
-                "15h Fast generations",
-                "Unlimited Relaxed generations",
-                "General commercial terms",
-                "Access to member gallery",
-                "Optional credit top ups",
-                "3 concurrent fast jobs",
-                "Access to member gallery",
-                "Optional credit top ups",
-            ],
-            buttonText: "Choose Plan",
-            isPopular: true,
-        },
-        {
-            name: "Unlimited Plan",
-            price: "$120",
-            description: "per editor/month billed monthly",
-            features: [
-                "60h Fast generations",
-                "Unlimited Relaxed generations",
-                "General commercial terms",
-                "Access to member gallery",
-                "Optional credit top ups",
-                "3 concurrent fast jobs",
-                "12 concurrent fast jobs",
-            ],
-            buttonText: "Choose Plan",
-            isPopular: false,
-        },
-    ];
+const Plan = ({bgImg}) => {
+    
+    const pathname = usePathname()
     return (
         <div className='pt-[86px] pb-[107px] px-6 md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
                 <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2' /></span> made just for you</h1>
                 <p className=' mx-auto text-[22px] robo text-0f1'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
 
-                <div className='w-full min-h-[640px] flex justify-center  items-end h-full z-20 relative desk rounded-4xl  bg-cover bg-no-repeat '>
+                <div className={`w-full min-h-[640px] flex justify-center ${pathname?.startsWith("/subscription") ?"items-center":"items-end"}  h-full z-20 relative ${bgImg} rounded-4xl  bg-cover bg-no-repeat `}>
                     {/* <img src="/assets/desktop.png" alt="" className='mx-auto' /> */}
-                    <div className=' flex justify-center gap-9 items-center h-full   w-full'>
+                    <div className={`flex justify-center gap-9 items-center h-full   w-full`}>
 
-                        {plans.map((plan, index) => (
+                        {plans?.map((plan, index) => (
                             <div
                                 key={index}
-                                className={`p-6 rounded-[30px] inter max-w-[300px] lg:max-w-max lg:min-w-[300px] min-h-[526px] shadow-lg transition-transform transform hover:scale-105 text-start flex flex-col  ${plan.isPopular ? "bg-green text-white -mt-14" : "bg-white text-1d2  -mb-4"
+                                className={`p-6 rounded-[30px] inter max-w-[300px] lg:max-w-[400px] w-full lg:min-w-[300px] min-h-[526px] shad transition-transform transform hover:scale-105 text-start flex flex-col  ${plan.isPopular ? `bg-green text-white -mt-14` : "bg-white text-1d2  -mb-4"
                                     }`}
 
                             >
@@ -99,12 +52,14 @@ const Plan = () => {
                                         ))}
                                     </ul>
                                 </div>
+                                <Link href={`/subscription/${plan?.id}`}className='mt-auto'>
                                 <button
                                     className={`mt-auto w-full py-2 self-end rounded-lg text-lg font-semibold ${plan.isPopular ? "bg-0ab text-white" : "bg-f1e text-green"
-                                        }`}
-                                >
+                                    }`}
+                                    >
                                     {plan.buttonText}
                                 </button>
+                                    </Link>
                             </div>
                         ))}
                     </div>

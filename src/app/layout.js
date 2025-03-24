@@ -2,6 +2,7 @@ import { Poppins, Montserrat, DM_Sans, Raleway, Manrope, Roboto, Inter } from "n
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Provider";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -47,9 +48,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.className} relative flex flex-col justify-between`}>
-        <Navbar />
-        {children}
-        <Footer bg={"bg-bggreen"} />
+        <Providers>
+
+
+          <Navbar />
+          {children}
+          <Footer bg={"bg-bggreen"} />
+        </Providers>
       </body>
     </html>
   );

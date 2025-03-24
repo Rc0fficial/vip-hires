@@ -12,7 +12,7 @@ export default function Home() {
     <Hero/>
     <Whychoosing/>
     <OurFamily/>
-    <Plan/>
+    <Plan bgImg="desk"/>
     <FAQs/>
     {/* <Footer bg={"bg-bggreen"}/> */}
     </>
