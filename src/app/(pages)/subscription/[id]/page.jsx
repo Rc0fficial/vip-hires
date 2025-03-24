@@ -6,7 +6,7 @@ import LeftArrowIcon from '@/components/Icons/LeftArrowIcon';
 import PaypalIcon from '@/components/Icons/PaypalIcon.svg';
 import { plans } from '@/components/Plan/planData';
 import { useParams } from 'next/navigation';
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const PlanSubscribe = () => {
     const { id } = useParams();
@@ -17,6 +17,9 @@ const PlanSubscribe = () => {
     }
 
     return (
+        <Suspense fallback={"Loading..."}>
+
+        
         <div className='pt-[86px] pb-[107px] px-6 md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
                 <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2' /></span> made just for you</h1>
@@ -118,6 +121,7 @@ const PlanSubscribe = () => {
             <img src="/assets/planbgleft.png" alt="plan" className='absolute left-0 bottom-20 z-0' />
             <img src="/assets/planbgright.png" alt="plan" className='absolute right-0 bottom-20 z-0' />
         </div>
+        </Suspense>
     )
 }
 

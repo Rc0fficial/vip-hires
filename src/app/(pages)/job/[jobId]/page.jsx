@@ -1,3 +1,4 @@
+import {Suspense} from'react'
 import HeartIcon from '@/components/Icons/HeartIcon.svg'
 import LinkIcon from '@/components/Icons/LinkIcon.svg'
 import UrlIcon from '@/components/Icons/UrlIcon.svg'
@@ -13,6 +14,9 @@ import Notify from '@/components/common/Notify'
 
 const JobDetailPage = () => {
     return (
+        <Suspense fallback={"Loading..."}>
+
+       
         <div className="bg-bggreen">
             <div className="bg-bggreen overflow-y-auto px-12 md:px-16  mx-auto ">
                 <div className="w-full mx-auto grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
@@ -68,6 +72,7 @@ const JobDetailPage = () => {
                 </div>
             </div>
         </div>
+        </Suspense>
     )
 }
 
