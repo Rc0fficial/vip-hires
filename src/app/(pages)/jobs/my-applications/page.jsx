@@ -7,11 +7,11 @@ const MyApplicationsPage = () => {
   return (
     <div>
       <div className='grid grid-cols-3 gap-6'>
-        <div className='col-span-2'>
+        <div className='col-span-2 h-full max-h-[320px]'>
           <AppliedJobGraph/>
 
         </div>
-        <div className='col-span-1'>
+        <div className='col-span-1 h-full max-h-[320px]'>
         <SubmittedApplicatinGraph/>
 
         </div>

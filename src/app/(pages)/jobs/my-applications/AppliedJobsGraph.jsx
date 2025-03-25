@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { PiDotsThreeVerticalBold } from "react-icons/pi";
 
 // Register required components
 ChartJS.register(
@@ -48,7 +49,7 @@ const AppliedJobGraph = () => {
         position: "bottom",
       },
       title: {
-        display: true,
+        display: false,
         text: "Total Applied Jobs",
       },
     },
@@ -60,8 +61,15 @@ const AppliedJobGraph = () => {
   };
 
   return (
-    <div style={{ width: "100%", padding: "20px", borderRadius: "10px", background: "#fff", boxShadow: "0px 4px 6px rgba(0,0,0,0.1)" }}>
+    <div className="p-5 rounded-3xl shad bg-white max-h-[320px]">
+      <div className="flex justify-between  gap-3">
+              <h3 className="text font-medium">Total Submitted Application</h3>
+              <PiDotsThreeVerticalBold size={30} />
+            </div>
+            <div className="w-full max-w-[574px] mx-auto h-full max-h-[250px] flex justify-center">
+
       <Line data={data} options={options} />
+            </div>
     </div>
   );
 };

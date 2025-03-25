@@ -6,6 +6,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { PiDotsThreeVerticalBold } from "react-icons/pi";
 
 // Register required components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -43,38 +44,26 @@ const SubmittedApplicatinGraph = () => {
   };
 
   return (
-    <div style={{
-      width: "300px",
-      height: "250px",
-      background: "#fff",
-      borderRadius: "10px",
-      padding: "20px",
-      boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
-      textAlign: "center"
-    }}>
-      <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>Total Submitted Application</h3>
-      <div style={{ position: "relative", height: "150px" }}>
+    <div className="w-auto h-full bg-white rounded-3xl p-5 shad ">
+      <div className="flex justify-between  gap-3">
+        <h3 className="text font-medium">Total Submitted Application</h3>
+        <PiDotsThreeVerticalBold size={30} />
+      </div>
+      <div className="relative h-[150px] flex justify-center items-center">
         <Doughnut data={data} options={options} />
-        <div style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: "18px",
-          fontWeight: "bold"
-        }}>
+        <div className="absolute top-1/2 left-1/2 transform text-center -translate-x-1/2  text-2xl font-semibold">
           Total <br />
-          <span style={{ fontSize: "24px" }}>{percentage.toFixed(0)}%</span>
+          <span className="text-2xl">{percentage.toFixed(0)}%</span>
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "10px", fontSize: "12px" }}>
-        <span style={{ marginRight: "10px", display: "flex", alignItems: "center" }}>
-          <span style={{ width: "8px", height: "8px", background: "#D3F5E3", borderRadius: "50%", marginRight: "5px" }}></span>
-          Applied {applied}
+      <div className="flex justify-center mt-7 text-xs">
+        <span className="flex items-center mr-3">
+          <span className="w-2 h-2 bg-[#C1F3E0] rounded-full mr-1.5"></span>
+          Applied <span className="text-[#B0B0B0] ml-2"> {applied}</span>
         </span>
-        <span style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ width: "8px", height: "8px", background: "#3CB371", borderRadius: "50%", marginRight: "5px" }}></span>
-          Submitted {submitted}
+        <span className="flex items-center">
+          <span className="w-2 h-2 bg-[#61C6A5] rounded-full mr-1.5"></span>
+          Submitted <span className="text-[#B0B0B0] ml-2"> {submitted}</span>
         </span>
       </div>
     </div>

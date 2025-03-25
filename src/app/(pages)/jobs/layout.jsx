@@ -31,12 +31,12 @@ const JobsLayout = ({ children }) => {
               <div className="flex flex-col gap-6 border-l-4 border-[#C5DDFB]">
                 {/* Recommended Jobs */}
                 <div
-                  className={`pl-4 border-l-4 ${pathname === "/jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
+                  className={`pl-4  border-l-4 ${pathname === "/jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                 >
                   <button
                     onClick={() => handleNavigation("/jobs")}
-                    className={`capitalize w-full text-start max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs" ? "bg-green text-white" : "bg-transparent text-gray"
+                    className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                   >
                     Recommended Jobs
@@ -45,13 +45,13 @@ const JobsLayout = ({ children }) => {
 
                 {/* AI Jobs (Disabled) */}
                 <div
-                  className={`pl-4 border-l-4 ${pathname === "/jobs/ai-jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
+                  className={`pl-4  border-l-4 ${pathname === "/jobs/ai-jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                 >
                   <button
                     //   onClick={() => handleNavigation("/jobs/ai-jobs")}
                     disabled
-                    className="capitalize w-full text-start max-w-[240px] py-3 px-6 rounded-md bg-transparent mont font-semibold text-gray cursor-not-allowed"
+                    className="capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md bg-transparent mont font-semibold text-gray cursor-not-allowed"
                   >
                     AI Jobs <span className="py-2 px-3 text-sm rounded-full bg-[#D1D1D14D]">Coming Soon</span>
                   </button>
@@ -59,12 +59,12 @@ const JobsLayout = ({ children }) => {
 
                 {/* My Applications */}
                 <div
-                  className={`pl-4 border-l-4 ${pathname === "/jobs/my-applications" ? "border-l-green" : "border-l-[#C5DDFB]"
+                  className={`pl-4  border-l-4 ${pathname === "/jobs/my-applications" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                 >
                   <button
                     onClick={() => handleNavigation("/jobs/my-applications")}
-                    className={`capitalize w-full text-start max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs/my-applications" ? "bg-green text-white" : "bg-transparent text-gray"
+                    className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs/my-applications" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                   >
                     My Applications
@@ -73,12 +73,12 @@ const JobsLayout = ({ children }) => {
 
                 {/* Saved Jobs */}
                 <div
-                  className={`pl-4 border-l-4 ${pathname === "/jobs/saved-jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
+                  className={`pl-4  border-l-4 ${pathname === "/jobs/saved-jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                 >
                   <button
                     onClick={() => handleNavigation("/jobs/saved-jobs")}
-                    className={`capitalize w-full text-start max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs/saved-jobs" ? "bg-green text-white" : "bg-transparent text-gray"
+                    className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${pathname === "/jobs/saved-jobs" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                   >
                     Saved Jobs
@@ -90,7 +90,7 @@ const JobsLayout = ({ children }) => {
           </div>
 
           {/* Main Content */}
-          <div className="col-span-2 rounded-3xl shad bg-white py-10 px-12 h-fit">
+          <div className={`col-span-2 rounded-3xl   ${pathname ==="/jobs/my-applications"?"":"py-10 px-12 bg-white shad"}  h-fit`}>
             {children}
           </div>
         </div>

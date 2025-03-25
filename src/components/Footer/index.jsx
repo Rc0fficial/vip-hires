@@ -9,7 +9,14 @@ const Footer = ({bg}) => {
 const pathname = usePathname()
 
     return (
-        <div className={`py-8 ${pathname ==="/login"&& "hidden"} ${bg} border-t border-gray px-6 md:px-10 `}>
+        <div className={`py-8 ${
+            pathname === "/login" || 
+            pathname === "/login/register" || 
+            pathname === "/login/reset-password" || 
+            pathname === "/login/verify-email" || 
+            pathname === "/login/new-password" 
+            ? "hidden" : ""
+          } ${bg} border-t border-gray px-6 md:px-10 w-screen overflow-hidden`}>
             <div className=' mx-auto px-6 flex justify-between flex-wrap gap-10 items-center'>
                 <div className='flex items-center gap-3'>
                     <h1 className='text-[32px] font-semibold mont text-green'>Pro</h1>

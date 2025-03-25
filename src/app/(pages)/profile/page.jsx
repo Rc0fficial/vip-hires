@@ -40,10 +40,10 @@ const ProfilePage = () => {
     return (
         <div className='bg-bggreen relative '>
             <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[112px]' />
-            <div className='bg-bggreen  overflow-y-auto px-12 md:px-10  mx-auto  z-20 -mt-60'>
+            <div className='bg-bggreen  overflow-y-auto px-12 md:px-10  mx-auto  z-20 -mt-30'>
                 <div className='w-full   mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
                    <PersonalInformation/>
-                    <div className='col-span-2  h-fit mt-20 flex flex-col gap-6'>
+                    <div className='col-span-2  h-fit  flex flex-col gap-6'>
 
                         {/* profile completeness score */}
                         <div className='rounded-2xl bg-white p-10'>
