@@ -102,8 +102,8 @@ const OurFamily = () => {
                 </div>
 
                 <div className='flex flex-wrap w-full  lg:flex-nowrap justify-between gap-10 mt-20  xl:mt-6'>
-                    {stats?.map((stats) => (
-                        <div className='max-w-[260px]'>
+                    {stats?.map((stats,i) => (
+                        <div key={i} className='max-w-[260px]'>
                             <h1 className='man text-[65px] leading-[100px] lg:text-[80px] font-bold'>{stats.title}</h1>
                             <p className='rale text-[22px] mt-2 max-w-[206px]'>{stats?.detail}</p>
                         </div>

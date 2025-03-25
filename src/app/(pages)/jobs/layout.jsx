@@ -90,7 +90,7 @@ const JobsLayout = ({ children }) => {
           </div>
 
           {/* Main Content */}
-          <div className={`col-span-2 rounded-3xl shad  ${pathname ==="/jobs/my-applications"?"":"py-10 px-12 bg-white"}  h-fit`}>
+          <div className={`col-span-2 rounded-3xl   ${pathname ==="/jobs/my-applications"?"":"py-10 px-12 bg-white shad"}  h-fit`}>
             {children}
           </div>
         </div>
