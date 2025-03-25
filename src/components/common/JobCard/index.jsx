@@ -17,9 +17,9 @@ const JobCard = ({saved,isDetail}) => {
                     <h3 className='capitalize  text-gray group-hover:text-white leading-[20px] mt-2'>21/12/2025</h3>
                 </div>
                 {saved ? 
-                <HeartFilledIcon className="fill-green group-hover:fill-white"  height={32} width={32} />
+                <HeartFilledIcon className="fill-green cursor-pointer group-hover:fill-white"  height={32} width={32} />
                 :    
-            <HeartIcon className="fill-989 group-hover:fill-white"  height={32} width={32} />
+            <HeartIcon className="fill-989 cursor-pointer group-hover:fill-white"  height={32} width={32} />
             }
             </div>
             {!isDetail &&
@@ -34,8 +34,8 @@ const JobCard = ({saved,isDetail}) => {
             </div>
 
             <div className='flex items-center gap-4 mt-8'>
-                <button onClick={()=>router.push('/job/1')} className='py-2.5 rounded-md text-lg text-white group-hover:text-green group-hover:bg-white font-semibold bg-green px-6 flex-1'>Details</button>
-                <button className='h-12 w-12 rounded-md text-lg group-hover:border-white font-semibold border border-green   flex  justify-center items-center'><ShareIcon className="group-hover:stroke-white group-hover:fill-green fill-white  stroke-green"  height={24} width={24} /></button>
+                <button onClick={()=>router.push('/job/1')} className='cursor-pointer py-2.5 rounded-md text-lg text-white group-hover:text-green group-hover:bg-white font-semibold bg-green px-6 flex-1'>Details</button>
+                <button className='h-12 w-12 rounded-md text-lg cursor-pointer group-hover:border-white font-semibold border border-green   flex  justify-center items-center'><ShareIcon className="group-hover:stroke-white group-hover:fill-green fill-white  stroke-green"  height={24} width={24} /></button>
 
             </div>
         </div>
