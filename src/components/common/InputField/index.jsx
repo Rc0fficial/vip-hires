@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 
-const InputField = ({ label, placeholder, value, onChange, type,labelClass  }) => {
+const InputField = ({ label, placeholder, value, onChange, type, labelClass, name }) => {
     return (
         <div className='flex flex-col gap-3 '>
             <label htmlFor={label} className={`${labelClass} capitalize text-525 leading-none`}>{label}</label>
@@ -12,6 +12,7 @@ const InputField = ({ label, placeholder, value, onChange, type,labelClass  }) =
                 onChange={onChange}
                 className='h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]'
                 id={label}
+                name={name} // Add this line
             />
         </div>
     );
