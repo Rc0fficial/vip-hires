@@ -1,21 +1,38 @@
-'use client'
-import React from 'react';
+"use client";
+import React from "react";
 
-const InputField = ({ label, placeholder, value, onChange, type, labelClass, name }) => {
-    return (
-        <div className='flex flex-col gap-3 '>
-            <label htmlFor={label} className={`${labelClass} capitalize text-525 leading-none`}>{label}</label>
-            <input
-                type={type}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                className='h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]'
-                id={label}
-                name={name} // Add this line
-            />
-        </div>
-    );
+const InputField = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  type,
+  labelClass,
+  error,
+  onBlur,
+}) => {
+  return (
+    <div className="flex flex-col gap-3">
+      <label
+        htmlFor={label}
+        className={`${labelClass} capitalize text-525 leading-none`}
+      >
+        {label}
+      </label>
+      <input
+        type={type || "text"}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        className={`h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px] ${
+          error ? "border-red-500" : ""
+        }`}
+        id={label}
+      />
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
 };
 
 export default InputField;

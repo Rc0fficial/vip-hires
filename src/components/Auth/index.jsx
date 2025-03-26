@@ -4,10 +4,14 @@ import LinkedinIcon from "@/components/Icons/LinkedinIcon.svg";
 import FacecookIcon from "../Icons/FacebookIcon.svg";
 import InstagramIcon from "../Icons/InstagramIcon";
 
-export const AuthLayout = ({ children, title, subtitle, showSocialLogin = false }) => {
+export const AuthLayout = ({
+  children,
+  title,
+  subtitle,
+  showSocialLogin = false,
+}) => {
   return (
-    <div className=' flex flex-col justify-between loginbg min-h-screen overflow-y-auto w-screen overflow-hidden bg-no-repeat bg-cover bg-bottom'>
-           
+    <div className=" flex flex-col justify-between loginbg min-h-screen overflow-y-auto w-screen overflow-hidden bg-no-repeat bg-cover bg-bottom">
       <div className="container mx-auto px-6 py-8 flex gap-12 justify-center">
         {/* Left Section */}
         <div className="py-32 hidden lg:flex flex-col gap-4 text-white">
@@ -39,7 +43,9 @@ export const AuthLayout = ({ children, title, subtitle, showSocialLogin = false 
               {subtitle && (
                 <>
                   <br />
-                  <span className="text-sm text-[#99A1AF] capitalize">{subtitle}</span>
+                  <span className="text-sm text-[#99A1AF] capitalize">
+                    {subtitle}
+                  </span>
                 </>
               )}
             </h1>
@@ -47,40 +53,39 @@ export const AuthLayout = ({ children, title, subtitle, showSocialLogin = false 
             {children}
 
             {/* Social Login Buttons */}
-
           </div>
         </div>
       </div>
 
-   <div className={`py-8  bg-[#FFFFFF1A]  border-t border-gray w-screen overflow-x-hidden`}>
-                   <div className='container mx-auto px-6 md:px-10  flex justify-between flex-wrap gap-10 items-center'>
-                       <div className='flex items-center gap-3'>
-                           <h1 className='text-[32px] font-semibold mont text-green'>Pro</h1>
-                           <Image
-                               src="/assets/logoArrow.png"
-                               alt="Logo Arrow"
-                               width={24} // 6 * 4px = 24px
-                               height={24} // 6 * 4px = 24px
-                               className="w-6 h-6"
-                           />
-                       </div>
-                       <p className=''>© 2019 All rights reserved to applypro</p>
-   
-                       <div className='flex items-center gap-6'>
-                           <div className='h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center '>
-                               <LinkedinIcon color={"#ffffff"} height={13.5} width={13.5} />
-                           </div>
-                           <div className='h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center '>
-                               <FacecookIcon color={"#ffffff"} height={13.5} width={13.5} />
-                           </div>
-                           <div className='h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center '>
-                               <InstagramIcon color={"#ffffff"} height={13.5} width={13.5} />
-                           </div>
-   
-                       </div>
-                   </div>
-   
-               </div>
-           </div>
+      <div
+        className={`py-8  bg-[#FFFFFF1A]  border-t border-gray w-screen overflow-x-hidden`}
+      >
+        <div className="container mx-auto px-6 md:px-10  flex justify-between flex-wrap gap-10 items-center">
+          <div className="flex items-center gap-3">
+            <h1 className="text-[32px] font-semibold mont text-green">Pro</h1>
+            <Image
+              src="/assets/logoArrow.png"
+              alt="Logo Arrow"
+              width={24} // 6 * 4px = 24px
+              height={24} // 6 * 4px = 24px
+              className="w-6 h-6"
+            />
+          </div>
+          <p className="">© 2019 All rights reserved to applypro</p>
+
+          <div className="flex items-center gap-6">
+            <div className="h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center ">
+              <LinkedinIcon color={"#ffffff"} height={13.5} width={13.5} />
+            </div>
+            <div className="h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center ">
+              <FacecookIcon color={"#ffffff"} height={13.5} width={13.5} />
+            </div>
+            <div className="h-[45px] w-[45px] border-2 border-[#ffffff50] rounded-full flex justify-center items-center ">
+              <InstagramIcon color={"#ffffff"} height={13.5} width={13.5} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
