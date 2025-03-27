@@ -43,18 +43,18 @@ const ProfilePage = () => {
             <div className='bg-bggreen  overflow-y-auto px-12 md:px-10  mx-auto  z-20 -mt-30'>
                 <div className='w-full   mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
                    <PersonalInformation/>
-                    <div className='col-span-2  h-fit  flex flex-col gap-6'>
+                    <div className='col-span-2  h-fit  flex flex-col gap-6  '>
 
                         {/* profile completeness score */}
-                        <div className='rounded-2xl bg-white p-10'>
+                        <div className='rounded-2xl bg-white p-10 '>
 
-                            <h1 className='capitalize text-[28px] font-semibold text-3d3'>profile completeness score</h1>
+                            <h1 className='capitalize text-[28px] font-semibold text-3d3 '>profile completeness score</h1>
                             <p className='text-989 mb-6'>Track your progress and complete your profile by adding missing details to increase your chances of getting noticed.</p>
-                            <div className='p-4 shad rounded-md mb-8'>
+                            <div className='p-4 shad rounded-md mb-8 '>
                                 <h1 className='text-5d5 mb-4'>Your progress</h1>
                                 <h3 className='text-2xl font-medium text-green mb-3'>70% to complete</h3>
 
-                                <div className="relative w-full h-5 bg-gray-300 rounded-full">
+                                <div className="relative w-full h-5 bg-gray-300 rounded-full ">
                                     <div className="absolute top-0 left-0 h-4 bg-green rounded-full" style={{ width: '70%' }}></div>
                                     <div className="absolute top-1/2 left-[10%] w-2 h-2 bg-white border-2 border-green rounded-full transform -translate-y-1/2"></div>
                                     <div className="absolute top-1/2 left-[30%] w-2 h-2 bg-white border-2 border-green rounded-full transform -translate-y-1/2"></div>

@@ -6,11 +6,11 @@ const Modal = ({ id, isOpen, onClose, onSave, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 top-0 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/50 top-0 flex justify-center items-center ">
       <div className="bg-white p-6 rounded-lg w-full max-w-[800px]">
         <div className=" flex justify-between items-center mb-6">
 
-        <h2 className="capitalize text-[28px] font-semibold text-3d3 ">Edit {id}</h2>
+        <h2 className="capitalize text-[28px] font-semibold text-3d3 "> {id}</h2>
         <CloseIcon onClick={onClose} color={"#707070"} height={32} width={32} />
         </div>
         
