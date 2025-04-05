@@ -33,7 +33,7 @@ const Availability = () => {
                 </button>
 
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Availability">
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Availability">
                 <div className='flex flex-wrap gap-4'>
 
                     <CheckboxButton

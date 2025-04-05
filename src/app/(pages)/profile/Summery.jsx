@@ -21,7 +21,7 @@ const Summary = ({ summary, setSummary }) => {
     
       <p className="text-lg text-344 tracking-[0.3px] leading-[36px]">{summary}</p>
       {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Summery">
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Summery">
         <textarea
           className="w-full text-lg text-344 tracking-[0.3px] leading-[36px] p-2 h-[356px] border border-gray rounded"
           value={summary}

@@ -36,7 +36,7 @@ const JobType = () => {
                 </button>
 
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Employment Type">
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Employment Type">
                 <div className='flex flex-wrap gap-4'>
 
                     <CheckboxButton

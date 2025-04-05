@@ -46,7 +46,7 @@ const Education = () => {
                 <h1 className='capitalize text-989 text-sm leading-[36px]'>( 2018 - 2021 )</h1>
 
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Education">
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Education">
                 <div className='flex flex-col gap-6'>
 
                     <InputField

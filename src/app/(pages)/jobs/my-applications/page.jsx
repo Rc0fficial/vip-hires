@@ -2,6 +2,7 @@
 import React from 'react'
 import AppliedJobGraph from './AppliedJobsGraph'
 import SubmittedApplicatinGraph from './SubmittedApplicationGraph'
+import MyApplications from './MyApplications'
 
 const MyApplicationsPage = () => {
   return (
@@ -15,7 +16,10 @@ const MyApplicationsPage = () => {
         <SubmittedApplicatinGraph/>
 
         </div>
+        <div className='col-span-3  w-auto h-full bg-white rounded-3xl p-5 shad xl:p-8'>
+        <MyApplications/>
 
+        </div>
       </div>
     </div>
   )

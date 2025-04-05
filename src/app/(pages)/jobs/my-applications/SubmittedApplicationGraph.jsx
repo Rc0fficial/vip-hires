@@ -44,7 +44,7 @@ const SubmittedApplicatinGraph = () => {
   };
 
   return (
-    <div className="w-auto h-full bg-white rounded-3xl p-5 shad ">
+    <div className="w-auto h-full bg-white rounded-3xl p-5 shad xl:p-8 ">
       <div className="flex justify-between  gap-3">
         <h3 className="text font-medium">Total Submitted Application</h3>
         <PiDotsThreeVerticalBold size={30} />

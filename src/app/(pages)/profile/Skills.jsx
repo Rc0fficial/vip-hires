@@ -37,7 +37,7 @@ const Skills = ({ skills, setSkills }) => {
                 ))}
             </div>
             {/* Modal */}
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="skills">
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit skills">
                 <div>
 
 
