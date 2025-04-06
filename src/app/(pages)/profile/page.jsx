@@ -22,6 +22,7 @@ import EmploymentType from './EmploymentType'
 import JobType from './JobType'
 import Education from './Education'
 import PersonalInformation from './PersonalInformation'
+import ResumeSection from './Resume'
 
 const ProfilePage = () => {
 
@@ -40,8 +41,8 @@ const ProfilePage = () => {
     return (
         <div className='bg-bggreen relative '>
             <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[112px]' />
-            <div className='bg-bggreen  overflow-y-auto px-12 md:px-10  mx-auto  z-20 -mt-30'>
-                <div className='w-full   mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
+            <div className='bg-bggreen   px-12 md:px-10  mx-auto  z-20 -mt-30'>
+                <div className='w-full   top-[120px] mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
                    <PersonalInformation/>
                     <div className='col-span-2  h-fit  flex flex-col gap-6  '>
 
@@ -77,45 +78,7 @@ const ProfilePage = () => {
 
                         <Summary summary={summary} setSummary={setSummary} />
                         {/* reesume */}
-                        <div className='rounded-2xl bg-white p-10 f'>
-
-                            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Resume </h1>
-                            <div className='flex justify-between '>
-
-                                <p className='text-989 mb-6'>Upload your CV to help recruiters understand your background and qualifications at a glance.</p>
-                                {/* <EditIcon  color={"#707070"} height={32} width={32}/> */}
-                            </div>
-                            <div className='rounded-md shad flex items-center '>
-                                <div className='w-[200px] h-[197px] bg-bdb'>
-                                    <img src="/assets/resume.png" alt="" className='mx-auto' />
-                                </div>
-                                <div className='flex-1 py-6 px-4 flex justify-between flex-col h-full'>
-                                    <div className='flex justify-between mb-9'>
-                                        <div>
-                                            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Resume </h1>
-                                            <p className='text-989 '>154.03 KB</p>
-                                        </div>
-                                        <p className='text-989 '>31/5/2023</p>
-                                    </div>
-                                    <div className='flex items-center gap-4'>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <ViewIcon color={"#009969"} height={24} width={24} />
-                                            Preview
-                                        </button>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <DownloadIcon color={"#009969"} height={24} width={24} />
-                                            Download
-                                        </button>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <UploadIcon color={"#009969"} height={24} width={24} />
-                                            Upload
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
+                        <ResumeSection/>
                         {/* skills */}
                         <Skills skills={skills} setSkills={setSkills} />
                         {/* availability  */}

@@ -50,6 +50,7 @@ const JobsPage = () => {
                 {Array(8).fill(null).map((_, index) => (
                     <JobCard key={index} />
                 ))}
+                 <JobCard  lock={true} text={"Subscribe now to unlock 10 more jobs"} />
             </div>
 
         </div>

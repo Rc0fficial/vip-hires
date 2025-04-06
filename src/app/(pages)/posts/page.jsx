@@ -64,6 +64,13 @@ const Posts = () => {
                 {Array(8).fill(null).map((_, index) => (
                     <PostCard key={index} handleOpenModal={handleOpenModal} btnTitle="Edit" />
                 ))}
+                <PostCard 
+  saved={false} 
+  isDetail={false} 
+//   handleOpenModal={handleEdit} 
+  lock={true}
+  text="Subscribe now to unlock 5 more posts"
+/>
             </div>
 
 

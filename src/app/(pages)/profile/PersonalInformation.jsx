@@ -38,26 +38,26 @@ const PersonalInformation = () => {
         { value: 'au', label: 'Australia' },
     ];
     return (
-        <div className='col-span-1 sticky top-0 rounded-3xl bg-white p-10 h-fit '>
+        <div className='col-span-1 sticky top-[150px] rounded-3xl bg-white p-10 h-fit '>
             <div className='pb-10 border-b border-[#B0B0B0] group mb-10 relative'>
-                <span className='absolute top-0 right-0 hidden group-hover:block'><EditIcon color={"#707070"} height={32} width={32} /></span>
+                <span onClick={handleInfoOpenModal} className='absolute cursor-pointer top-0 right-0 hidden group-hover:block'><EditIcon color={"#707070"} height={32} width={32} /></span>
                 <img onClick={handleOpenModal} src="/assets/profile2.png" alt="" className='mb-10 mx-auto w-[200px] h-[200px] rounded-full' />
                 <h1 className='capitalize text-[28px] font-medium text-center text-3d3'>mohamed ali</h1>
                 <p className='capitalize text-[#B0B0B0] text-xl  text-center'>ui/ux designer</p>
             </div>
-            <div onClick={handleInfoOpenModal} className='flex items-center gap-2.5 mb-4'>
+            <div  className='flex items-center gap-2.5 mb-4'>
                 <EmailIcon color={"#989898"} height={24} width={24} />
                 <h1 className='text-989 text-sm '>Email :</h1>
                 <h2 className='text-sm text-525 capitalize'>email@gmail.com</h2>
 
             </div>
-            <div onClick={handleInfoOpenModal} className='flex items-center gap-2.5 mb-13'>
+            <div  className='flex items-center gap-2.5 mb-13'>
                 <PhoneIcon color={"#989898"} height={24} width={24} />
                 <h1 className='text-989 text-sm '>phone :</h1>
                 <h2 className='text-sm text-525 capitalize'>+020123456789</h2>
 
             </div>
-            <div onClick={handleInfoOpenModal} className='flex items-center gap-2.5 mb-4'>
+            <div  className='flex items-center gap-2.5 mb-4'>
                 <LocationIcon color={"#989898"} height={24} width={24} />
                 <h1 className='text-989 text-sm '>country :</h1>
                 <h2 className='text-sm text-525 capitalize'>egypt</h2>
