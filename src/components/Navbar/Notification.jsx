@@ -8,9 +8,14 @@ const Notification = () => {
 
     // Sample notifications
     const notifications = [
-        { id: 1, title: "Your subscription is about to expire, renew now", date: "February 26, 2023" },
-        { id: 2, title: "Your application has been submitted successfully", date: "5 days ago" },
-        { id: 3, title: "Payment received for your subscription", date: "March 1, 2023" },
+        { id: 1, title: "Your subscription is about to expire, renew now", date: "February 26, 2023", read: true },
+        { id: 2, title: "your application have submetted successfully ", date: "5 days ago", read: false },
+        { id: 2, title: "Your subscription is about to expire, renew your subscription now", date: "5 days ago", read: true },
+        { id: 2, title: "Your subscription is about to expire, renew now", date: "5 days ago", read: false },
+        { id: 3, title: "Your subscription is about to expire, renew your subscription now", date: "March 1, 2023", read: true },
+        { id: 2, title: "Your application has been submitted successfully", date: "5 days ago", read: false },
+        { id: 3, title: "Your subscription is about to expire, renew your subscription now", date: "March 1, 2023", read: true },
+        { id: 2, title: "Your subscription is about to expire, renew now", date: "5 days ago", read: false },
     ];
 
     // Handle click outside to close
@@ -28,7 +33,7 @@ const Notification = () => {
             {/* Bell Icon */}
             <div
                 className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full relative cursor-pointer"
-                onClick={() => setNotificationMenu(!notificationMenu)}
+                onMouseEnter={() => setNotificationMenu(!notificationMenu)}
             >
                 <BellIcon height={20} width={21} stroke={"#C7C7C7"} />
                 {notifications.length > 0 && (
@@ -47,15 +52,21 @@ const Notification = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2  w-[400px] bg-white shad rounded-lg overflow-hidden"
+                    className="absolute right-0 mt-2 w-[582px] bg-white shad rounded-lg overflow-hidden"
                 >
-                    <div className="p-4 border-b text-lg font-semibold">Notifications</div>
-                    <div className="max-h-80 overflow-y-auto">
+
+                    <div className="max-h-[700px] overflow-y-auto w-full" onMouseLeave={() => setNotificationMenu(false)}>
                         {notifications.length > 0 ? (
                             notifications.map((notification) => (
-                                <div key={notification.id} className="p-4 border-b last:border-none hover:bg-gray-100">
-                                    <p className="text-sm font-medium">{notification.title}</p>
-                                    <p className="text-xs text-gray-500">{notification.date}</p>
+                                <div key={notification.id} className={`px-6 py-5 border-gray border-b last:border-none flex gap-3 ${notification.read ? "":"bg-[#EDEEF1]"} `}>
+                                    <div className='h-12 min-w-12 flex bg-white border rounded-full border-gray justify-center items-center'>
+                                        <img src="/assets/logoArrow.png" alt="logo" className='h-6 w-6' />
+                                    </div>
+                                    <div>
+
+                                        <p className="text-gray font-medium"><span className='font-bold text-3d3 mr-2'>ApplyPro</span>{notification.title}</p>
+                                        <p className="text-xs text-gray-500">{notification.date}</p>
+                                    </div>
                                 </div>
                             ))
                         ) : (

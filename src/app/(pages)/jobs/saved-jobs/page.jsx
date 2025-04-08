@@ -9,8 +9,10 @@ const SavedJobs = () => {
            
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
                 {Array(8).fill(null).map((_, index) => (
+                  
                     <JobCard key={index} saved={true} />
-                ))}
+                  ))}
+                 
             </div>
 
         </div>

@@ -10,6 +10,7 @@ const InputField = ({
   labelClass,
   error,
   onBlur,
+  name
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -20,6 +21,7 @@ const InputField = ({
         {label}
       </label>
       <input
+      name={name}
         type={type || "text"}
         placeholder={placeholder}
         value={value}

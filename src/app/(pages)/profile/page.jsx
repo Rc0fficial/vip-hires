@@ -7,8 +7,10 @@ import EmailIcon from '@/components/Icons/EmailIcon.svg'
 import LinkedinIcon from '@/components/Icons/LinkedinIcon.svg'
 import LinkIcon from '@/components/Icons/LinkIcon.svg'
 import LocationIcon from '@/components/Icons/LocationIcon.svg'
+import CameraIcon2 from '@/components/Icons/CameraIcon2.svg'
 import MediumIcon from '@/components/Icons/MediumIcon.svg'
 import PhoneIcon from '@/components/Icons/PhoneIcon.svg'
+import PhotoIcon from '@/components/Icons/PhotoIcon.svg'
 import StackOverflowIcon from '@/components/Icons/StackOverflowIcon.svg'
 import UploadIcon from '@/components/Icons/UploadIcon.svg'
 import ViewIcon from '@/components/Icons/ViewIcon.svg'
@@ -22,6 +24,13 @@ import EmploymentType from './EmploymentType'
 import JobType from './JobType'
 import Education from './Education'
 import PersonalInformation from './PersonalInformation'
+import ResumeSection from './Resume'
+import InputField from '@/components/common/InputField'
+import SelectField from '@/components/common/SelectField'
+import DribbbleIcon from '@/components/Icons/DribbbleIcon.svg'
+import GithupIcon from '@/components/Icons/GithupIcon.svg'
+import KaggleIcon from '@/components/Icons/KaggleIcon.svg'
+import UrlIcon from '@/components/Icons/UrlIcon.svg'
 
 const ProfilePage = () => {
 
@@ -36,13 +45,33 @@ const ProfilePage = () => {
         "Design Thinking",
         "Brainstorming",
     ]);
+     const [isModalOpen, setIsModalOpen] = useState(false);
+        const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    
+        const handleOpenModal = () => setIsModalOpen(true);
+        const handleInfoOpenModal = () => setIsInfoModalOpen(true);
+        const handleCloseModal = () => {
+            setIsModalOpen(false);
+            setIsInfoModalOpen(false);
+        }
+        const handleSave = () => handleCloseModal();
+        const countryOptions = [
+            { value: 'us', label: 'United States' },
+            { value: 'ca', label: 'Canada' },
+            { value: 'uk', label: 'United Kingdom' },
+            { value: 'au', label: 'Australia' },
+        ];
    
     return (
         <div className='bg-bggreen relative '>
-            <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[112px]' />
-            <div className='bg-bggreen  overflow-y-auto px-12 md:px-10  mx-auto  z-20 -mt-30'>
-                <div className='w-full   mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
-                   <PersonalInformation/>
+            <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[120px]' />
+            <div className='bg-bggreen   px-12 md:px-10  mx-auto  z-20 -mt-30'>
+                <div className='w-full   top-[120px] mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
+                   <PersonalInformation
+                   handleOpenModal={handleOpenModal}
+                   handleInfoOpenModal={handleInfoOpenModal}
+
+                   />
                     <div className='col-span-2  h-fit  flex flex-col gap-6  '>
 
                         {/* profile completeness score */}
@@ -77,45 +106,7 @@ const ProfilePage = () => {
 
                         <Summary summary={summary} setSummary={setSummary} />
                         {/* reesume */}
-                        <div className='rounded-2xl bg-white p-10 f'>
-
-                            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Resume </h1>
-                            <div className='flex justify-between '>
-
-                                <p className='text-989 mb-6'>Upload your CV to help recruiters understand your background and qualifications at a glance.</p>
-                                {/* <EditIcon  color={"#707070"} height={32} width={32}/> */}
-                            </div>
-                            <div className='rounded-md shad flex items-center '>
-                                <div className='w-[200px] h-[197px] bg-bdb'>
-                                    <img src="/assets/resume.png" alt="" className='mx-auto' />
-                                </div>
-                                <div className='flex-1 py-6 px-4 flex justify-between flex-col h-full'>
-                                    <div className='flex justify-between mb-9'>
-                                        <div>
-                                            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Resume </h1>
-                                            <p className='text-989 '>154.03 KB</p>
-                                        </div>
-                                        <p className='text-989 '>31/5/2023</p>
-                                    </div>
-                                    <div className='flex items-center gap-4'>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <ViewIcon color={"#009969"} height={24} width={24} />
-                                            Preview
-                                        </button>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <DownloadIcon color={"#009969"} height={24} width={24} />
-                                            Download
-                                        </button>
-                                        <button className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3'>
-                                            <UploadIcon color={"#009969"} height={24} width={24} />
-                                            Upload
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
+                        <ResumeSection/>
                         {/* skills */}
                         <Skills skills={skills} setSkills={setSkills} />
                         {/* availability  */}
@@ -130,6 +121,124 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </div>
+
+             {/* profile change model */}
+             <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Profile Picture">
+                <img src="/assets/profile2.png" alt="" className='mb-10  mx-auto w-[200px] h-[200px] rounded-full' />
+
+                <div className='flex justify-center items-center gap-8 pb-10 border-b border-[#DCDCDC]'>
+                    <button className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md'><CameraIcon2 color={"#525252"} height={20} width={20} />Take Photo</button>
+                    <button className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md '><PhotoIcon color={"#525252"} height={20} width={20} /> Upload Photo</button>
+                </div>
+            </Modal>
+            <Modal isOpen={isInfoModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Profile Picture">
+
+                <div className='flex flex-col  gap-6 border-b pb-6 border-[#DCDCDC]'>
+
+                    <div className=' grid grid-cols-1 lg:grid-cols-2 items-center w-full gap-4'>
+                        <InputField
+                            label="First Name"
+                            placeholder="Enter First Name"
+                            // value={formData.firstName}
+                            // onChange={handleInputChange}
+                            type="text"
+                            name="firstName"
+                        />
+                        <InputField
+                            label="Last Name"
+                            placeholder="Enter Last Name"
+                            type="text"
+                            // value={formData.lastName}
+                            // onChange={handleInputChange}
+                            name="lastName"
+                        />
+                    </div>
+                    <InputField
+                        label="job tittle"
+                        placeholder="Enter job tittle"
+                        // value={formData.firstName}
+                        // onChange={handleInputChange}
+                        labelClass={"text-center"}
+                        type="text"
+                        name="job tittle"
+                    />
+
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                        <SelectField
+                            label="Country"
+                            // value={formData.country}
+                            // onChange={handleInputChange}
+                            options={countryOptions}
+                            name="country"
+                        />
+                        <SelectField
+                            label="City"
+                            // value={formData.country}
+                            // onChange={handleInputChange}
+                            options={countryOptions}
+                            name="city"
+                        />
+                    </div>
+
+                    <InputField
+                        label="Email"
+                        placeholder="Enter Email"
+                        type="text"
+                        labelClass={"text-center"}
+                        // value={formData.lastName}
+                        // onChange={handleInputChange}
+                        name="email"
+                    />
+                    <div className='flex flex-col gap-3'>
+                        <label htmlFor="Phone" className='text-525 text-center leading-none'>Phone</label>
+                        <div className='flex gap-4'>
+                            <div className='h-12 px-4 flex justify-center gap-2 items-center border-[0.5px] border-[#BDBDBD] rounded-md'>
+                                <img src="/assets/flag.png" alt="" /> <span className='text-sm text-[#989898]'>+02</span>
+                            </div>
+                            <input type="text" placeholder='Enter Name' className='h-12 px-4 flex-1 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]' name="" id="" />
+                        </div>
+                    </div>
+                </div>
+                <div className='flex justify-between items-center mt-3'>
+                    <h1 className='text-525 text-lg  capitalize'>account link</h1>
+
+                    <div className='flex items-center gap-4'>
+
+                        <div className='bg-green h-8 w-8 rounded-full flex justify-center items-center'>
+
+
+                            <LinkedinIcon color={"#ffffff"} height={20} width={20} />
+                        </div>
+                        <div className='bg-green h-8 w-8 rounded-full flex justify-center items-center'>
+
+
+                            <BehanceIcon color={"#ffffff"} height={20} width={20} />
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
+                            <DribbbleIcon color={"#525252"} height={20} width={20} />
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-green'>
+                            <MediumIcon color={"#ffffff"} height={20} width={20} />
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
+                            <GithupIcon color={"#ffffff"} height={20} width={20} />
+
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-green'>
+                            <StackOverflowIcon color={"#ffffff"} height={20} width={20} />
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
+                            <KaggleIcon color={"#ffffff"} height={20} width={20} />
+
+                        </div>
+                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
+                            <UrlIcon color={"#ffffff"} height={20} width={20} />
+
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
           
         </div>
     )

@@ -10,7 +10,8 @@ const FAQs = () => {
         { id: 5, question: 'What if I want to reapply for a job?' },
     ];
     return (
-        <div className='pt-[86px]  px-6 md:px-10  relative overflow-hidden bg-bggreen'>
+        <>
+        <div className='pt-[86px] pb-28  px-6 md:px-10  relative overflow-hidden bg-bggreen'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
                 <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>Got Questions? We’ve Got  <span className='relative'>Answers <img src="/assets/underline3.png" alt="underline" className='absolute -bottom-2 right-2 ' /></span> </h1>
 
@@ -35,13 +36,15 @@ const FAQs = () => {
                     </div>
 
                 </div>
-                <Notify/>
+                
             </div>
 
             <img src="/assets/faqbgright.png" alt="faq" className='absolute right-0 top-40 z-0' />
             <img src="/assets/faqcircleright.png" alt="faq" className='absolute right-0 top-28 z-0' />
             <img src="/assets/faqstar.png" alt="faq" className='absolute left-0 top-0' />
         </div>
+            <Notify/>
+        </>
     )
 }
 

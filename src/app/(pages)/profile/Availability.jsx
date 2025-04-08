@@ -6,56 +6,85 @@ import React, { useState } from 'react'
 
 const Availability = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleStateChange = (newState) => {
-        console.log("CheckboxButton state changed:", newState);
+    const [availabilityOptions, setAvailabilityOptions] = useState([
+        { label: 'immediately', selected: true },
+        { label: 'Within a month', selected: false },
+        { label: 'Partially available', selected: false }
+    ]);
+    const [activeOptions, setActiveOptions] = useState(['immediately']);
+
+    const handleOptionChange = (label, isSelected) => {
+        setAvailabilityOptions(prev => 
+            prev.map(option => 
+                option.label === label ? { ...option, selected: isSelected } : option
+            )
+        );
+        
+        setActiveOptions(prev => 
+            isSelected 
+                ? [...prev, label]
+                : prev.filter(opt => opt !== label)
+        );
     };
+
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
-    const handleSave = () => handleCloseModal();
+    
+    const handleSave = () => {
+        // Filter only selected options
+        const selected = availabilityOptions
+            .filter(option => option.selected)
+            .map(option => option.label);
+        setActiveOptions(selected);
+        handleCloseModal();
+    };
+
     return (
-        <div className='rounded-2xl bg-white p-10 f'>
-
-            <h1 className='capitalize text-[28px] font-semibold text-3d3'>availability  </h1>
-            <div className='flex justify-between '>
-
-                <p className='text-989 mb-6'>Indicate when you're ready to start your next opportunity so recruiters can match you accordingly.</p>
-                <EditIcon onClick={handleOpenModal} color={"#707070"} height={32} width={32} />
+        <div className='rounded-2xl bg-white p-10'>
+            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Availability</h1>
+            <div className='flex justify-between'>
+                <p className='text-989 mb-6'>
+                    Indicate when you're ready to start your next opportunity so recruiters can match you accordingly.
+                </p>
+                <EditIcon 
+                    onClick={handleOpenModal} 
+                    color={"#707070"} 
+                    height={32} 
+                    width={32} 
+                    className="cursor-pointer"
+                />
             </div>
+            
             <div className='flex flex-wrap gap-4'>
-
-                <button className='flex w-fit capitalize justify-center items-center rounded-full  bg-green text-white py-2 px-6 gap-3'>
-
-                    immediately
-                </button>
-                <button className='flex w-fit capitalize justify-center items-center rounded-full  bg-green text-white py-2 px-6 gap-3'>
-
-                    Within a month
-                </button>
-
+                {activeOptions.map(option => (
+                    <button 
+                        key={option}
+                        className='flex w-fit capitalize justify-center items-center rounded-full bg-green text-white py-2 px-6 gap-3'
+                    >
+                        {option}
+                    </button>
+                ))}
             </div>
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Availability">
+            
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onSave={handleSave} 
+                id="Edit Availability"
+            >
                 <div className='flex flex-wrap gap-4'>
-
-                    <CheckboxButton
-                        label="immediately"
-                        defaultSelected={true} // Initial state
-                        onChange={handleStateChange} // Callback for state changes
-                    />
-                    <CheckboxButton
-                        label="Partially available"
-                        defaultSelected={true} // Initial state
-                        onChange={handleStateChange} // Callback for state changes
-                    />
-                    <CheckboxButton
-                        label=" Within a month"
-                        defaultSelected={false} // Initial state
-                        onChange={handleStateChange} // Callback for state changes
-                    />
-
+                    {availabilityOptions.map(option => (
+                        <CheckboxButton
+                            key={option.label}
+                            label={option.label}
+                            defaultSelected={option.selected}
+                            onChange={(isSelected) => handleOptionChange(option.label, isSelected)}
+                        />
+                    ))}
                 </div>
             </Modal>
         </div>
     )
 }
 
-export default Availability
+export default Availability;

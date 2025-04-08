@@ -26,9 +26,27 @@
   --color-ff6: #FF6161;
   --color-dcd: #DCDCDC;
   --color-219: #219826;
+  --color-bob: #B0B0B0;
 }
 
+.bg-blur{
+  /* box-shadow: 0px 0px 8px 0px #00000026; */
 
+backdrop-filter: blur(8px);
+
+box-shadow: 8px 8px 20px 0px #FFFFFF40 inset;
+
+}
+
+.green-card{
+  background: linear-gradient(107.38deg, #2FD899 2.61%, #009969 101.2%);
+
+}
+.gray-card{
+  background: linear-gradient(107.38deg, #FFFFFF 2.61%, #BDBDBD 101.2%);
+
+
+}
 
 body {
 
@@ -57,6 +75,10 @@ body {
 
 .man {
   font-family: "Manrope";
+  /* Class for elements using Montserrat */
+}
+.ant {
+  font-family: "Anton";
   /* Class for elements using Montserrat */
 }
 
