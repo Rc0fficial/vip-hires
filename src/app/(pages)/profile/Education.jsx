@@ -131,7 +131,7 @@ const Education = () => {
                     </button>
                 </div>
             </div>
-
+{/* 
             {educations.map((education) => (
                 <div key={education.id} className='flex justify-between items-center mb-6 group relative'>
                     <div className='flex items-center gap-6'>
@@ -162,8 +162,10 @@ const Education = () => {
                         </button>
                     </div>
                 </div>
-            ))}
-
+            ))} */}
+  <img src="/assets/education.png" alt="" className="h-[190px] w-[214px] mx-auto" />
+      <h1 className='text-center ant text-[32px] text-green'>Add Your Education</h1>
+      <p className='text-gray mt-2 text-center '>Showcase your qualifications and stand out to top employers. Add your education details now to unlock better job opportunities</p>
             <Modal 
                 isOpen={isModalOpen} 
                 onClose={handleCloseModal} 

@@ -4,7 +4,7 @@ import React from 'react'
 
 const CreditCard = ({ holderName, cvv, exp, cardNumber, bgColor = 'bg-green-500', textColor = 'text-white' }) => {
     return (
-        <div className={`rounded-3xl pt-6 shad w-full max-w-[350px] flex flex-col justify-between h-[225px] ${bgColor}`}>
+        <div className={`rounded-3xl pt-6 shad w-[350px] flex flex-col justify-between h-[225px] ${bgColor}`}>
             <div className='flex justify-between px-[26px]'>
                 <div>
                     <h3 className={`text-xs uppercase ${textColor}`}>card holder</h3>

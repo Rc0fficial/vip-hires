@@ -18,6 +18,7 @@ import GithupIcon from "@/components/Icons/GithupIcon.svg";
 import StackOverflowIcon from "@/components/Icons/StackOverflowIcon.svg";
 import KaggleIcon from "@/components/Icons/KaggleIcon.svg";
 import UrlIcon from "@/components/Icons/UrlIcon.svg";
+import PhoneInputField from "@/components/PhoneInputField";
 
 // Validation Schemas
 const FirstStepSchema = z.object({
@@ -225,38 +226,25 @@ const CreateAccount = () => {
           )}
         />
 
-        <div className="flex flex-col gap-3">
-          <label htmlFor="Phone" className="text-525 text-center leading-none">
-            Phone
-          </label>
-          <div className="flex gap-4">
-            <div className="h-12 px-4 flex justify-center gap-2 items-center border-[0.5px] border-[#BDBDBD] rounded-md">
-              <img src="/assets/flag.png" alt="" />{" "}
-              <span className="text-sm text-[#989898]">+02</span>
-            </div>
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field: { ref, ...field } }) => (
-                <div className="flex-1 flex flex-col">
-                  <input
-                    {...field}
-                    type="text"
-                    placeholder="Enter Phone Number"
-                    ref={ref}
-                    onBlur={field.onBlur}
-                    className={`h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px] ${
-                      errors.phoneNumber ? 'border-red-500' : ''
-                    }`}
-                  />
-                  {errors.phoneNumber && (
-                    <p className="text-red-500 text-sm mt-1">{errors.phoneNumber.message}</p>
-                  )}
-                </div>
-              )}
-            />
-          </div>
-        </div>
+<div className="flex flex-col gap-3">
+      <Controller
+        name="phoneNumber"
+        control={control}
+        rules={{
+          required: 'Phone number is required',
+          validate: (value) => validatePhoneNumber(value) || 'Invalid phone number'
+        }}
+        render={({ field: { onChange, value } }) => (
+          <PhoneInputField
+            value={value}
+            onChange={onChange}
+            label="Phone"
+            error={errors.phoneNumber?.message}
+            className="w-full"
+          />
+        )}
+      />
+    </div>
         <Button
           type="submit"
           label="Next"

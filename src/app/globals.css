@@ -77,6 +77,10 @@ body {
   font-family: "Manrope";
   /* Class for elements using Montserrat */
 }
+.ant {
+  font-family: "Anton";
+  /* Class for elements using Montserrat */
+}
 
 .robo {
   font-family: "Roboto", sans-serif;

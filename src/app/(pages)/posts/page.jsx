@@ -21,7 +21,7 @@ const Posts = () => {
                 </Link>
             </div>
 
-            <div className='rounded-3xl bg-gradient-to-tr flex  items-center from-[rgb(3,98,71)] to-[#06C891]  px-6 mt-8 relative'>
+            {/* <div className='rounded-3xl bg-gradient-to-tr flex  items-center from-[rgb(3,98,71)] to-[#06C891]  px-6 mt-8 relative'>
                 <Image
                     src="/assets/post.svg"
                     alt="recommend"
@@ -42,7 +42,7 @@ const Posts = () => {
                     className="absolute right-1/3 top-4 w-[28px] h-[29px]"
                 />
 
-                {/* Profile Icon 2 - Rotated */}
+               
                 <Image
                     src="/assets/post-profile1.svg"
                     alt="profile"
@@ -51,7 +51,7 @@ const Posts = () => {
                     className="absolute rotate-45 right-6 top-6 w-[41px] h-[41px]"
                 />
 
-                {/* Profile Icon 3 */}
+               
                 <Image
                     src="/assets/post-profile2.svg"
                     alt="profile"
@@ -59,21 +59,24 @@ const Posts = () => {
                     height={41}
                     className="absolute right-1/5 bottom-0 w-[107px] h-[41px]"
                 />
-            </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
+            </div> */}
+            {/* <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
                 {Array(8).fill(null).map((_, index) => (
                     <PostCard key={index} handleOpenModal={handleOpenModal} btnTitle="Edit" />
                 ))}
-                <PostCard 
-  saved={false} 
-  isDetail={false} 
-//   handleOpenModal={handleEdit} 
-  lock={true}
-  text="Subscribe now to unlock 5 more posts"
-/>
-            </div>
+                <PostCard
+                    saved={false}
+                    isDetail={false}
+                    //   handleOpenModal={handleEdit} 
+                    lock={true}
+                    text="Subscribe now to unlock 5 more posts"
+                />
+            </div> */}
+            <img src="/assets/posts.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto'/>
 
 
+            <h1 className='text-center ant text-[32px] text-green'>We're Crafting Your Perfect Posts</h1>
+<p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>We’re preparing personalized posts for you based on your interests and job field. Stay tuned , great opportunities are on the way</p>
 
         </div>
     )

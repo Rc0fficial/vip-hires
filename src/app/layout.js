@@ -1,4 +1,4 @@
-import { Poppins, Montserrat, DM_Sans, Raleway, Manrope, Roboto, Inter } from "next/font/google";
+import { Poppins, Montserrat, DM_Sans, Raleway, Manrope, Roboto, Inter,Anton } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +11,10 @@ const poppins = Poppins({
 
 const raleway = Raleway({
   weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+});
+const anton = Anton({
+  weight: '400',
   subsets: ['latin'],
 });
 

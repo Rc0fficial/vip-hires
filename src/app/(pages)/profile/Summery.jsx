@@ -19,8 +19,10 @@ const Summary = ({ summary, setSummary }) => {
         </button>
         </div>
     
-      <p className="text-lg text-344 tracking-[0.3px] leading-[36px]">{summary}</p>
-      {/* Modal */}
+      {/* <p className="text-lg text-344 tracking-[0.3px] leading-[36px]">{summary}</p> */}
+      <img src="/assets/summary.png" alt="" className="h-[190px] w-[214px] mx-auto" />
+      <h1 className='text-center ant text-[32px] text-green'>Add a Summary</h1>
+      <p className='text-gray mt-2 text-center '>Give employers a quick snapshot of your skills and experience. A strong summary increases your chances of landing the perfect job</p>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Summery">
         <textarea
           className="w-full text-lg text-344 tracking-[0.3px] leading-[36px] p-2 h-[356px] border border-gray rounded"
