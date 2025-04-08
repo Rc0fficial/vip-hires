@@ -5,16 +5,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DownArrowSvg from '@/components/Icons/DownArrowIcon.svg';
 import ShareIcon from '@/components/Icons/ShareIcon.svg';
 import SendIconSvg from '@/components/Icons/SendIconSvg';
+import { usePathname } from 'next/navigation';
 
 const Notify = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+const pathname = usePathname()
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className=" bottom-4 right-4 z-50">
+    <div className={`${pathname==="/"? "bottom-32":"bottom-44"} fixed  w-full left-8 z-50`}>
       {/* Minimized Chat Notification */}
       
         

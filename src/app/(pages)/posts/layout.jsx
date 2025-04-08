@@ -38,13 +38,13 @@ const PostLayout = ({ children }) => {
                 <div className="flex flex-col gap-6 border-l-4 border-[#C5DDFB]">
                   {/* Recommended Posts */}
                   <div
-                    className={`pl-4 border-l-4 ${
+                    className={`pl-4 border-l-4 cursor-pointer ${
                       pathname === "/posts" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                   >
                     <button
                       onClick={() => handleNavigation("/posts")}
-                      className={`capitalize w-full text-start max-w-[250px] py-3 px-6 rounded-md ${
+                      className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
                         pathname === "/posts" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                     >
@@ -54,17 +54,33 @@ const PostLayout = ({ children }) => {
 
                   {/* Draft Posts */}
                   <div
-                    className={`pl-4 border-l-4 ${
+                    className={`pl-4 border-l-4 cursor-pointer ${
                       pathname === "/posts/draft-posts" ? "border-l-green" : "border-l-[#C5DDFB]"
                     } -ml-1`}
                   >
                     <button
                       onClick={() => handleNavigation("/posts/draft-posts")}
-                      className={`capitalize w-full text-start max-w-[250px] py-3 px-6 rounded-md ${
+                      className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
                         pathname === "/posts/draft-posts" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                     >
                       Draft Posts
+                    </button>
+                  </div>
+
+                  {/* my Applications */}
+                  <div
+                    className={`pl-4 border-l-4 cursor-pointer ${
+                      pathname === "/posts/my-applications" ? "border-l-green" : "border-l-[#C5DDFB]"
+                    } -ml-1`}
+                  >
+                    <button
+                      onClick={() => handleNavigation("/posts/my-applications")}
+                      className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
+                        pathname === "/posts/my-applicatons" ? "bg-green text-white" : "bg-transparent text-gray"
+                      } mont font-semibold`}
+                    >
+                      My Applications
                     </button>
                   </div>
                   

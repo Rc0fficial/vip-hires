@@ -33,7 +33,7 @@ const Notification = () => {
             {/* Bell Icon */}
             <div
                 className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full relative cursor-pointer"
-                onClick={() => setNotificationMenu(!notificationMenu)}
+                onMouseEnter={() => setNotificationMenu(!notificationMenu)}
             >
                 <BellIcon height={20} width={21} stroke={"#C7C7C7"} />
                 {notifications.length > 0 && (
@@ -55,7 +55,7 @@ const Notification = () => {
                     className="absolute right-0 mt-2 w-[582px] bg-white shad rounded-lg overflow-hidden"
                 >
 
-                    <div className="max-h-[700px] overflow-y-auto w-full">
+                    <div className="max-h-[700px] overflow-y-auto w-full" onMouseLeave={() => setNotificationMenu(false)}>
                         {notifications.length > 0 ? (
                             notifications.map((notification) => (
                                 <div key={notification.id} className={`px-6 py-5 border-gray border-b last:border-none flex gap-3 ${notification.read ? "":"bg-[#EDEEF1]"} `}>

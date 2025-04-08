@@ -21,9 +21,10 @@ const JobsLayout = ({ children }) => {
 
   return (
     <div className="bg-bggreen relative">
-      <div className="bg-bggreen  px-12 md:px-16  mx-auto ">
-        <div className="w-full mx-auto grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
-          <div className="col-span-1 flex flex-col justify-between gap-10 rounded-3xl h-full">
+    <div className="bg-bggreen overflow-y-auto px-12 md:px-16 mx-auto">
+      <div className="w-full mx-auto grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
+        {/* Left Sidebar - Sticky with scrollable content */}
+        <div className="col-span-1 sticky top-[0px] h-[75vh]">
             <div>
 
               <div className="py-5 px-6 rounded-md shad mb-6 bg-white mont font-semibold text-525">
@@ -44,18 +45,7 @@ const JobsLayout = ({ children }) => {
                   </button>
                 </div>
 
-                {/* AI Jobs (Disabled) */}
-                {/* <div
-                  className={`pl-4  border-l-4 ${pathname === "/jobs/ai-jobs" ? "border-l-green" : "border-l-[#C5DDFB]"
-                    } -ml-1`}
-                >
-                  <button
-                    disabled
-                    className="capitalize w-full text-start  max-w-[240px] py-3 px-6 rounded-md bg-transparent mont font-semibold text-gray cursor-not-allowed"
-                  >
-                    AI Jobs <span className="py-2 px-3 text-sm rounded-full bg-[#D1D1D14D]">Coming Soon</span>
-                  </button>
-                </div> */}
+                
 
                 {/* subscription settings */}
                 <div

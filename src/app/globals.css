@@ -38,6 +38,16 @@ box-shadow: 8px 8px 20px 0px #FFFFFF40 inset;
 
 }
 
+.green-card{
+  background: linear-gradient(107.38deg, #2FD899 2.61%, #009969 101.2%);
+
+}
+.gray-card{
+  background: linear-gradient(107.38deg, #FFFFFF 2.61%, #BDBDBD 101.2%);
+
+
+}
+
 body {
 
   font-family: "Poppins", serif;
