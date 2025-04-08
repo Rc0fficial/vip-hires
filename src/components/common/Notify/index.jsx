@@ -15,7 +15,7 @@ const pathname = usePathname()
   };
 
   return (
-    <div className={`${pathname==="/"? "bottom-32":"bottom-44"} fixed  w-full left-8 z-50`}>
+    <div className={`${pathname==="/"? "bottom-12":"bottom-20"} fixed  w-full left-8 z-50`}>
       {/* Minimized Chat Notification */}
       
         
