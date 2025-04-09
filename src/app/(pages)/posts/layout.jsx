@@ -77,7 +77,7 @@ const PostLayout = ({ children }) => {
                     <button
                       onClick={() => handleNavigation("/posts/my-applications")}
                       className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
-                        pathname === "/posts/my-applicatons" ? "bg-green text-white" : "bg-transparent text-gray"
+                        pathname === "/posts/my-applications" ? "bg-green text-white" : "bg-transparent text-gray"
                       } mont font-semibold`}
                     >
                       My Applications
