@@ -33,9 +33,7 @@ const FirstStepSchema = z.object({
     email: z.string()
       .min(1, { message: "Email is required" })
       .email({ message: "Invalid email address" }),
-    phoneNumber: z.string()
-      .min(1, { message: "Phone number is required" })
-      .regex(/^\d{10}$/, { message: "Phone number must be 10 digits" })
+  
   });
   const SecondStepSchema = z.object({
     jobTitle: z.string()
@@ -129,7 +127,7 @@ const CreateAccount = () => {
           Personal Information
         </h1>
         <div className="grid grid-cols-4 gap-6">
-        <div className="col-span-1">
+        <div className="col-span-4 md:col-span-1">
           <label htmlFor="profileImageUpload" className="cursor-pointer">
             <div className="flex justify-center mb-2 items-center bg-f2f h-[124px] rounded-lg overflow-hidden">
               {profileImage ? (
@@ -154,7 +152,7 @@ const CreateAccount = () => {
             />
           </label>
         </div>
-          <div className="col-span-3 flex flex-col gap-4">
+          <div className="col-span-4 md:col-span-3 flex flex-col gap-4">
             <Controller
               name="firstName"
               control={control}
@@ -249,7 +247,7 @@ const CreateAccount = () => {
           type="submit"
           label="Next"
           className="self-end bg-green text-white"
-          disabled={!isValid}
+          // disabled={!isValid}
         />
       </form>
     );
@@ -424,7 +422,7 @@ const CreateAccount = () => {
             control={control}
             render={({ field }) => (
               <>
-                <div className="flex gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {["immediately", "within_a_month", "partially_available"].map((option) => (
                     <div 
                       key={option}
@@ -456,7 +454,7 @@ const CreateAccount = () => {
             control={control}
             render={({ field }) => (
               <>
-                <div className="flex gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {["full_time", "part_time", "freelancing"].map((option) => (
                     <div 
                       key={option}
@@ -488,7 +486,7 @@ const CreateAccount = () => {
             control={control}
             render={({ field }) => (
               <>
-                <div className="flex gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {["Remotely", "on_site", "Hybrid"].map((option) => (
                     <div 
                       key={option}
@@ -514,8 +512,8 @@ const CreateAccount = () => {
 </div>
       {/* Social Links Section - Matching your working example */}
       <div className="flex flex-col gap-3">
-        <div className='flex justify-between items-center'>
-          <h1 className='text-525 text-lg capitalize'>Account Link</h1>
+        <div className='flex justify-between flex-col md:flex-row items-start md:items-center'>
+          <h1 className='text-525 text-lg capitalize text-left mb-2 md:mb-0'>Account Link</h1>
           <div className='flex items-center gap-4'>
             {socialPlatforms.map((platform) => (
               <div 

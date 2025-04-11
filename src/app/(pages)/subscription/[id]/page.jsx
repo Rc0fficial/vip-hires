@@ -26,7 +26,7 @@ const PlanSubscribe = () => {
                 <p className=' mx-auto text-[22px] robo text-0f1 mb-16'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
 
                 <div className='grid grid-cols-3 gap-8 z-30'>
-                    <div className='cols-span-3 lg:col-span-2 bg-white/80 shad p-8 rounded-3xl '>
+                    <div className='col-span-3 lg:col-span-2 bg-white/80 shad p-8 rounded-3xl '>
 
                         <div className='flex gap-2'>
                             <LeftArrowIcon height={48} width={48} color={"#009969"} />
@@ -75,9 +75,9 @@ const PlanSubscribe = () => {
 
                             </form>
                     </div>
-                    <div className='cols-span-1 bg-white/80 shad p-8 rounded-3xl '>
+                    <div className='col-span-3 lg:col-span-1 bg-white/80 shad p-8 rounded-3xl '>
                         <div
-                            className={`p-6 rounded-[30px] inter max-w-[300px] border-4 border-[#B6B2FF80] lg:max-w-[400px] w-full lg:min-w-[300px] min-h-[526px] shad transition-transform transform hover:scale-105 text-start flex flex-col 
+                            className={`p-6 mx-auto lg:mx-0 rounded-[30px] inter max-w-[300px] border-4 border-[#B6B2FF80] lg:max-w-[400px] w-full lg:min-w-[300px] min-h-[526px] shad transition-transform transform hover:scale-105 text-start flex flex-col 
                 ${plan.isPopular ? `bg-green text-white` : "bg-white text-1d2 "}`}
                         >
                             <div className='flex justify-between items-center'>

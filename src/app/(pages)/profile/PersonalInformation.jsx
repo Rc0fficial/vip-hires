@@ -38,7 +38,7 @@ const PersonalInformation = ({handleOpenModal,handleInfoOpenModal}) => {
     //     { value: 'au', label: 'Australia' },
     // ];
     return (
-        <div className='col-span-1 sticky top-[150px] rounded-3xl bg-white p-10 h-fit '>
+        <div className='col-span-1 mt-[150px] lg:mt-0 lg:sticky top-[150px] rounded-3xl bg-white p-10 h-fit '>
             <div className='pb-10 border-b border-[#B0B0B0] group mb-10 relative'>
                 <span onClick={handleInfoOpenModal} className='absolute cursor-pointer top-0 right-0 hidden group-hover:block'><EditIcon color={"#707070"} height={32} width={32} /></span>
                 <img onClick={handleOpenModal} src="/assets/profile2.png" alt="" className='mb-10 mx-auto w-[200px] h-[200px] rounded-full' />

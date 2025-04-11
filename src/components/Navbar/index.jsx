@@ -57,7 +57,7 @@ const Navbar = () => {
             path: "/posts",
             dropdown: [
                 { name: "Recommended Posts", path: "/posts/" },
-                { name: "My Applications", path: "/posts/" },
+                { name: "My Applications", path: "/posts/my-applications" },
                 { name: "Saved Posts", path: "/posts/draft-posts" }
             ]
         },
@@ -69,13 +69,11 @@ const Navbar = () => {
         setOpenDropdown(openDropdown === itemName ? null : itemName);
     };
 
-    const handleNavigation = (path) => {
-        setIsOpen(false); // Close mobile sidebar after navigation
-    };
+   
 
     return (
-        <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md px-6 md:px-10 sticky top-0 z-50`}>
-            <nav className="flex items-center justify-between p-8 mx-auto">
+        <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
+            <nav className="flex items-center justify-between p-6 mx-auto">
                 {/* Left Section */}
                 <div className="flex items-center gap-20">
                     <Link href={'/'}>
