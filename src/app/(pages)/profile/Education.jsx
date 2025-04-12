@@ -117,7 +117,7 @@ const Education = () => {
     };
 
     return (
-        <div className='rounded-2xl bg-white p-10'>
+        <div className='rounded-2xl bg-white p-4 lg:p-10'>
             <div className='flex justify-between gap-6 items-start'>
                 <div>
                     <h1 className='capitalize text-[28px] font-semibold text-3d3'>Education</h1>
@@ -125,7 +125,7 @@ const Education = () => {
                         Showcase your academic background, degrees, and achievements to strengthen your profile.
                     </p>
                 </div>
-                <div className='flex items-center gap-4'>
+                <div className='flex flex-1 items-center gap-4'>
                     <button onClick={() => handleOpenModal()}>
                         <AddIcon color="#707070" height={24} width={24} className="cursor-pointer" />
                     </button>

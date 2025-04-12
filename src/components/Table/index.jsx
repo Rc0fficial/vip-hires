@@ -13,7 +13,7 @@ export default function DynamicTable({ columns, data }) {
               <th
                 key={col.accessor}
                 className={`p-3 text-left text-sm text-nowrap font-medium text-[#191919] border-b border-dcd ${
-                  idx === 0 ? 'sticky left-0 min-w-[270px] border-r border-dcd bg-bggreen z-10' : 'min-w-[170px]'
+                  idx === 0 ? 'static lg:sticky left-0 min-w-[270px] border-r border-dcd bg-bggreen z-10' : 'min-w-[170px]'
                 }`}
               >
                 <div className="flex items-center text-sm justify-between gap-6">
@@ -34,7 +34,7 @@ export default function DynamicTable({ columns, data }) {
                 <td
                   key={col.accessor}
                   className={`px-3 py-6 text-xs  text-[#666666] border-b border-dcd ${
-                    idx === 0 ? 'sticky left-0 border-r  bg-white z-0' : ''
+                    idx === 0 ? 'static lg:sticky left-0 border-r  bg-white z-0' : ''
                   }`}
                 >
                   {row[col.accessor]}

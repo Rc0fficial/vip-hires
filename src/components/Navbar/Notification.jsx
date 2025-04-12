@@ -53,7 +53,7 @@ const Notification = () => {
     };
 
     return (
-        <div ref={menuRef} className="md:relative static  overflow-visible">
+        <div ref={menuRef} className="md:relative static hidden lg:block  overflow-visible">
             {/* Bell Icon */}
             <div
                 className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full relative cursor-pointer"

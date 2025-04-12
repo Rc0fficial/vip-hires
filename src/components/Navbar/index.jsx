@@ -69,7 +69,7 @@ const Navbar = () => {
         setOpenDropdown(openDropdown === itemName ? null : itemName);
     };
 
-   
+
 
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
@@ -85,12 +85,12 @@ const Navbar = () => {
                             <li
                                 key={index}
                                 className={`relative nav-dropdown-trigger hover:text-black text-xl font-medium cursor-pointer ${(link.path === "/jobs" &&
-                                        (pathname === "/jobs" || pathname.startsWith("/jobs/") || pathname.startsWith("/job/"))) ||
-                                        (link.path === "/posts" &&
-                                            (pathname === "/posts" || pathname.startsWith("/posts/"))) ||
-                                        (link.path !== "/jobs" && link.path !== "/posts" && pathname === link.path)
-                                        ? 'text-green'
-                                        : ''
+                                    (pathname === "/jobs" || pathname.startsWith("/jobs/") || pathname.startsWith("/job/"))) ||
+                                    (link.path === "/posts" &&
+                                        (pathname === "/posts" || pathname.startsWith("/posts/"))) ||
+                                    (link.path !== "/jobs" && link.path !== "/posts" && pathname === link.path)
+                                    ? 'text-green'
+                                    : ''
                                     }`}
                             >
                                 {link.dropdown ? (
@@ -141,7 +141,7 @@ const Navbar = () => {
 
                 {/* Right Section */}
                 <div className="flex items-center gap-4">
-                    <div className="relative hidden xl:block mont">
+                    <div className="relative hidden lg:block mont">
                         <input
                             type="text"
                             placeholder="Search"
@@ -149,11 +149,11 @@ const Navbar = () => {
                         />
                         <CiSearch className="absolute left-3 top-[14px] text-gray" size={20} />
                     </div>
-                    <div className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full">
+                    <div className="h-12 w-12 border hidden border-[#1877F240] text-gray lg:flex justify-center items-center rounded-full">
                         <GlobeIcon />
                     </div>
                     <Notification />
-                    <div className="relative"  ref={dropdownRef}>
+                    <div className="relative hidden lg:block" ref={dropdownRef}>
                         {/* Profile Image */}
                         <button onMouseEnter={() => setIsOpenMenu(true)}>
                             <Image
@@ -175,29 +175,29 @@ const Navbar = () => {
                                 className="absolute right-0 mt-2 w-[300px] bg-white shadow-lg rounded-md border border-gray-200"
                             >
                                 <ul className="text-sm" onMouseLeave={() => setIsOpenMenu(false)}>
-                                <Link href="/profile">
-                                    <li onClick={()=>setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center gap-1">
-                                        <UserIcon height={24} width={24} color={"#525252"} />
-                                       Profile
-                                    </li>
+                                    <Link href="/profile">
+                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center gap-1">
+                                            <UserIcon height={24} width={24} color={"#525252"} />
+                                            Profile
+                                        </li>
                                     </Link>
                                     <Link href="/settings">
-                                    <li onClick={()=>setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center">
-                                        <SettingIcon height={24} width={24} color={"#525252"} />
-                                        Settings
-                                    </li>
+                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center">
+                                            <SettingIcon height={24} width={24} color={"#525252"} />
+                                            Settings
+                                        </li>
                                     </Link>
                                     <Link href="/">
-                                    <li onClick={()=>setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center">
-                                        <SwitchAccountIcon height={24} width={24} color={"#525252"} />
-                                        Switch Accounts
-                                    </li>
+                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 border-b border-[#29292929] text-525 hover:bg-gray-100 flex items-center">
+                                            <SwitchAccountIcon height={24} width={24} color={"#525252"} />
+                                            Switch Accounts
+                                        </li>
                                     </Link>
                                     <Link href="/login">
-                                    <li onClick={()=>setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
-                                        <LogOutIcon height={24} width={24} color={"#D31510"} />
-                                        Log Out
-                                    </li>
+                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
+                                            <LogOutIcon height={24} width={24} color={"#D31510"} />
+                                            Log Out
+                                        </li>
                                     </Link>
                                 </ul>
                             </motion.div>
@@ -224,51 +224,130 @@ const Navbar = () => {
                         />
                     </div>
                     <ul className="flex flex-col gap-6 mt-8 text-gray-600">
-                        {navLinks.map((link, index) => (
-                            <li
-                                key={index}
-                                className={`hover:text-black text-lg cursor-pointer ${pathname === link.path ? "text-black" : "text-gray-600"
-                                    }`}
+                        {/* Jobs Dropdown */}
+                        <li className="text-lg text-gray-600">
+                            <button
+                                type="button"
+                                className="flex items-center justify-between w-full"
+                                onClick={() => toggleDropdown("Jobs")}
                             >
-                                {link.dropdown ? (
-                                    <div className="flex flex-col">
-                                        <div
-                                            className="flex items-center justify-between"
-                                            onClick={() => toggleDropdown(link.name)}
-                                        >
-                                            <span>{link.name}</span>
-                                            <svg
-                                                className={`w-4 h-4 ml-1 transition-transform ${openDropdown === link.name ? 'rotate-180' : ''
-                                                    }`}
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                            </svg>
-                                        </div>
-                                        {openDropdown === link.name && (
-                                            <div className="pl-4 mt-2 flex flex-col gap-2">
-                                                {link.dropdown.map((item, idx) => (
-                                                    <Link
-                                                        key={idx}
-                                                        href={item.path}
-                                                        className="text-gray-600 hover:text-black"
-                                                        onClick={() => setIsOpen(false)}
-                                                    >
-                                                        {item.name}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    <Link href={link.path} onClick={() => setIsOpen(false)}>
-                                        {link.name}
+                                <span className={`${pathname.startsWith("/jobs") ? "text-black" : ""}`}>
+                                    Jobs
+                                </span>
+                                <svg
+                                    className={`w-4 h-4 ml-1 transition-transform ${openDropdown === "Jobs" ? "rotate-180" : ""
+                                        }`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                           
+                                <div className="pl-4 mt-2 flex flex-col gap-2">
+                                    <Link href="/jobs/" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        Recommended Jobs
                                     </Link>
-                                )}
+                                    <Link href="/jobs/my-applications" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        My Applications
+                                    </Link>
+                                    <Link href="/jobs/saved-jobs" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        Saved Jobs
+                                    </Link>
+                                </div>
+                            
+                        </li>
+
+                        {/* Posts Dropdown */}
+                        <li className="text-lg text-gray-600 ">
+                            <button
+                                type="button"
+                                className="flex items-center justify-between w-full"
+                                onClick={() => toggleDropdown("Posts")}
+                            >
+                                <span className={`${pathname.startsWith("/posts") ? "text-black" : ""}`}>
+                                    Posts
+                                </span>
+                                <svg
+                                    className={`w-4 h-4 ml-1 transition-transform ${openDropdown === "Posts" ? "rotate-180" : ""
+                                        }`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            
+                                <div className="pl-4 mt-2 flex flex-col gap-2">
+                                    <Link href="/posts/" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        Recommended Posts
+                                    </Link>
+                                    <Link href="/posts/my-applications" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        My Applications
+                                    </Link>
+                                    <Link href="/posts/draft-posts" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
+                                        Saved Posts
+                                    </Link>
+                                </div>
+                            
+                        </li>
+
+                        {/* Subscription */}
+                        <li>
+                            <Link
+                                href="/subscription"
+                                className={`text-lg hover:text-black ${pathname === "/subscription" ? "text-black" : "text-gray-600"}`}
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Subscription
+                            </Link>
+                        </li>
+
+                        {/* Help & Support */}
+                        <li>
+                            <Link
+                                href="/help-support"
+                                className={`text-lg hover:text-black ${pathname === "/help-support" ? "text-black" : "text-gray-600"}`}
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Help & Support
+                            </Link>
+                        </li>
+
+                        <Link href={"/profile"} >
+                            <li
+                                onClick={() => setIsOpen(false)}
+                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
+                            >
+                                Profile
                             </li>
-                        ))}
+                        </Link>
+                        <Link href={"/settings"} >
+                            <li
+                                onClick={() => setIsOpen(false)}
+                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
+                            >
+                                Settings
+                            </li>
+                        </Link>
+                        <Link href={"/switch-accounts"} onClick={() => setIsOpen(false)}>
+                            <li
+
+                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
+                            >
+                                Switch Accounts
+                            </li>
+                        </Link>
+                        <Link href={"/login"} onClick={() => setIsOpen(false)}>
+                            <li onClick={() => setIsOpen(false)} className="hover:text-black text-lg cursor-pointer text-[#D31510]">
+
+                                Log Out
+                            </li>
+                        </Link>
                     </ul>
                 </div>
             </nav>

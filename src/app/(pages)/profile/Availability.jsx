@@ -40,7 +40,7 @@ const Availability = () => {
     };
 
     return (
-        <div className='rounded-2xl bg-white p-10'>
+        <div className='rounded-2xl bg-white p-4 lg:p-10'>
             <h1 className='capitalize text-[28px] font-semibold text-3d3'>Availability</h1>
             <div className='flex justify-between'>
                 <p className='text-989 mb-6'>

@@ -61,12 +61,30 @@ const ProfilePage = () => {
             { value: 'uk', label: 'United Kingdom' },
             { value: 'au', label: 'Australia' },
         ];
-   
+        const profileCompletionItems = [
+            {
+              text: "Add 5+ skills to complete your profile",
+              bonus: "+10%",
+              flexCol: true // Only the first item has flex-col on mobile
+            },
+            {
+              text: "Add Education information complete your profile",
+              bonus: "+10%"
+            },
+            {
+              text: "Certifications & Courses complete your profile",
+              bonus: "+10%"
+            },
+            {
+              text: "Upload a resume to increase profile completeness by",
+              bonus: "+25%"
+            }
+          ];
     return (
         <div className='bg-bggreen relative '>
             <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[120px]' />
-            <div className='bg-bggreen   px-12 md:px-10  mx-auto  z-20 -mt-30'>
-                <div className='w-full   top-[120px] mx-auto grid grid-cols-1  gap-10 lg:grid-cols-3 mb-6'>
+            <div className='bg-bggreen   px-4 md:px-10  mx-auto  z-20 -mt-30'>
+                <div className='w-full   top-[120px] mx-auto grid grid-cols-1  gap-0 lg:gap-10 lg:grid-cols-3 mb-6'>
                    <PersonalInformation
                    handleOpenModal={handleOpenModal}
                    handleInfoOpenModal={handleInfoOpenModal}
@@ -75,7 +93,7 @@ const ProfilePage = () => {
                     <div className='col-span-2  h-fit  flex flex-col gap-6  '>
 
                         {/* profile completeness score */}
-                        <div className='rounded-2xl bg-white p-10 '>
+                        <div className='rounded-2xl bg-white p-4 lg:p-10 '>
 
                             <h1 className='capitalize text-[28px] font-semibold text-3d3 '>profile completeness score</h1>
                             <p className='text-989 mb-6'>Track your progress and complete your profile by adding missing details to increase your chances of getting noticed.</p>
@@ -95,11 +113,22 @@ const ProfilePage = () => {
 
                             </div>
                             <ul className='list-disc space-y-5'>
-                                <li className='flex justify-between items-center w-full text-lg text-5d5'> <span className=' flex items-center gap-3'><div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>Add 5+ skills to complete your profile <span className='text-green'>+10%</span></span> <button className='h-[44px] w-[88px] flex items-center justify-center border border-green rounded-md gap-2 font-bold'><AddIcon color={"#009969"} height={24} width={24} /> Add</button></li>
-                                <li className='flex justify-between items-center w-full text-lg text-5d5'> <span className=' flex items-center gap-3'><div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>Add Education information  complete your profile<span className='text-green'>+10%</span></span> <button className='h-[44px] w-[88px] flex items-center justify-center border border-green rounded-md gap-2 font-bold'><AddIcon color={"#009969"} height={24} width={24} /> Add</button></li>
-                                <li className='flex justify-between items-center w-full text-lg text-5d5'> <span className=' flex items-center gap-3'><div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>Certifications & Courses complete your profile <span className='text-green'>+10%</span></span> <button className='h-[44px] w-[88px] flex items-center justify-center border border-green rounded-md gap-2 font-bold'><AddIcon color={"#009969"} height={24} width={24} /> Add</button></li>
-                                <li className='flex justify-between items-center w-full text-lg text-5d5'> <span className=' flex items-center gap-3'><div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>Upload a resume to increase profile completeness by  <span className='text-green'>+25%</span></span> <button className='h-[44px] w-[88px] flex items-center justify-center border border-green rounded-md gap-2 font-bold'><AddIcon color={"#009969"} height={24} width={24} /> Add</button></li>
-                            </ul>
+  {profileCompletionItems.map((item, index) => (
+    <li 
+      key={index}
+      className={`flex justify-between flex-col md:flex-row  items-center w-full text-lg text-5d5`}
+    >
+      <span className='flex items-center gap-3'>
+        <div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>
+        {item.text} 
+        <span className='text-green mr-4'>{item.bonus}</span>
+      </span>
+      <button className='h-[44px] w-[88px] flex items-center justify-center border border-green rounded-md gap-2 font-bold'>
+        <AddIcon color={"#009969"} height={24} width={24} /> Add
+      </button>
+    </li>
+  ))}
+</ul>
 
                         </div>
                         {/* summery */}
