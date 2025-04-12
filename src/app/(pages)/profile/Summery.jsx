@@ -9,7 +9,7 @@ const Summary = ({ summary, setSummary }) => {
   const handleCloseModal = () => setIsModalOpen(false);
   const handleSave = () => handleCloseModal();
   return (
-    <div className="rounded-2xl bg-white p-6">
+    <div className="rounded-2xl bg-white p-4 lg:p-10">
      
         <h1 className="capitalize text-[28px] font-semibold text-3d3">Summary</h1>
         <div className='flex justify-between '>

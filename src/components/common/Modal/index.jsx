@@ -7,7 +7,7 @@ const Modal = ({ id, isOpen, onClose, onSave, children }) => {
 
   return (
     <div className="fixed inset-0 left-0  bg-black/50 top-0 z-50 flex justify-center items-center ">
-      <div className="bg-white p-6 rounded-lg w-full max-w-[800px]">
+      <div className="bg-white p-6 mx-4 rounded-lg w-full max-w-[800px]">
         <div className=" flex justify-between items-center mb-6">
 
         <h2 className="capitalize text-[28px] font-semibold text-3d3 "> {id}</h2>

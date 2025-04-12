@@ -22,7 +22,7 @@ const Skills = ({ skills, setSkills }) => {
         setSkills(updatedSkills);
     };
     return (
-        <div className="rounded-2xl bg-white p-6">
+        <div className="rounded-2xl bg-white p-4 lg:p-10">
             <h1 className="text-2xl font-semibold">Skills</h1>
             <div className="flex justify-between items-center">
                 <p className='text-989 mb-6'>List your key skills to demonstrate your expertise and improve job matching accuracy.</p>

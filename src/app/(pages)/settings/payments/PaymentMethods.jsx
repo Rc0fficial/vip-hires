@@ -135,7 +135,7 @@ const PaymentMethods = () => {
     return (
         <>
             <h1 className='text-5d5 mt-6 mb-3'>Payment methods</h1>
-            <div className='grid grid-cols-3 gap-3 mb-6'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-3 mb-6'>
                 <div 
                     className={`py-4 px-5 border rounded-xl cursor-pointer ${getMethodClass('credit-card')}`}
                     onClick={() => setSelectedMethod('credit-card')}

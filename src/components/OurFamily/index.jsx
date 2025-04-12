@@ -19,7 +19,7 @@ const OurFamily = () => {
     return (
         <div className='pt-[86px] pb-[107px]  md:px-10  relative overflow-hidden bg-bggreen'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
-                <h1 className='text-6xl lg:text-[72px] font-bold rale text-center'>Be A Part Of Our Family</h1>
+                <h1 className='text-5xl lg:text-[72px] font-bold rale text-center'>Be A Part Of Our Family</h1>
                 <p className='max-w-[683px] mx-auto text-[22px] rale text-center'>Land your dream job effortlessly – we apply, update, and keep you ahead in your career</p>
                 <div className='mapbg bg-center h-[651px]  w-full grid grid-cols-1 xl:grid-cols-2 gap-10 justify-center items-center '>
                     <div className='w-full h-fit max-w-[598px] mx-auto bg-white/70 rounded-[60px] py-[36px] px-[81px] relative'>
