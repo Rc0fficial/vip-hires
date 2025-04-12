@@ -46,7 +46,7 @@ const features = [
 ];
 const Whychoosing = () => {
     return (
-        <div className='pb-[86px] pt-[107px] px-6 md:px-10 relative overflow-hidden bg-white'>
+        <div className='pb-[86px] pt-[107px]  md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-10 '>
                 <h1 className='text-6xl lg:text-[72px] mont text-525 font-semibold flex flex-wrap mx-auto gap-3 text-center'>Why Choosing <span className='flex items-center gap-3'>Apply <span className='text-green'>Pro</span> <img src="/assets/logoArrow.png" alt="logo Arrow" /></span></h1>
 

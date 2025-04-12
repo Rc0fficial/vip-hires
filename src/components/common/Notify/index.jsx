@@ -15,7 +15,7 @@ const pathname = usePathname()
   };
 
   return (
-    <div className={`${pathname==="/"? "bottom-12":"bottom-20"} fixed  w-full left-8 z-50`}>
+    <div className={`${pathname==="/"? "bottom-12":"bottom-20"} fixed   w-fit md:w-full right-8 md:left-8  z-50`}>
       {/* Minimized Chat Notification */}
       
         
@@ -40,7 +40,7 @@ const pathname = usePathname()
                   alt="profile"
                   className="w-10 h-10 rounded-full"
                 />
-                <div>
+                <div className=''>
                   <h1 className="font-semibold">Sarah Amr</h1>
                   <p className="text-xs text-[#7F7F7F]">Applypro Employee</p>
                 </div>
@@ -77,21 +77,21 @@ const pathname = usePathname()
       </AnimatePresence>
 
       <div
-        className={`${className} bg-green cursor-pointer p-4 mt-4 mr-auto rounded-xl w-full max-w-[380px] flex justify-between items-center`}
+        className={`${className} bg-green cursor-pointer p-2 ml-auto md:ml-0 md:p-4 mt-4 md:mr-auto rounded-full md:rounded-xl  w-full max-w-fit md:max-w-[380px] flex justify-between items-center relative md:static`}
           onClick={toggleChat}
         >
           <div className="flex items-center gap-2">
             <img
               src="/assets/profile.png"
               alt="profile"
-              className="w-10 h-10 rounded-full"
+              className="w-12 md:w-10 h-12 md:h-10 rounded-full"
             />
-            <div>
+            <div className='hidden md:block'>
               <h1 className="text-white font-bold">Sarah Amr</h1>
               <p className="text-xs text-white">Applypro Employee</p>
             </div>
           </div>
-          <div className="h-8 w-8 rounded-full text-green-600 bg-white flex justify-center items-center font-bold">
+          <div className="h-8 w-8 absolute md:static -top-3 -left-3 rounded-full text-green-600 bg-white flex justify-center items-center font-bold">
             2
           </div>
         </div>

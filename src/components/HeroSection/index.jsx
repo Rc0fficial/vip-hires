@@ -4,7 +4,7 @@ import BriefcaseIcon from '../Icons/BriefcaseIcon.svg'
 
 const Hero = () => {
   return (
-    <div className='py-[86px] px-6 md:px-10 lg:px-32  relative overflow-hidden bg-bggreen'>
+    <div className='py-[86px]  md:px-10 lg:px-32  relative overflow-hidden bg-bggreen'>
         <div className='container  mx-auto px-6 flex justify-between items-center z-10 flex-col lg:flex-row gap-10 '>
             <div className='w-full max-w-[556px] z-10'>
                 <h1 className='text-5xl font-bold max-w-[504px] text-[#3D3D3D] leading-16 tracking-[2px] mont mb-6 '>Land Your Dream Job <span className='relative'>Effortlessly<img src="/assets/underline.png" alt="underline" className='absolute -bottom-6 right-0' /></span> </h1>

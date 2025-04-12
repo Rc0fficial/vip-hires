@@ -76,7 +76,7 @@ const ResumeSection = () => {
         </p>
       </div>
       
-      <div className='rounded-md shad flex items-center'>
+      <div className='rounded-md shad flex flex-col md:flex-row py-4 md:py-0 items-center'>
         <div className='w-[200px] h-[197px] bg-bdb flex items-center justify-center'>
           <img 
             src={previewUrl} 
@@ -100,7 +100,7 @@ const ResumeSection = () => {
             </p>
           </div>
           
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center flex-wrap gap-4'>
             <button 
               onClick={handleView}
               disabled={!resumeFile}

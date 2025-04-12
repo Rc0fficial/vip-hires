@@ -161,7 +161,7 @@ const PaymentMethods = () => {
 
             {selectedMethod === 'credit-card' && (
                 <>
-                    <div className='flex items-center gap-4 mb-6'>
+                    <div className='flex items-center flex-wrap lg:flex-nowrap gap-4 mb-6'>
                         {cards.map(card => (
                             <div 
                                 key={card.id} 
