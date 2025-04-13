@@ -1,11 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
-import { PiBellBold } from "react-icons/pi";
-import { CiGlobe, CiSearch } from "react-icons/ci";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { AiOutlineClose } from "react-icons/ai";
+import {  CiRepeat, CiSearch,} from "react-icons/ci";
+import {  AiOutlineExclamationCircle } from "react-icons/ai";
 import Image from "next/image";
-import BellIcon from "../Icons/BellIcon.svg";
 import GlobeIcon from "../Icons/GlobeIcon.svg";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,17 +12,30 @@ import SettingIcon from "../Icons/SettingIcon.svg";
 import SwitchAccountIcon from "../Icons/SwitchAccountIcon.svg";
 import LogOutIcon from "../Icons/LogOutIcon";
 import Notification from "./Notification";
-
+import { FaBars, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FiFileText, FiHome } from "react-icons/fi";
+import { LuBadgeCheck, LuBriefcase } from "react-icons/lu";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
-    const router = useRouter();
     const ishidden = pathname === "/login" || pathname === "/login/create-account";
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const dropdownRef = useRef(null);
-    const [notificationMenu, setNotificationMenu] = useState(false);
-    const menuRef = useRef(null);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [size, setSize] = useState({ width: 21, height: 20 });
+    const [openJobs, setOpenJobs] = useState(false);
+    const [openPosts, setOpenPosts] = useState(false);
+    const [openSetting, setOpenSetting] = useState(false);
+    const updateSize = () => {
+        const isLarge = window.innerWidth <= 1024;
+        setSize(isLarge ? { width: 24, height: 24 } : { width: 21, height: 20 });
+    };
+
+    useEffect(() => {
+        updateSize();
+        window.addEventListener('resize', updateSize);
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -74,6 +84,12 @@ const Navbar = () => {
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
             <nav className="flex items-center justify-between p-6 mx-auto">
+                {/* Mobile Menu Icon */}
+                <FaBars
+                    size={24}
+                    className="text-green cursor-pointer xl:hidden"
+                    onClick={() => setIsOpen(true)}
+                />
                 {/* Left Section */}
                 <div className="flex items-center gap-20">
                     <Link href={'/'}>
@@ -84,7 +100,7 @@ const Navbar = () => {
                         {navLinks.map((link, index) => (
                             <li
                                 key={index}
-                                className={`relative nav-dropdown-trigger hover:text-black text-xl font-medium cursor-pointer ${(link.path === "/jobs" &&
+                                className={`relative nav-dropdown-trigger hover:text-5d5 text-xl font-medium cursor-pointer ${(link.path === "/jobs" &&
                                     (pathname === "/jobs" || pathname.startsWith("/jobs/") || pathname.startsWith("/job/"))) ||
                                     (link.path === "/posts" &&
                                         (pathname === "/posts" || pathname.startsWith("/posts/"))) ||
@@ -152,7 +168,7 @@ const Navbar = () => {
                     <div className="h-12 w-12 border hidden border-[#1877F240] text-gray lg:flex justify-center items-center rounded-full">
                         <GlobeIcon />
                     </div>
-                    <Notification />
+                    <Notification divClass={'lg:border'} iconHeight={size.height} iconWidth={size.height} />
                     <div className="relative hidden lg:block" ref={dropdownRef}>
                         {/* Profile Image */}
                         <button onMouseEnter={() => setIsOpenMenu(true)}>
@@ -203,152 +219,148 @@ const Navbar = () => {
                             </motion.div>
                         )}
                     </div>
-                    {/* Mobile Menu Icon */}
-                    <RxHamburgerMenu
-                        size={24}
-                        className="text-gray cursor-pointer xl:hidden"
-                        onClick={() => setIsOpen(true)}
-                    />
+
                 </div>
+
+                {isOpen ? (
+                    <div
+                        onClick={() => setIsOpen(false)}
+                        className="-inset-0 bg-black/30 fixed top-0 h-screen w-screen z-40"
+                    />
+                ) : null}
 
                 {/* Mobile Sidebar */}
                 <div
-                    className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform ${isOpen ? "translate-x-0" : "translate-x-full"
-                        } transition-transform duration-300 ease-in-out p-5 z-50`}
+                    className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform ${isOpen ? '-translate-x-0' : '-translate-x-full'
+                        } transition-transform duration-300 ease-in-out pl-5 z-50`}
                 >
-                    <div className="flex justify-end">
-                        <AiOutlineClose
-                            size={24}
-                            className="text-gray-700 cursor-pointer"
-                            onClick={() => setIsOpen(false)}
-                        />
+                    {/* Top Profile Section */}
+                    <Link href={'/profile'}>
+                    <div className="border border-green rounded-md p-2 mr-5 mt-12 bg-[#EBFEF5] flex items-center gap-2 mb-6">
+                        <img
+                            src="/assets/profile.png"
+                            alt="Profile"
+                            className="h-10 w-10 rounded-full"
+                            />
+                        <div>
+                            <h1 className="font-medium text-sm text-black">Mohamed Ali</h1>
+                            <h1 className="font-medium text-xs text-[#5D5D5D]">UI/UX Designer</h1>
+                        </div>
                     </div>
-                    <ul className="flex flex-col gap-6 mt-8 text-gray-600">
-                        {/* Jobs Dropdown */}
-                        <li className="text-lg text-gray-600">
-                            <button
-                                type="button"
-                                className="flex items-center justify-between w-full"
-                                onClick={() => toggleDropdown("Jobs")}
-                            >
-                                <span className={`${pathname.startsWith("/jobs") ? "text-black" : ""}`}>
-                                    Jobs
-                                </span>
-                                <svg
-                                    className={`w-4 h-4 ml-1 transition-transform ${openDropdown === "Jobs" ? "rotate-180" : ""
-                                        }`}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
+                            </Link>
 
-                           
-                                <div className="pl-4 mt-2 flex flex-col gap-2">
-                                    <Link href="/jobs/" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        Recommended Jobs
-                                    </Link>
-                                    <Link href="/jobs/my-applications" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        My Applications
-                                    </Link>
-                                    <Link href="/jobs/saved-jobs" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        Saved Jobs
-                                    </Link>
-                                </div>
-                            
-                        </li>
-
-                        {/* Posts Dropdown */}
-                        <li className="text-lg text-gray-600 ">
-                            <button
-                                type="button"
-                                className="flex items-center justify-between w-full"
-                                onClick={() => toggleDropdown("Posts")}
-                            >
-                                <span className={`${pathname.startsWith("/posts") ? "text-black" : ""}`}>
-                                    Posts
-                                </span>
-                                <svg
-                                    className={`w-4 h-4 ml-1 transition-transform ${openDropdown === "Posts" ? "rotate-180" : ""
-                                        }`}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
-
-                            
-                                <div className="pl-4 mt-2 flex flex-col gap-2">
-                                    <Link href="/posts/" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        Recommended Posts
-                                    </Link>
-                                    <Link href="/posts/my-applications" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        My Applications
-                                    </Link>
-                                    <Link href="/posts/draft-posts" onClick={() => { setOpenDropdown(null); setIsOpen(false); }}>
-                                        Saved Posts
-                                    </Link>
-                                </div>
-                            
-                        </li>
-
-                        {/* Subscription */}
-                        <li>
-                            <Link
-                                href="/subscription"
-                                className={`text-lg hover:text-black ${pathname === "/subscription" ? "text-black" : "text-gray-600"}`}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                Subscription
+                    {/* Sidebar Links */}
+                    <ul className="space-y-6">
+                        <li onClick={()=>setIsOpen(false)} className={`${pathname === "/" ? "border-r-4 border-green text-green" : "text-5d5"}`}>
+                            <Link href="/" className="flex items-center gap-3 ">
+                                <FiHome  size={18} /> Home
                             </Link>
                         </li>
 
-                        {/* Help & Support */}
-                        <li>
-                            <Link
-                                href="/help-support"
-                                className={`text-lg hover:text-black ${pathname === "/help-support" ? "text-black" : "text-gray-600"}`}
-                                onClick={() => setIsOpen(false)}
+                        <li className={``}>
+                            <button
+                                onClick={() => setOpenJobs(!openJobs)}
+                                className={`flex items-center gap-6 w-full ${pathname.startsWith("/jobs") ? " text-green border-r-4" : "text-5d5"} `}
                             >
-                                Help & Support
-                            </Link>
+                                <span className="flex items-center gap-3">
+                                    <LuBriefcase  size={18} /> Jobs
+                                </span>
+                                {openJobs ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+                            </button>
+                            {openJobs && (
+                                <ul className="pl-7 mt-2 space-y-4 text-xs text-5d5">
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/jobs">• Recommended Jobs</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs/my-applications" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/jobs/my-applications">• My Application</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs/saved-jobs" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/jobs/saved-jobs">• Saved Jobs</Link>
+                                    </li>
+                                </ul>
+                            )}
                         </li>
 
-                        <Link href={"/profile"} >
-                            <li
-                                onClick={() => setIsOpen(false)}
-                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
+                        <li>
+                            <button
+                                onClick={() => setOpenPosts(!openPosts)}
+                                className={`flex items-center gap-6 w-full ${pathname.startsWith("/posts") ? " text-green border-r-4" : "text-5d5"} `}
                             >
-                                Profile
-                            </li>
-                        </Link>
-                        <Link href={"/settings"} >
-                            <li
-                                onClick={() => setIsOpen(false)}
-                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
-                            >
-                                Settings
-                            </li>
-                        </Link>
-                        <Link href={"/switch-accounts"} onClick={() => setIsOpen(false)}>
-                            <li
+                                <span className="flex items-center gap-3">
+                                    <FiFileText size={18} /> Posts
+                                </span>
+                                {openPosts ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+                            </button>
+                            {openPosts && (
+                                <ul className="pl-7 mt-2 space-y-4 text-sm text-5d5">
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/posts/">• Recommended Posts</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/my-applications" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/posts/my-applications">• My Application</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/draft-posts" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/posts/draft-posts">• Saved Posts</Link>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
 
-                                className={`hover:text-black text-lg cursor-pointer text-gray-600`}
+                        <li onClick={()=>setIsOpen(false)}>
+                            <Link href="/subscription" className="flex items-center gap-3 text-5d5">
+                                <LuBadgeCheck size={18} /> Subscription
+                            </Link>
+                        </li>
+                        <li onClick={()=>setIsOpen(false)}>
+                            <Link href="/help-support" className="flex items-center gap-3 text-5d5">
+                                <AiOutlineExclamationCircle size={18} /> Help & Support
+                            </Link>
+                        </li>
+                        <li onClick={()=>setIsOpen(false)}>
+                            <Link href="/language" className="flex items-center gap-3 text-5d5">
+                                <GlobeIcon height={20} width={20} color={"#5d5d5d"} /> Language
+                            </Link>
+                        </li>
+                        <li  className={``}>
+                            <button
+                                onClick={() => setOpenSetting(!openSetting)}
+                                className={`flex items-center gap-6 w-full ${pathname.startsWith("/settings") ? " text-green border-r-4" : "text-5d5"} `}
                             >
-                                Switch Accounts
-                            </li>
-                        </Link>
-                        <Link href={"/login"} onClick={() => setIsOpen(false)}>
-                            <li onClick={() => setIsOpen(false)} className="hover:text-black text-lg cursor-pointer text-[#D31510]">
-
-                                Log Out
-                            </li>
-                        </Link>
+                                <span className="flex items-center gap-3">
+                                    <SettingIcon height={26} width={26} color={`${pathname.startsWith("/settings") ? "#009969" : "#5d5d5d"}`}/> Setting
+                                </span>
+                                {openSetting ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
+                            </button>
+                            {openSetting && (
+                                <ul className="pl-7 mt-2 space-y-4 text-xs text-5d5">
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/settings">• Sign In & Security</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/subscription" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/settings/subscription">• Subscription Setting</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/notifications" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/settings/notifications">• Notifications</Link>
+                                    </li>
+                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/payments" ? " text-green" : "text-5d5"}`}>
+                                        <Link href="/settings/payments">• Payment Setting </Link>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
+                       
                     </ul>
+
+                    {/* Bottom Section */}
+                    <div  className="absolute bottom-5 left-5 space-y-3 w-[calc(100%-2.5rem)]">
+                        <Link href="/switch" className="flex items-center gap-3 text-5d5">
+                            <SwitchAccountIcon height={24} width={24} /> Switch Account
+                        </Link>
+                        <Link href="/login" onClick={()=>setIsOpen(false)} className="flex items-center gap-3 text-red-500">
+                            <LogOutIcon height={24} width={24} /> Log Out
+                        </Link>
+                    </div>
                 </div>
             </nav>
         </div>

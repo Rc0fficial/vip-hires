@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import BellIcon from '../Icons/BellIcon.svg';
-const Notification = () => {
+const Notification = ({iconHeight,iconWidth,iconStroke,divClass}) => {
     const [notificationMenu, setNotificationMenu] = useState(false);
     const menuRef = useRef(null);
 
@@ -53,14 +53,14 @@ const Notification = () => {
     };
 
     return (
-        <div ref={menuRef} className="md:relative static hidden lg:block  overflow-visible">
+        <div ref={menuRef} className="md:relative static  overflow-visible">
             {/* Bell Icon */}
             <div
-                className="h-12 w-12 border border-[#1877F240] text-gray flex justify-center items-center rounded-full relative cursor-pointer"
+                className={`${divClass} h-12 w-12  border-[#1877F240] text-gray flex justify-center items-center rounded-full relative cursor-pointer`}
                 onClick={handleClick} // Always works on click
                 onMouseEnter={handleMouseEnter} // Only works on large screens
             >
-                <BellIcon height={20} width={21} stroke={"#C7C7C7"} />
+                <BellIcon height={iconHeight || 20} width={iconWidth || 21} stroke={iconStroke ||"#C7C7C7"} />
                 {notifications.length > 0 && (
                     <div className="absolute w-[14px] h-[14px] rounded-full text-[9px] text-white bg-[#FF6B6B] flex justify-center items-center right-2 top-2">
                         {notifications.length}

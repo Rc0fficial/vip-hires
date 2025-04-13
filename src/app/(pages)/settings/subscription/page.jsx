@@ -52,14 +52,14 @@ const SubscriptionSettingPage = () => {
     return (
         <>
             <div className={`col-span-2 rounded-3xl py-10 px-12 bg-white shad     `}>
-                <h1 className='font-semibold capitalize text-2xl text-3d3'>subscription settings</h1>
+                <h1 className='font-semibold capitalize md:text-2xl text-3d3'>subscription settings</h1>
                 <div className='flex justify-between py-4 gap-6 border-b border-dcd '>
                     <div className='flex-1'>
-                        <h1 className='text-525 text-xl capitalize font-medium flex items-center gap-2'>
+                        <h1 className='text-525 md:text-xl capitalize font-medium flex items-center gap-2'>
                             <RepeatArrowIcon height={32} width={32} color={"#525252"} />
                             automatically subscribe
                         </h1>
-                        <h4 className='text-989 text-sm capitalize'>
+                        <h4 className='text-989 text-xs md:text-sm capitalize'>
                             Easily manage your subscription renewal. Turn on auto-renewal to keep your access uninterrupted,
                             or disable it to renew manually before your plan expires.
                         </h4>
@@ -75,10 +75,10 @@ const SubscriptionSettingPage = () => {
                 </div>
 
                 <div className='mt-4 max-w-[805px]'>
-                    <h1 className='text-525 text-xl  capitalize font-medium flex items-center gap-2'>
+                    <h1 className='text-525 md:text-xl  capitalize font-medium flex items-center gap-2'>
                         subscription history
                     </h1>
-                    <h4 className='text-989 text-sm capitalize'>
+                    <h4 className='text-989 text-xs md:text-sm capitalize'>
                         View a record of your past purchases, including subscription start and end dates, payment details, and plan changes. Stay informed about your billing history at a glance.
                     </h4>
                 </div>

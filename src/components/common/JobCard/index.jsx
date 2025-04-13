@@ -20,13 +20,13 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
             <div>
                 <div className='flex justify-between'>
                     <div>
-                        <h1 className={`capitalize text-xl text-525 font-medium leading-[20px] ${lock ? 'text-white' : ''}`}>
+                        <h1 className={`capitalize md:text-xl text-525 font-medium leading-[20px] ${lock ? 'text-white' : ''}`}>
                             ui/ux designer
                         </h1>
-                        <h3 className={`capitalize text-gray leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
+                        <h3 className={`capitalize text-gray text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
                             Heliopolis, Cairo, Egypt
                         </h3>
-                        <h3 className={`capitalize text-gray leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
+                        <h3 className={`capitalize text-gray text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
                             21/12/2025
                         </h3>
                     </div>
@@ -45,18 +45,18 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                     }
                 </div>
                 {!isDetail &&
-                    <p className={`capitalize text-gray leading-[25px] mt-2 pb-4 border-b ${lock ? 'text-white border-white' : 'border-[#DCDCDC]'}`}>
+                    <p className={`capitalize text-gray text-xs md:text-[16px] leading-[25px] mt-2 pb-4 border-b ${lock ? 'text-white border-white' : 'border-[#DCDCDC]'}`}>
                         Lorem ipsum dolor sit amet consectetur. Morbi sit tellus enim blandit diam risus eleifend vulputate sed. Semper ut pellentesque et ac eget odio bibendum sed adipiscing. Nec bibendum tristique tincidunt nulla. Pulvinar sem tellus viverra rhoncus accumsan et.
                     </p>
                 }
                 <div className='flex items-center gap-2 mt-4'>
-                    <button className={`capitalize leading-[20px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
                         Remote
                     </button>
-                    <button className={`capitalize leading-[20px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
                         Full Time
                     </button>
-                    <button className={`capitalize leading-[20px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
                         Senior
                     </button>
                 </div>

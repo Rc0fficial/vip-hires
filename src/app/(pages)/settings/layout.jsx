@@ -56,17 +56,7 @@ const JobsLayout = ({ children }) => {
   return (
     <div className="bg-bggreen relative">
       <div className="bg-bggreen overflow-y-auto px-4 md:px-16 mx-auto">
-        {/* Mobile Toggle Button */}
-        <button
-          onClick={() => setSidebarOpen(!isSidebarOpen)}
-          className="fixed left-4 top-28 z-50 lg:hidden bg-white p-2 rounded-md shadow-md"
-        >
-          {isSidebarOpen ? 
-            <FiChevronLeft size={24} />
-            :
-            <FiChevronRight size={24} />
-          }
-        </button>
+       
 
         <div className="w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 py-10">
           {/* Desktop Sidebar - Hidden on mobile, visible on lg screens */}
@@ -162,113 +152,7 @@ const JobsLayout = ({ children }) => {
           </div>
         </div>
 
-        {/* Mobile Sidebar with Animation */}
-        <AnimatePresence>
-          {isSidebarOpen && (
-            <>
-              {/* Overlay */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSidebarOpen(false)}
-                className="fixed inset-0 z-40 bg-black lg:hidden"
-              />
-              
-              {/* Sidebar */}
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '-100%' }}
-                transition={{ type: "tween", ease: "easeInOut" }}
-                className="fixed top-28 left-0 z-40 min-h-screen w-full max-w-sm bg-white shad rounded-r-3xl p-6"
-              >
-                <div>
-                  <div className="py-5 px-6 rounded-md shad mb-6 bg-white mont font-semibold text-525">
-                    Settings
-                  </div>
-                  <div className="flex flex-col gap-6 border-l-4 border-[#C5DDFB]">
-                    {/* sign in & security */}
-                    <div className={`pl-4 border-l-4 ${
-                      (pathname === "/settings" || 
-                       pathname === "/settings/logged-in-devices" ||
-                       pathname === "/settings/remember-devices") 
-                        ? "border-l-green" 
-                        : "border-l-[#C5DDFB]"
-                    } -ml-1`}>
-                      <button
-                        onClick={() => handleNavigation("/settings")}
-                        className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${
-                          (pathname === "/settings" || 
-                           pathname === "/settings/logged-in-devices" ||
-                           pathname === "/settings/remember-devices") 
-                            ? "bg-green text-white" 
-                            : "bg-transparent text-gray"
-                        } mont font-semibold`}
-                      >
-                        sign in & security
-                      </button>
-                    </div>
-
-                    {/* subscription settings */}
-                    <div className={`pl-4 border-l-4 ${
-                      pathname === "/settings/subscription" 
-                        ? "border-l-green" 
-                        : "border-l-[#C5DDFB]"
-                    } -ml-1`}>
-                      <button
-                        onClick={() => handleNavigation("/settings/subscription")}
-                        className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${
-                          pathname === "/settings/subscription" 
-                            ? "bg-green text-white" 
-                            : "bg-transparent text-gray"
-                        } mont font-semibold`}
-                      >
-                        subscription settings
-                      </button>
-                    </div>
-
-                    {/* Notifications */}
-                    <div className={`pl-4 border-l-4 ${
-                      pathname === "/settings/notifications" 
-                        ? "border-l-green" 
-                        : "border-l-[#C5DDFB]"
-                    } -ml-1`}>
-                      <button
-                        onClick={() => handleNavigation("/settings/notifications")}
-                        className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${
-                          pathname === "/settings/notifications" 
-                            ? "bg-green text-white" 
-                            : "bg-transparent text-gray"
-                        } mont font-semibold`}
-                      >
-                        Notifications
-                      </button>
-                    </div>
-
-                    {/* Payment Settings */}
-                    <div className={`pl-4 border-l-4 ${
-                      pathname === "/settings/payments" 
-                        ? "border-l-green" 
-                        : "border-l-[#C5DDFB]"
-                    } -ml-1`}>
-                      <button
-                        onClick={() => handleNavigation("/settings/payments")}
-                        className={`capitalize w-full text-start cursor-pointer max-w-[240px] py-3 px-6 rounded-md ${
-                          pathname === "/settings/payments" 
-                            ? "bg-green text-white" 
-                            : "bg-transparent text-gray"
-                        } mont font-semibold`}
-                      >
-                        Payment Settings
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+       
 
         {/* Security Model */}
         <SecurityModel 

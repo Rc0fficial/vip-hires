@@ -134,28 +134,28 @@ const PaymentMethods = () => {
 
     return (
         <>
-            <h1 className='text-5d5 mt-6 mb-3'>Payment methods</h1>
+            <h1 className='text-5d5 text-xs md:text-[16px] mt-6 mb-3'>Payment methods</h1>
             <div className='grid grid-cols-2 md:grid-cols-3 gap-3 mb-6'>
                 <div 
                     className={`py-4 px-5 border rounded-xl cursor-pointer ${getMethodClass('credit-card')}`}
                     onClick={() => setSelectedMethod('credit-card')}
                 >
                     <CardIcon height={24} width={24} color={getIconColor('credit-card')} />
-                    <h1 className='text-xl  mt-3'>Credit Card</h1>
+                    <h1 className='md:text-xl  mt-3'>Credit Card</h1>
                 </div>
                 <div 
                     className={`py-4 px-5 border rounded-xl cursor-pointer ${getMethodClass('bank-transfer')}`}
                     onClick={() => setSelectedMethod('bank-transfer')}
                 >
                     <BankIcon height={24} width={24} color={getIconColor('bank-transfer')} />
-                    <h1 className='text-xl  mt-3'>Bank Transfer</h1>
+                    <h1 className='md:text-xl  mt-3'>Bank Transfer</h1>
                 </div>
                 <div 
                     className={`py-4 px-5 border rounded-xl cursor-pointer ${getMethodClass('paypal')}`}
                     onClick={() => setSelectedMethod('paypal')}
                 >
                     <PaypalIcon height={24} width={24} color={getIconColor('paypal')} />
-                    <h1 className='text-xl  mt-3'>Paypal</h1>
+                    <h1 className='md:text-xl  mt-3'>Paypal</h1>
                 </div>
             </div>
 

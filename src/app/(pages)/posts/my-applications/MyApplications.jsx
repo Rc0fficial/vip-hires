@@ -44,7 +44,7 @@ const MyApplications = () => {
       ];
   return (
     <>
-       <h1 className='font-semibold capitalize text-2xl text-3d3'>My Applications</h1>
+       <h1 className='font-semibold capitalize  text-3d3'>My Applications</h1>
          <DynamicTable columns={columns} data={data} />
     </>
   )

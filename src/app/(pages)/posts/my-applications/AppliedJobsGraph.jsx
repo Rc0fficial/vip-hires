@@ -63,13 +63,13 @@ const AppliedJobGraph = () => {
   return (
     <div className="p-5 rounded-3xl shad bg-white max-h-[320px] xl:p-8">
       <div className="flex justify-between  gap-3">
-              <h3 className="text font-medium">Total Submitted Application</h3>
-              <PiDotsThreeVerticalBold size={30} />
-            </div>
-            <div className="w-full max-w-[574px] mx-auto h-full max-h-[250px] flex justify-center">
+        <h3 className="text font-medium">Total Submitted Application</h3>
+        <PiDotsThreeVerticalBold size={30} />
+      </div>
+      <div className="w-full max-w-[574px] mx-auto h-full max-h-[250px] flex justify-center">
 
-      <Line data={data} options={options} />
-            </div>
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };

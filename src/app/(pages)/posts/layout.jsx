@@ -34,17 +34,7 @@ const PostLayout = ({ children }) => {
   return (
     <div className="bg-bggreen relative">
       <div className="bg-bggreen overflow-y-auto px-4 md:px-16 mx-auto">
-        {/* Mobile Toggle Button */}
-        <button
-          onClick={() => setSidebarOpen(!isSidebarOpen)}
-          className="fixed left-4 top-28 z-50 lg:hidden bg-white p-2 rounded-md shadow-md"
-        >
-          {isSidebarOpen ? 
-            <FiChevronLeft size={24} />
-            :
-            <FiChevronRight size={24} />
-          }
-        </button>
+        
 
         <div className="w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 py-10">
           {/* Desktop Sidebar - Hidden on mobile, visible on lg screens */}
@@ -114,85 +104,7 @@ const PostLayout = ({ children }) => {
           </div>
         </div>
 
-        {/* Mobile Sidebar with Animation */}
-        <AnimatePresence>
-          {isSidebarOpen && (
-            <>
-              {/* Overlay */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSidebarOpen(false)}
-                className="fixed inset-0 z-40 bg-black lg:hidden"
-              />
-              
-              {/* Sidebar */}
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '-100%' }}
-                transition={{ type: "tween", ease: "easeInOut" }}
-                className="fixed top-28 left-0 z-40 min-h-screen w-full max-w-sm bg-white shad rounded-r-3xl p-6"
-              >
-                <div className="flex flex-col justify-between h-full gap-10">
-                  <div>
-                    <div className="py-5 px-6 rounded-md shad mb-6 bg-white mont font-semibold text-525">
-                      Posts
-                    </div>
-                    <div className="flex flex-col gap-6 border-l-4 border-[#C5DDFB]">
-                      {/* Recommended Posts */}
-                      <div className={`pl-4 border-l-4 cursor-pointer ${pathname === "/posts" ? "border-l-green" : "border-l-[#C5DDFB]"} -ml-1`}>
-                        <button
-                          onClick={() => handleNavigation("/posts")}
-                          className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
-                            pathname === "/posts" ? "bg-green text-white" : "bg-transparent text-gray"
-                          } mont font-semibold`}
-                        >
-                          Recommended Posts
-                        </button>
-                      </div>
-
-                      {/* Draft Posts */}
-                      <div className={`pl-4 border-l-4 cursor-pointer ${pathname === "/posts/draft-posts" ? "border-l-green" : "border-l-[#C5DDFB]"} -ml-1`}>
-                        <button
-                          onClick={() => handleNavigation("/posts/draft-posts")}
-                          className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
-                            pathname === "/posts/draft-posts" ? "bg-green text-white" : "bg-transparent text-gray"
-                          } mont font-semibold`}
-                        >
-                          Draft Posts
-                        </button>
-                      </div>
-
-                      {/* My Applications */}
-                      <div className={`pl-4 border-l-4 cursor-pointer ${pathname === "/posts/my-applications" ? "border-l-green" : "border-l-[#C5DDFB]"} -ml-1`}>
-                        <button
-                          onClick={() => handleNavigation("/posts/my-applications")}
-                          className={`capitalize w-full cursor-pointer text-start max-w-[250px] py-3 px-6 rounded-md ${
-                            pathname === "/posts/my-applications" ? "bg-green text-white" : "bg-transparent text-gray"
-                          } mont font-semibold`}
-                        >
-                          My Applications
-                        </button>
-                      </div>
-                      
-                      {/* AI Posts (Disabled) */}
-                      <div className={`pl-4 border-l-4 ${pathname === "/posts/ai-posts" ? "border-l-green" : "border-l-[#C5DDFB]"} -ml-1`}>
-                        <button
-                          disabled
-                          className="capitalize w-full text-start max-w-[250px] py-3 px-6 rounded-md bg-transparent mont font-semibold text-gray cursor-not-allowed"
-                        >
-                          AI Posts <span className="py-2 px-3 text-sm rounded-full bg-[#D1D1D14D] text-nowrap">Coming Soon</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+       
 
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Post">
           <div className='flex flex-wrap gap-4'>

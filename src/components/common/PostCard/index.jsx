@@ -23,13 +23,13 @@ const PostCard = ({ saved, isDetail, handleOpenModal, lock, text }) => {
                     <img 
                         src="/assets/profile2.png" 
                         alt="profile" 
-                        className='h-16 w-16 rounded-full'
+                        className='h-16 w-16 rounded-full hidden lg:block'
                     />
                     <div>
-                        <h1 className={`capitalize text-xl font-medium leading-[20px] ${lock ? 'text-white' : 'text-525 '}`}>
+                        <h1 className={`capitalize lg:text-xl font-medium leading-[20px] ${lock ? 'text-white' : 'text-525 '}`}>
                             ui/ux designer
                         </h1>
-                        <h3 className={`capitalize leading-[20px] mt-2 ${lock ? 'text-white' : 'text-gray '}`}>
+                        <h3 className={`capitalize text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : 'text-gray '}`}>
                             21/12/2025
                         </h3>
                     </div>

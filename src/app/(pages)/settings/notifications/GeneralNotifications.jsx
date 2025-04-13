@@ -25,7 +25,7 @@ const GeneralNotifications = () => {
                 className='flex justify-between items-center py-4 cursor-pointer'
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h1 className='text-525 text-xl capitalize font-semibold'>general notifications</h1>
+                <h1 className='text-525 md:text-xl capitalize font-semibold'>general notifications</h1>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
@@ -46,7 +46,7 @@ const GeneralNotifications = () => {
                     >
                         {/* active all notifications */}
                         <div className='flex justify-between items-center py-4'>
-                            <h1 className={`${allActive ? "text-5d5" : "text-989"} text-xl capitalize font-semibold`}>
+                            <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all general settings
                             </h1>
                             {/* toggle button */}
@@ -61,10 +61,10 @@ const GeneralNotifications = () => {
                         {/* Account updates */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${accountUpdates ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${accountUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Account updates
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get alerts for password changes, security issues, and login activity.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get alerts for password changes, security issues, and login activity.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -78,10 +78,10 @@ const GeneralNotifications = () => {
                         {/* subscription and billing */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${subscriptionReminders ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${subscriptionReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Subscription and billing reminders
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Stay informed on renewals, payments, and billing issues.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Stay informed on renewals, payments, and billing issues.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -95,10 +95,10 @@ const GeneralNotifications = () => {
                         {/* system announcement */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${systemAnnouncements ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${systemAnnouncements ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     System announcements and feature updates
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get notified about new features and important changes.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified about new features and important changes.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
