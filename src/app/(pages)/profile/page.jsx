@@ -99,10 +99,10 @@ const ProfilePage = () => {
                             <p className='text-989 text-xs md:text-[16px] mb-6'>Track your progress and complete your profile by adding missing details to increase your chances of getting noticed.</p>
                             <div className='p-4 shad rounded-md mb-8 '>
                                 <h1 className='text-5d5 mb-4 '>Your progress</h1>
-                                <h3 className='text-2xl font-medium text-green mb-3'>70% to complete</h3>
+                                <h3 className='md:text-2xl font-medium text-green mb-3'>70% to complete</h3>
 
-                                <div className="relative w-full h-5 bg-gray-300 rounded-full ">
-                                    <div className="absolute top-0 left-0 h-4 bg-green rounded-full" style={{ width: '70%' }}></div>
+                                <div className="relative w-full h-3 md:h-5 bg-gray-300 rounded-full ">
+                                    <div className="absolute top-0 left-0 h-3 md:h-4 bg-green rounded-full" style={{ width: '70%' }}></div>
                                     <div className="absolute top-1/2 left-[10%] w-2 h-2 bg-white border-2 border-green rounded-full transform -translate-y-1/2"></div>
                                     <div className="absolute top-1/2 left-[30%] w-2 h-2 bg-white border-2 border-green rounded-full transform -translate-y-1/2"></div>
                                     <div className="absolute top-1/2 left-[50%] w-2 h-2 bg-white border-2 border-green rounded-full transform -translate-y-1/2"></div>
@@ -116,7 +116,7 @@ const ProfilePage = () => {
                                 {profileCompletionItems.map((item, index) => (
                                     <li
                                         key={index}
-                                        className={`flex justify-between flex-col md:flex-row  items-center w-full md:text-lg text-5d5`}
+                                        className={`flex justify-between gap-2 md:gap-0 flex-col md:flex-row  items-start md:items-center w-full md:text-lg text-5d5`}
                                     >
                                         <span className='flex items-center gap-3'>
                                             <div className='w-1.5 h-1.5 bg-5d5 rounded-full'></div>

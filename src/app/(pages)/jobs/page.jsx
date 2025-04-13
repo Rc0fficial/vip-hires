@@ -5,7 +5,7 @@ import React from 'react'
 const JobsPage = () => {
     return (
         <div className=''>
-            <h1 className='font-semibold capitalize text-2xl text-3d3'>recommended jobs</h1>
+            <h1 className='font-semibold capitalize md:text-2xl text-3d3'>recommended jobs</h1>
 
             {/* <div className='rounded-3xl bg-gradient-to-tr flex  items-center  from-[rgb(3,98,71)] to-[#06C891]  px-6 mt-8 relative'>
                 <Image
@@ -55,8 +55,8 @@ const JobsPage = () => {
 
 <img src="/assets/jobs.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto '/>
 
-<h1 className='text-center ant text-[32px] text-green'>Your Next Big Opportunity is Loading...</h1>
-<p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>We're analyzing your qualifications to find the best job matches for you. Please hold tight – opportunities that fit your skills are on the way</p>
+<h1 className='text-center ant md:text-[32px] text-green'>Your Next Big Opportunity is Loading...</h1>
+<p className='text-gray mt-2 text-xs md:text-[16px] text-center max-w-[640px] mx-auto'>We're analyzing your qualifications to find the best job matches for you. Please hold tight – opportunities that fit your skills are on the way</p>
         </div>
     )
 }
