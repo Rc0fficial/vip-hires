@@ -9,7 +9,7 @@ const Payment = () => {
     <>
      <div className={`col-span-2 rounded-3xl py-10 px-12 bg-white shad   overflow-y-auto   `}>
 
-     <h1 className='font-semibold capitalize text-2xl text-3d3'>payment settings</h1>
+     <h1 className='font-semibold capitalize md:text-2xl text-3d3'>payment settings</h1>
      <PaymentMethods/>
      </div>
       

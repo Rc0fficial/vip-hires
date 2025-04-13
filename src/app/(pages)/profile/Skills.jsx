@@ -23,15 +23,15 @@ const Skills = ({ skills, setSkills }) => {
     };
     return (
         <div className="rounded-2xl bg-white p-4 lg:p-10">
-            <h1 className="text-2xl font-semibold">Skills</h1>
+            <h1 className="md:text-2xl font-semibold">Skills</h1>
             <div className="flex justify-between items-center">
-                <p className='text-989 mb-6'>List your key skills to demonstrate your expertise and improve job matching accuracy.</p>
+                <p className='text-989 mb-6 text-xs md:text-[16px]'>List your key skills to demonstrate your expertise and improve job matching accuracy.</p>
                 <EditIcon onClick={handleOpenModal} color={"#707070"} height={32} width={32} />
 
             </div>
             <div className="flex flex-wrap gap-4">
                 {skills.map((skill, index) => (
-                    <span key={index} className="flex w-fit capitalize justify-center items-center rounded-full  bg-green text-white py-2 px-6 gap-3">
+                    <span key={index} className="flex w-fit text-sm md:text-[16px] capitalize justify-center items-center rounded-full  bg-green text-white py-2 px-6 gap-3">
                         {skill}
                     </span>
                 ))}

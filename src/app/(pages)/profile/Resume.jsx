@@ -69,9 +69,9 @@ const ResumeSection = () => {
 
   return (
     <div className='rounded-2xl bg-white p-4 lg:p-10'>
-      <h1 className='capitalize text-[28px] font-semibold text-3d3'>Resume</h1>
+      <h1 className='capitalize md:text-[28px] font-semibold text-3d3'>Resume</h1>
       <div className='flex justify-between'>
-        <p className='text-989 mb-6'>
+        <p className='text-989 mb-6 text-xs md:text-[16px]'>
           Upload your CV to help recruiters understand your background and qualifications at a glance.
         </p>
       </div>
@@ -88,14 +88,14 @@ const ResumeSection = () => {
         <div className='flex-1 py-6 px-4 flex justify-between flex-col h-full'>
           <div className='flex justify-between mb-9'>
             <div>
-              <h1 className='capitalize text-[28px] font-semibold text-3d3'>
+              <h1 className='capitalize md:text-[28px] font-semibold text-3d3'>
                 {resumeFile ? resumeFile.name : 'Resume'}
               </h1>
-              <p className='text-989'>
+              <p className='text-989 text-xs md:text-[16px]'>
                 {resumeFile ? `${(resumeFile.size / 1024).toFixed(2)} KB` : '154.03 KB'}
               </p>
             </div>
-            <p className='text-989'>
+            <p className='text-989 text-xs md:text-[16px]'>
               {resumeFile ? new Date(resumeFile.lastModified).toLocaleDateString() : '31/5/2023'}
             </p>
           </div>
@@ -104,7 +104,7 @@ const ResumeSection = () => {
             <button 
               onClick={handleView}
               disabled={!resumeFile}
-              className={`flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
+              className={`flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
                 !resumeFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
               }`}
             >
@@ -115,7 +115,7 @@ const ResumeSection = () => {
             <button 
               onClick={handleDownload}
               disabled={!resumeFile}
-              className={`flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
+              className={`flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
                 !resumeFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
               }`}
             >
@@ -125,7 +125,7 @@ const ResumeSection = () => {
             
             <button 
               onClick={handleUploadClick}
-              className='flex w-full justify-center items-center rounded-full border border-green text-green py-2 px-6 gap-3 hover:bg-green hover:text-white'
+              className='flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 hover:bg-green hover:text-white'
             >
               <UploadIcon color="#009969" height={24} width={24} />
               Upload

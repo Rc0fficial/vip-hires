@@ -25,7 +25,7 @@ const PostNotification = () => {
                 className='flex justify-between items-center py-4 cursor-pointer'
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h1 className='text-525 text-xl capitalize font-semibold'>posts notifications</h1>
+                <h1 className='text-525 md:text-xl capitalize font-semibold'>posts notifications</h1>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
@@ -46,7 +46,7 @@ const PostNotification = () => {
                     >
                         {/* active all notifications */}
                         <div className='flex justify-between items-center py-4'>
-                            <h1 className={`${allActive ? "text-5d5" : "text-989"} text-xl capitalize font-semibold`}>
+                            <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all posts notifications
                             </h1>
                             {/* toggle button */}
@@ -61,10 +61,10 @@ const PostNotification = () => {
                         {/* New Recommended Posts */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${newRecommendedPosts ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${newRecommendedPosts ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     New Recommended Posts
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get notified when new recommended posts match your preferences.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified when new recommended posts match your preferences.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -78,10 +78,10 @@ const PostNotification = () => {
                         {/* Submitted similar Post Status */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${postStatusUpdates ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${postStatusUpdates ? "text-5d5" : "text-989"}  md:text-lg capitalize font-semibold`}>
                                     Submitted similar Post Status
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Receive updates when a submitted similar post is approved, rejected, or needs revision.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Receive updates when a submitted similar post is approved, rejected, or needs revision.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -95,10 +95,10 @@ const PostNotification = () => {
                         {/* Draft Post Updates */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${draftPostUpdates ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${draftPostUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Draft Post Updates
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get notified when your draft posts are saved or updated.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified when your draft posts are saved or updated.</h4>
                             </div>
                             {/* toggle button */}
                             <div 

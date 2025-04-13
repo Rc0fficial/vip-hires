@@ -29,7 +29,7 @@ const JobNotification = () => {
                 className='flex justify-between items-center py-4 cursor-pointer'
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h1 className='text-525 text-xl capitalize font-semibold'>job notifications</h1>
+                <h1 className='text-525 md:text-xl capitalize font-semibold'>job notifications</h1>
                 <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
@@ -50,7 +50,7 @@ const JobNotification = () => {
                     >
                         {/* active all notifications */}
                         <div className='flex justify-between items-center py-4'>
-                            <h1 className={`${allActive ? "text-5d5" : "text-989"} text-xl capitalize font-semibold`}>
+                            <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all job notifications
                             </h1>
                             {/* toggle button */}
@@ -65,10 +65,10 @@ const JobNotification = () => {
                         {/* New Job Matches */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${newJobMatches ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${newJobMatches ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     New Job Matches
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get notified when new jobs match your preferences.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified when new jobs match your preferences.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -82,10 +82,10 @@ const JobNotification = () => {
                         {/* Application Updates */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${applicationUpdates ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${applicationUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Application Updates
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Receive updates when your application is viewed, shortlisted, or rejected.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Receive updates when your application is viewed, shortlisted, or rejected.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -99,10 +99,10 @@ const JobNotification = () => {
                         {/* Job Recommendation Alerts */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${jobRecommendations ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${jobRecommendations ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Job Recommendation Alerts
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get personalized job suggestions based on your skills.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get personalized job suggestions based on your skills.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -116,10 +116,10 @@ const JobNotification = () => {
                         {/* Saved Job Reminders */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${savedJobReminders ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${savedJobReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Saved Job Reminders
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Receive alerts before a saved job listing expires.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Receive alerts before a saved job listing expires.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
@@ -133,10 +133,10 @@ const JobNotification = () => {
                         {/* Employer Messages */}
                         <div className='flex justify-between py-4'>
                             <div>
-                                <h1 className={`${employerMessages ? "text-5d5" : "text-989"} text-lg capitalize font-semibold`}>
+                                <h1 className={`${employerMessages ? "text-5d5" : "text-989"}  md:text-lg capitalize font-semibold`}>
                                     Employer Messages
                                 </h1>
-                                <h4 className='text-989 text-sm capitalize'>Get notified when employers message you.</h4>
+                                <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified when employers message you.</h4>
                             </div>
                             {/* toggle button */}
                             <div 

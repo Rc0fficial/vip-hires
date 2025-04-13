@@ -35,9 +35,9 @@ const EmploymentType = () => {
 
     return (
         <div className='rounded-2xl bg-white p-4 lg:p-10'>
-            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Employment Type</h1>
+            <h1 className='capitalize md:text-[28px] font-semibold text-3d3'>Employment Type</h1>
             <div className='flex justify-between'>
-                <p className='text-989 mb-6'>
+                <p className='text-989 mb-6 text-xs md:text-[16px]'>
                     Select your preferred employment types to help recruiters find the right opportunities for you.
                 </p>
                 <EditIcon 
@@ -53,7 +53,7 @@ const EmploymentType = () => {
                 {activeOptions.map(option => (
                     <button 
                         key={option}
-                        className='flex w-fit capitalize justify-center items-center rounded-full bg-green text-white py-2 px-6 gap-3'
+                        className='flex w-fit text-sm md:text-[16px] capitalize justify-center items-center rounded-full bg-green text-white py-2 px-6 gap-3'
                     >
                         {option}
                     </button>

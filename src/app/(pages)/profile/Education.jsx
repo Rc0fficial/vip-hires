@@ -120,8 +120,8 @@ const Education = () => {
         <div className='rounded-2xl bg-white p-4 lg:p-10'>
             <div className='flex justify-between gap-6 items-start'>
                 <div>
-                    <h1 className='capitalize text-[28px] font-semibold text-3d3'>Education</h1>
-                    <p className='text-989 mb-6'>
+                    <h1 className='capitalize md:text-[28px] font-semibold text-3d3'>Education</h1>
+                    <p className='text-989 mb-6 text-xs md:text-[16px]'>
                         Showcase your academic background, degrees, and achievements to strengthen your profile.
                     </p>
                 </div>
@@ -164,8 +164,8 @@ const Education = () => {
                 </div>
             ))} */}
   <img src="/assets/education.png" alt="" className="h-[190px] w-[214px] mx-auto" />
-      <h1 className='text-center ant text-[32px] text-green'>Add Your Education</h1>
-      <p className='text-gray mt-2 text-center '>Showcase your qualifications and stand out to top employers. Add your education details now to unlock better job opportunities</p>
+      <h1 className='text-center ant md:text-[32px] text-green'>Add Your Education</h1>
+      <p className='text-gray mt-2 text-center text-xs md:text-[16px] '>Showcase your qualifications and stand out to top employers. Add your education details now to unlock better job opportunities</p>
             <Modal 
                 isOpen={isModalOpen} 
                 onClose={handleCloseModal} 

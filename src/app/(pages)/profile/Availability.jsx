@@ -41,9 +41,9 @@ const Availability = () => {
 
     return (
         <div className='rounded-2xl bg-white p-4 lg:p-10'>
-            <h1 className='capitalize text-[28px] font-semibold text-3d3'>Availability</h1>
+            <h1 className='capitalize md:text-[28px] font-semibold text-3d3 '>Availability</h1>
             <div className='flex justify-between'>
-                <p className='text-989 mb-6'>
+                <p className='text-989 mb-6 text-xs md:text-[16px]'>
                     Indicate when you're ready to start your next opportunity so recruiters can match you accordingly.
                 </p>
                 <EditIcon 
@@ -59,7 +59,7 @@ const Availability = () => {
                 {activeOptions.map(option => (
                     <button 
                         key={option}
-                        className='flex w-fit capitalize justify-center items-center rounded-full bg-green text-white py-2 px-6 gap-3'
+                        className='flex w-fit capitalize text-sm md:text-[16px] justify-center items-center rounded-full bg-green text-white py-2 px-6 gap-3'
                     >
                         {option}
                     </button>

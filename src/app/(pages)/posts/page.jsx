@@ -27,7 +27,7 @@ const Posts = () => {
                     alt="recommend"
                     width={253}
                     height={189}z
-                    className="w-[253px] h-[189px]"
+                    className="w-[253px] hidden lg:block h-[189px]"
                 />
                 <div>
                     <h1 className='text-xl  font-bold text-white text-center lg:text-start'>Stay Active, Stay Visible  </h1>
