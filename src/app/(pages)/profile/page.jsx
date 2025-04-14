@@ -132,7 +132,6 @@ const ProfilePage = () => {
 
                         </div>
                         {/* summery */}
-
                         <Summary summary={summary} setSummary={setSummary} />
                         {/* reesume */}
                         <ResumeSection />
