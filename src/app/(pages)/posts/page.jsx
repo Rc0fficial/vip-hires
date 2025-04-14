@@ -15,7 +15,7 @@ const Posts = () => {
     return (
         <div className=''>
             <div className='flex justify-between items-center flex-col md:flex-row gap-2'>
-                <h1 className='font-semibold capitalize text-2xl text-3d3'>recommended jobs</h1>
+                <h1 className='font-semibold capitalize text-2xl text-3d3'>recommended posts</h1>
                 <Link href={"/create-post"}>
                     <button className='py-2.5 cursor-pointer px-6 flex justify-center items-center gap-2 font-bold tex-lg rounded-md bg-green text-white'><StarIcon height={24} width={24} color={"#ffffff"} /> Create Similar Post</button>
                 </Link>
@@ -39,7 +39,7 @@ const Posts = () => {
                     alt="profile"
                     width={28}
                     height={29}
-                    className="absolute right-1/3 top-4 w-[28px] h-[29px]"
+                    className="absolute right-1/3 top-0 md:top-0 w-[28px] h-[29px]"
                 />
 
                
@@ -48,7 +48,7 @@ const Posts = () => {
                     alt="profile"
                     width={41}
                     height={41}
-                    className="absolute rotate-45 right-6 top-6 w-[41px] h-[41px]"
+                    className="absolute rotate-45 right-3 md:right-6 top-6 w-[41px] h-[41px]"
                 />
 
                
@@ -57,7 +57,7 @@ const Posts = () => {
                     alt="profile"
                     width={107}
                     height={41}
-                    className="absolute right-1/5 bottom-0 w-[107px] h-[41px]"
+                    className="absolute right-6 md:right-1/5 bottom-0 w-[107px] h-[41px]"
                 />
             </div>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>

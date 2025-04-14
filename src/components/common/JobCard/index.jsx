@@ -50,13 +50,13 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                     </p>
                 }
                 <div className='flex items-center gap-2 mt-4'>
-                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
                         Remote
                     </button>
-                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
                         Full Time
                     </button>
-                    <button className={`capitalize leading-[20px] text-sm md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
+                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
                         Senior
                     </button>
                 </div>
@@ -64,7 +64,7 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                 <div className='flex items-center gap-4 mt-8'>
                     <button 
                         onClick={() => router.push('/job/1')} 
-                        className={`cursor-pointer py-2.5 rounded-md text-lg font-semibold px-6 flex-1 ${lock ? 'bg-white text-green' : 'bg-green text-white group-hover:text-green group-hover:bg-white'}`}
+                        className={`cursor-pointer py-2.5 rounded-md md:text-lg font-semibold px-6 flex-1 ${lock ? 'bg-white text-green' : 'bg-green text-white group-hover:text-green group-hover:bg-white'}`}
                     >
                         Details
                     </button>

@@ -11,7 +11,7 @@ const Plan = ({bgImg}) => {
     return (
         <div className='pt-[86px] pb-[107px]  md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
-                <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2' /></span> made just for you</h1>
+                <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2 w-[127px] h-5 ' /></span> made just for you</h1>
                 <p className=' mx-auto text-[22px] robo text-0f1 text-center'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
 
                 <div className={`w-full min-h-[640px] flex justify-center ${pathname?.startsWith("/subscription") ?"items-center":"items-end"}  h-full z-20 relative ${bgImg} rounded-4xl  bg-cover bg-no-repeat `}>
