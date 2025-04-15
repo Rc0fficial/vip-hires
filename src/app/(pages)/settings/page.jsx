@@ -176,18 +176,18 @@ const router = useRouter()
     <>
       <div className={`col-span-2 rounded-3xl py-10 px-5 md:px-12  bg-white shad`}>
         <h1 className='font-semibold capitalize md:text-2xl text-3d3'>sign in & security</h1>
-        <div className='mt-10'>
-          <div onClick={handleSecureEmailClick} className='flex cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
+        <div className='mt-6 md:mt-10'>
+          <div onClick={handleSecureEmailClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
             <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>email address</h1>
             <h3 className='text-989 text-sm md:text-lg'>moha************.com</h3>
           </div>
 
-          <div onClick={handleSecurePhoneClick} className='flex cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
+          <div onClick={handleSecurePhoneClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
             <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>phone number</h1>
             <h3 className='text-989 text-sm md:text-lg'>01*********9</h3>
           </div>
 
-          <div onClick={handleSecurePasswordClick} className='flex cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
+          <div onClick={handleSecurePasswordClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
             <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>change password</h1>
             <h3 className='text-989 text-sm md:text-lg'>***********</h3>
           </div>
@@ -196,7 +196,7 @@ const router = useRouter()
             href={'/settings/logged-in-devices'} 
             onClick={(e) => handleSecureDevicesClick(e, 'devices')}
           >
-            <div className='flex justify-between cursor-pointer pt-4 pb-6 border-b border-dcd'>
+            <div className='flex justify-between  flex-col md:flex-row gap-2 cursor-pointer pt-4 pb-6 border-b border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Logged in Devices</h1>
               <h3 className='text-989  text-sm md:text-lg'>3 devices</h3>
             </div>
@@ -206,7 +206,7 @@ const router = useRouter()
             href={'/settings/remember-devices'} 
             onClick={(e) => handleSecureDevicesClick(e, 'remembered-devices')}
           >
-            <div className='flex justify-between pt-4 pb-6 cursor-pointer border-dcd'>
+            <div className='flex justify-between  flex-col md:flex-row gap-2 pt-4 pb-6 cursor-pointer border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Devices that remember your password</h1>
               <h3 className='text-989 text-sm md:text-lg'>3 devices</h3>
             </div>
