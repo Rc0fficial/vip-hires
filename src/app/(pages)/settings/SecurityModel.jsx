@@ -10,7 +10,7 @@ const SecurityModel = ({ id, isOpen, onClose, onSave, children }) => {
       <div className="bg-white p-6 rounded-lg w-full mx-4 max-w-[472px]">
         <div className=" flex justify-between items-center mb-6">
 
-        <h2 className="capitalize text-[28px] font-semibold text-3d3 "> {id}</h2>
+        <h2 className="capitalize md:text-[28px] font-semibold text-3d3 "> {id}</h2>
         <span className="cursor-pointer">
         <CloseIcon onClick={onClose} color={"#707070"} height={32} width={32} />
 
@@ -22,7 +22,7 @@ const SecurityModel = ({ id, isOpen, onClose, onSave, children }) => {
         <div className="flex justify-between gap-2 mt-8">
           
           <button
-            className="px-4 py-2.5 bg-green cursor-pointer text-white w-full max-w-[200px] rounded-md text-lg font-semibold"
+            className="px-4 py-2 md:py-2.5 bg-green cursor-pointer text-white w-full max-w-[200px] rounded-md text-xs md:text-lg font-semibold"
             onClick={onSave}
           >
             Confirm

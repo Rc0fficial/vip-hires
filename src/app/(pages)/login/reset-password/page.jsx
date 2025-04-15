@@ -31,7 +31,7 @@ export default function ResetPasswordPage() {
 
         <button
           type="submit"
-          className="w-full rounded-md cursor-pointer text-white text-xl bg-green font-semibold py-[15px] mb-12"
+          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-green font-semibold py-[15px] mb-12"
         >
           Send
         </button>

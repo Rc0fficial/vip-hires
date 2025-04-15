@@ -48,7 +48,7 @@ const Whychoosing = () => {
     return (
         <div className='pb-[86px] pt-[107px]  md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-10 '>
-                <h1 className='text-5xl lg:text-[72px] mont text-525 font-semibold flex flex-wrap mx-auto gap-3 text-center'>Why Choosing <span className='flex items-center gap-3'>Apply <span className='text-green'>Pro</span> <img src="/assets/logoArrow.png" className='w-[50px] h-[50px] lg:w-auto lg:h-auto' alt="logo Arrow" /></span></h1>
+                <h1 className='text-2xl md:text-5xl lg:text-[72px] mont text-525 font-semibold flex flex-wrap mx-auto gap-3 text-center'>Why Choosing <span className='flex items-center gap-3'>Apply <span className='text-green'>Pro</span> <img src="/assets/logoArrow.png" className='h-8  w-8 md:w-[50px] md:h-[50px] lg:w-auto lg:h-auto' alt="logo Arrow" /></span></h1>
 
                 <div className="flex flex-col space-y-8 max-w-md mx-auto mt-10">
                     {features.map((feature, index) => (
@@ -67,10 +67,10 @@ const Whychoosing = () => {
                             
 
                             {/* Text Content */}
-                            <div className='flex flex-col gap-[42px]'>
-                                <h3 className="text-[25px] lg:text-[32px] leading-none text-wrap md:text-nowrap  font-medium text-cad">{feature.title}</h3>
-                                <div className={` text-cad mt-1 flex items-center gap-4`}>
-                                    <div className={`${feature.iconbg} w-[25px] h-[25px] rounded-full flex justify-center items-center `}>
+                            <div className='flex flex-col gap-[42px] mt-4 md:mt-0'>
+                                <h3 className="md:text-[25px] lg:text-[32px] leading-none text-wrap md:text-nowrap  font-medium text-cad">{feature.title}</h3>
+                                <div className={` text-cad mt-1 flex text-xs md:text-[16px] items-center gap-4`}>
+                                    <div className={`${feature.iconbg} w-[25px] h-[25px] text-xs md:text-[16px] rounded-full flex justify-center items-center `}>
 
                                     <CheckIcon color={feature?.checkColor}/> 
                                     </div>

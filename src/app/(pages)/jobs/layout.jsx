@@ -88,7 +88,7 @@ const JobsLayout = ({ children }) => {
           </div>
 
           {/* Main Content */}
-          <div className={`col-span-1 lg:col-span-2 rounded-3xl h-[calc(100vh-116px)] overflow-y-auto ${
+          <div className={`col-span-1 lg:col-span-2 rounded-3xl h-fit overflow-y-auto ${
             pathname === "/jobs/my-applications" ? "" : "py-10 px-4 md:px-12 bg-white shad"
           }`}>
             {children}

@@ -97,7 +97,7 @@ const PostLayout = ({ children }) => {
           </div>
 
           {/* Main Content */}
-          <div className={`col-span-1 lg:col-span-2 rounded-3xl shad bg-white py-10 px-4 md:px-12 h-[calc(100vh-116px)] overflow-y-auto ${
+          <div className={`col-span-1 lg:col-span-2 rounded-3xl shad bg-white py-10 px-4 md:px-12 h-fit overflow-y-auto ${
             !isSidebarOpen && 'lg:ml-0'
           }`}>
             {children}

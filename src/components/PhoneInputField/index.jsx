@@ -15,7 +15,7 @@ const PhoneInputField = ({
   return (
     <div className={`flex flex-col ${className}`}>
       {label && (
-        <label className="text-525 text-left leading-none mb-2">
+        <label className="text-525 text-xs md:text-[16px] text-left leading-none mb-2">
           {label}
         </label>
       )}
@@ -27,7 +27,7 @@ const PhoneInputField = ({
           value={value}
           onChange={onChange}
           placeholder="Enter phone number"
-          className={`phone-input w-full`}
+          className={`phone-input w-full p-2 md:p-3 border-[0.5px] border-[#bdbdbd] rounded-md`}
           {...props}
         />
       </div>
@@ -49,12 +49,7 @@ const PhoneInputField = ({
     box-shadow: 0 0 0 1px #ff0000;
   }
 
-  .phone-input {
-    padding: 12px;
-    border: 0.5px solid #BDBDBD;
-    border-radius: 6px;
-    width: 100%;
-  }
+
 
   .phone-input:focus {
     outline: none; /* removes default browser outline */

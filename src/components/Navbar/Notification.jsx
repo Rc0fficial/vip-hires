@@ -2,10 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import BellIcon from '../Icons/BellIcon.svg';
+import { useRouter } from 'next/navigation';
 const Notification = ({iconHeight,iconWidth,iconStroke,divClass}) => {
     const [notificationMenu, setNotificationMenu] = useState(false);
     const menuRef = useRef(null);
-
+const router = useRouter()
     // Sample notifications
     const notifications = [
         { id: 1, title: "Your subscription is about to expire, renew now", date: "February 26, 2023", read: true },
@@ -35,7 +36,7 @@ const Notification = ({iconHeight,iconWidth,iconStroke,divClass}) => {
 
     // Toggle notification menu on click (works for all devices)
     const handleClick = () => {
-        setNotificationMenu(!notificationMenu);
+        router.push('/notification')
     };
 
     // Show on hover (only for large screens)

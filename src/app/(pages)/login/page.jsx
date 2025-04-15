@@ -54,12 +54,12 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className="w-full rounded-md cursor-pointer text-white text-xl bg-green font-semibold py-[15px] mb-6 "
+          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-green font-semibold py-[15px] mb-6 "
         >
           Signin
         </button>
         <hr className="border-t border-[#B6B6B6] w-full "/>
-        <button className="w-full rounded-md text-white text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
+        <button className="w-full rounded-md text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
                   <Image
                     src="/assets/googleIcon.svg"
                     alt="google icon"
@@ -68,7 +68,7 @@ export default function LoginPage() {
                     className="w-[28px] h-[29px]"
                   /> Sign in with Google
                 </button>
-                <button className="w-full rounded-md text-525 text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
+                <button className="w-full rounded-md text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
                   <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
                     <LinkedinIcon color={"#ffffff"} width={20} height={20} />
                   </span>{" "}

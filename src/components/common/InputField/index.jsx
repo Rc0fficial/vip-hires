@@ -16,7 +16,7 @@ const InputField = ({
     <div className="flex flex-col gap-3">
       <label
         htmlFor={label}
-        className={`${labelClass} capitalize text-525 leading-none`}
+        className={`${labelClass} capitalize text-xs md:text-[16px] text-525 leading-none`}
       >
         {label}
       </label>
@@ -27,7 +27,7 @@ const InputField = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        className={`h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px] ${
+        className={`h-10 md:h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px] ${
           error ? "border-red-500" : ""
         }`}
         id={label}
