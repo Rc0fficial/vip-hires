@@ -23,7 +23,7 @@ export default function EmailVerificationPage() {
               key={index}
               type="text"
               maxLength="1"
-              className="w-10 h-12 text-center text-lg border border-[#BDBDBD] rounded-md bg-transparent focus:outline-0"
+              className="w-10 h-12 text-center md:text-lg border border-[#BDBDBD] rounded-md bg-transparent focus:outline-0"
               placeholder="-"
               required
             />
@@ -32,7 +32,7 @@ export default function EmailVerificationPage() {
 
         <button
           type="submit"
-          className="w-full rounded-md cursor-pointer text-white text-xl bg-green font-semibold py-[15px] mb-12"
+          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-green font-semibold py-[15px] mb-12"
         >
           Verify Code
         </button>

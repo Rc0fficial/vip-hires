@@ -11,8 +11,8 @@ const Plan = ({bgImg}) => {
     return (
         <div className='pt-[86px] pb-[107px]  md:px-10 relative overflow-hidden bg-white'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
-                <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2 w-[127px] h-5 ' /></span> made just for you</h1>
-                <p className=' mx-auto text-[22px] robo text-0f1 text-center'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
+                <h1 className='text-2xl md:text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>a <span className='relative'>plan <img src="/assets/underline2.png" alt="underline" className='absolute  -bottom-2 right-2 w-[127px] h-3 md:h-5 ' /></span> made just for you</h1>
+                <p className=' mx-auto md:text-[22px] robo text-0f1 text-center'>Choose a plan that fits your career goals  from job applications to LinkedIn growth, we’ve got you covered</p>
 
                 <div className={`w-full min-h-[640px] flex justify-center ${pathname?.startsWith("/subscription") ?"items-center":"items-end"}  h-full z-20 relative ${bgImg} rounded-4xl  bg-cover bg-no-repeat `}>
                     {/* <img src="/assets/desktop.png" alt="" className='mx-auto' /> */}
@@ -21,7 +21,7 @@ const Plan = ({bgImg}) => {
                         {plans?.map((plan, index) => (
                             <div
                                 key={index}
-                                className={`p-6 rounded-[30px] inter max-w-[300px] lg:max-w-[400px] w-full lg:min-w-[300px] min-h-[526px] shad transition-transform transform hover:scale-105 text-start flex flex-col  ${plan.isPopular ? `bg-green text-white lg:-mt-14` : "bg-white text-1d2  lg:-mb-4"
+                                className={`p-6 rounded-[30px] inter max-w-[300px] lg:max-w-[400px] w-full lg:min-w-[300px] min-h-[450px] md:min-h-[526px] shad transition-transform transform hover:scale-105 text-start flex flex-col  ${plan.isPopular ? `bg-green text-white lg:-mt-14` : "bg-white text-1d2  lg:-mb-4"
                                     }`}
 
                             >
@@ -29,22 +29,22 @@ const Plan = ({bgImg}) => {
                                     <h2 className=" font-semibold ">{plan.name}</h2>
 
                                     {plan.isPopular && (
-                                        <span className="bg-white inter text-green text-sm font-semibold px-2 py-1 rounded-xl mb-3 inline-block">
+                                        <span className="bg-white inter text-green text-xs md:text-sm font-semibold px-2 py-1 rounded-xl mb-3 inline-block">
                                             Most Popular
                                         </span>
                                     )}
                                 </div>
                                 <div>
                                     <div className='flex gap-2 items-center pb-8'>
-                                        <p className="text-4xl font-extrabold mt-2 text-">{plan.price}</p>
+                                        <p className="text-2xl md:text-4xl font-extrabold mt-2 text-">{plan.price}</p>
 
-                                        <p className="text-sm mt-1 max-w-[120px] inter text-b9b">{plan.description}</p>
+                                        <p className="text-xs md:text-sm mt-1 max-w-[120px] inter text-b9b">{plan.description}</p>
                                     </div>
 
 
                                     <ul className="mt-4 space-y-2">
                                         {plan.features.map((feature, i) => (
-                                            <li key={i} className="flex items-center text-sm justify-start space-x-2">
+                                            <li key={i} className="flex items-center text-xs md:text-sm justify-start space-x-2">
                                                 <span className={`w-4 h-4 flex justify-center items-center rounded-full ${plan.isPopular ? "bg-0ab" : "bg-[#EBEFF0]"
                                                     } `}><CheckIcon color={plan.isPopular ? "#ffffff" : "#B9BEC1"} /></span>
                                                 <span>{feature}</span>
@@ -54,7 +54,7 @@ const Plan = ({bgImg}) => {
                                 </div>
                                 <Link href={`/subscription/${plan?.id}`}className='mt-auto '>
                                 <button
-                                    className={`mt-auto w-full py-2 cursor-pointer self-end rounded-lg text-lg font-semibold ${plan.isPopular ? "bg-0ab text-white" : "bg-f1e text-green"
+                                    className={`mt-auto w-full py-2 cursor-pointer self-end rounded-lg md:text-lg font-semibold ${plan.isPopular ? "bg-0ab text-white" : "bg-f1e text-green"
                                     }`}
                                     >
                                     {plan.buttonText}

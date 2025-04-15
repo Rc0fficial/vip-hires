@@ -15,7 +15,7 @@ export default function RegisterPage() {
     <AuthLayout
       title={
         <>
-          welcome to <span className="text-green">Job</span>Pilot....
+          welcome to <span className="text-green mr-1">Job</span>Pilot....
         </>
       }
       showSocialLogin={true}
@@ -53,26 +53,26 @@ export default function RegisterPage() {
 
         <button
           type="submit"
-          className="w-full cursor-pointer rounded-md text-white text-xl bg-green font-semibold py-[15px] mb-6"
+          className="w-full cursor-pointer rounded-md text-white md:text-xl bg-green font-semibold py-[15px] mb-6"
         >
           Signup
         </button>
-         <hr className="border-t border-[#B6B6B6] w-full "/>
-                <button className="w-full rounded-md text-white text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
-                          <Image
-                            src="/assets/googleIcon.svg"
-                            alt="google icon"
-                            width={28}
-                            height={29}
-                            className="w-[28px] h-[29px]"
-                          /> Sign in with Google
-                        </button>
-                        <button className="w-full rounded-md text-525 text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
-                          <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
-                            <LinkedinIcon color={"#ffffff"} width={20} height={20} />
-                          </span>{" "}
-                          Sign in with LinkedIn
-                        </button>
+        <hr className="border-t border-[#B6B6B6] w-full " />
+        <button className="w-full rounded-md text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
+          <Image
+            src="/assets/googleIcon.svg"
+            alt="google icon"
+            width={28}
+            height={29}
+            className="w-[28px] h-[29px]"
+          /> Sign in with Google
+        </button>
+        <button className="w-full rounded-md text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
+          <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
+            <LinkedinIcon color={"#ffffff"} width={20} height={20} />
+          </span>{" "}
+          Sign in with LinkedIn
+        </button>
 
         <p className="capitalize text-525 text-xs text-center">
           Already have an account?{" "}

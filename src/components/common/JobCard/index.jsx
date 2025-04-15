@@ -49,7 +49,7 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                         Lorem ipsum dolor sit amet consectetur. Morbi sit tellus enim blandit diam risus eleifend vulputate sed. Semper ut pellentesque et ac eget odio bibendum sed adipiscing. Nec bibendum tristique tincidunt nulla. Pulvinar sem tellus viverra rhoncus accumsan et.
                     </p>
                 }
-                <div className='flex items-center gap-2 mt-4'>
+                <div className='flex items-center flex-wrap gap-2 mt-4'>
                     <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
                         Remote
                     </button>

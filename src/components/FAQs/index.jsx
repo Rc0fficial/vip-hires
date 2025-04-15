@@ -13,7 +13,7 @@ const FAQs = () => {
         <>
         <div className='pt-[86px] pb-28   md:px-10  relative overflow-hidden bg-bggreen'>
             <div className=' mx-auto px-6 flex justify-between items-center z-10 flex-col  gap-6 '>
-                <h1 className='text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>Got Questions? We’ve Got  <span className='relative'>Answers <img src="/assets/underline3.png" alt="underline" className='absolute -bottom-2 right-2 w-[218px] h-5' /></span> </h1>
+                <h1 className='text-2xl md:text-5xl lg:text-[56px] font-extrabold robo text-center text-0f1 capitalize'>Got Questions? We’ve Got  <span className='relative'>Answers <img src="/assets/underline3.png" alt="underline" className='absolute -bottom-2 right-2 w-[218px] h-3 md:h-5' /></span> </h1>
 
                 <div className='flex items-center flex-col lg:flex-row h-full mt-20 z-10'>
                     <div className=' rounded-full h-[400px] w-[400px] md:h-[595px] md:w-[595px] overflow-visible   relative '>
@@ -23,7 +23,7 @@ const FAQs = () => {
                     <div className="mt-8 flex flex-col justify-between  gap-4 h-[600px]">
                         {faqData.map((faq) => (
                             <details key={faq.id} className={`${faq.ml} bg-[#FFFFFF80] text-3d3 flex flex-col items-center px-3 lg:px-6 robo rounded-lg py-3 shad min-h-[75px] cursor-pointer w-[300px] sm:w-full`}>
-                                <summary className=" text-lg lg:text-2xl text-wrap flex justify-between items-center gap-3">
+                                <summary className=" md:text-lg lg:text-2xl text-wrap flex justify-between items-center gap-3">
                                     <span className='min-h-10 min-w-10 bgshad rounded-full bg-[#D9D9D9] text-black flex justify-center items-center '>{faq.id}</span>
                                     {faq.question}
                                     <RiArrowDropDownLine />
