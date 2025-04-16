@@ -45,13 +45,13 @@ const PostNotification = () => {
                         className='overflow-hidden'
                     >
                         {/* active all notifications */}
-                        <div className='flex justify-between items-center py-4'>
+                        <div className='flex justify-between gap-4 items-center py-4'>
                             <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all posts notifications
                             </h1>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={toggleAll}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -59,7 +59,7 @@ const PostNotification = () => {
                         </div>
 
                         {/* New Recommended Posts */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${newRecommendedPosts ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     New Recommended Posts
@@ -68,7 +68,7 @@ const PostNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${newRecommendedPosts ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${newRecommendedPosts ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setNewRecommendedPosts(!newRecommendedPosts)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -76,7 +76,7 @@ const PostNotification = () => {
                         </div>
 
                         {/* Submitted similar Post Status */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${postStatusUpdates ? "text-5d5" : "text-989"}  md:text-lg capitalize font-semibold`}>
                                     Submitted similar Post Status
@@ -85,7 +85,7 @@ const PostNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${postStatusUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${postStatusUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setPostStatusUpdates(!postStatusUpdates)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -93,7 +93,7 @@ const PostNotification = () => {
                         </div>
 
                         {/* Draft Post Updates */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${draftPostUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Draft Post Updates
@@ -102,7 +102,7 @@ const PostNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${draftPostUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${draftPostUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setDraftPostUpdates(!draftPostUpdates)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>

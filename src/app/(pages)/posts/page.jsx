@@ -15,9 +15,9 @@ const Posts = () => {
     return (
         <div className=''>
             <div className='flex justify-between items-center flex-col md:flex-row gap-2'>
-                <h1 className='font-semibold capitalize text-2xl text-3d3'>recommended posts</h1>
+                <h1 className='font-semibold capitalize md:text-2xl text-3d3'>recommended posts</h1>
                 <Link href={"/create-post"}>
-                    <button className='py-2.5 cursor-pointer px-6 flex justify-center items-center gap-2 font-bold tex-lg rounded-md bg-green text-white'><StarIcon height={24} width={24} color={"#ffffff"} /> Create Similar Post</button>
+                    <button className='py-2.5 cursor-pointer px-6 flex justify-center items-center gap-2 font-bold text-sm md:text-lg rounded-md bg-green text-white'><StarIcon height={24} width={24} color={"#ffffff"} /> Create Similar Post</button>
                 </Link>
             </div>
 
@@ -30,10 +30,10 @@ const Posts = () => {
                     className="w-[253px] hidden lg:block h-[189px]"
                 />
                 <div>
-                    <h1 className='text-xl  font-bold text-white text-center lg:text-start'>Stay Active, Stay Visible  </h1>
-                    <p className=' leading-[30px] text-white mr-3 text-center lg:text-start'>You're missing out! Only 10 posts left this month – Boost Your Presence Now</p>
+                    <h1 className='text-sm md:text-xl  font-bold text-white text-center lg:text-start'>Stay Active, Stay Visible  </h1>
+                    <p className=' leading-[30px] text-white mr-3 text-xs md:text-[16px] text-center lg:text-start'>You're missing out! Only 10 posts left this month – Boost Your Presence Now</p>
                 </div>
-                <button className='px-6 py-2.5 rounded-md text-green text-lg font-semibold bg-white text-nowrap'>Subscribe Now</button>
+                <button className='px-6 py-2.5 rounded-md text-green text-sm md:text-lg font-semibold bg-white text-nowrap'>Subscribe Now</button>
                 <Image
                     src="/assets/post-profile1.svg"
                     alt="profile"

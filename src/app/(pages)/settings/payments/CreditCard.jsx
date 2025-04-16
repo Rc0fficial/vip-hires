@@ -8,7 +8,7 @@ const CreditCard = ({ holderName, cvv, exp, cardNumber, bgColor = 'bg-green-500'
             <div className='flex justify-between px-[26px]'>
                 <div>
                     <h3 className={`text-xs uppercase ${textColor}`}>card holder</h3>
-                    <h1 className={`capitalize font-semibold ${textColor}`}>{holderName}</h1>
+                    <h1 className={`capitalize text-sm md:text-[16px] font-semibold ${textColor}`}>{holderName}</h1>
                 </div>
                 <img src="/assets/chip-card.png" alt="chip" className='h-[35px] w-[35px]' />
             </div>
@@ -16,16 +16,16 @@ const CreditCard = ({ holderName, cvv, exp, cardNumber, bgColor = 'bg-green-500'
             <div className='flex justify-between pl-[26px] pr-[60px]'>
                 <div>
                     <h3 className={`text-xs uppercase ${textColor}`}>CVV Number</h3>
-                    <h1 className={`capitalize font-semibold ${textColor}`}>{cvv}</h1>
+                    <h1 className={`capitalize text-sm md:text-[16px] font-semibold ${textColor}`}>{cvv}</h1>
                 </div>
                 <div>
                     <h3 className={`text-xs uppercase ${textColor}`}>VALID THRU</h3>
-                    <h1 className={`capitalize font-semibold ${textColor}`}>{exp}</h1>
+                    <h1 className={`capitalize text-sm md:text-[16px] font-semibold ${textColor}`}>{exp}</h1>
                 </div>
             </div>
 
             <div className='bg-white/40 rounded-b-3xl flex justify-between items-center w-full h-[70px] px-[26px]'>
-                <h1 className={`font-semibold ${textColor} text-[22px]`}>{cardNumber}</h1>
+                <h1 className={`font-semibold ${textColor}  md:text-[22px]`}>{cardNumber}</h1>
                 <CardLogoIcon color1="#ffffff" color2="#ffffff" height={30} width={44} />
             </div>
         </div>

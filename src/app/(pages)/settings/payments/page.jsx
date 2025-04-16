@@ -7,7 +7,7 @@ import PaymentMethods from './PaymentMethods'
 const Payment = () => {
   return (
     <>
-     <div className={`col-span-2 rounded-3xl py-10 px-12 bg-white shad   overflow-y-auto   `}>
+     <div className={`col-span-2 rounded-3xl py-10 px-4 md:px-12 bg-white shad   overflow-y-auto   `}>
 
      <h1 className='font-semibold capitalize md:text-2xl text-3d3'>payment settings</h1>
      <PaymentMethods/>

@@ -36,7 +36,7 @@ export const AuthLayout = ({
         </div>
 
         {/* Right Section (Form) */}
-        <div className="bg-bggreen z-20 px-[56px] h-full py-40 max-h-[800px] flex flex-col justify-center w-full max-w-[459px] rounded-3xl">
+        <div className="bg-bggreen z-20 px-4 md:px-[56px] h-full py-40 max-h-[800px] flex flex-col justify-center w-full max-w-[459px] rounded-3xl">
           <div>
             <h1 className="text-black text-xl font-semibold mb-6 capitalize">
               {title}
