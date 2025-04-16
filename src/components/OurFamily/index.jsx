@@ -22,9 +22,9 @@ const OurFamily = () => {
                 <h1 className='text-2xl md:text-5xl lg:text-[72px] font-bold rale text-center'>Be A Part Of Our Family</h1>
                 <p className='max-w-[683px] mx-auto md:text-[22px] rale text-center'>Land your dream job effortlessly – we apply, update, and keep you ahead in your career</p>
                 <div className='mapbg bg-center h-[651px]  w-full grid grid-cols-1 xl:grid-cols-2 gap-10 justify-center items-center '>
-                    <div className='w-full h-fit max-w-[598px] mx-auto bg-white/70 rounded-[60px] py-[36px] px-[81px] relative'>
-                        <p className='mont text-525 leading-[42px] '>  I landed my dream job in just 3 weeks thanks to ApplyPro! The LinkedIn posts were a game-changer</p>
-                        <h1 className='text-525 font-semibold mont -ml-7'>Ahmed, Marketing Manager</h1>
+                    <div className='w-full h-fit max-w-[598px] mx-auto bg-white/70 rounded-[60px] py-[36px] px-12 md:px-[81px] relative'>
+                        <p className='mont text-525 md:leading-[42px]  text-sm md:text-[16px] leading-[30px] indent-10'>  I landed my dream job in just 3 weeks thanks to ApplyPro! The LinkedIn posts were a game-changer</p>
+                        <h1 className='text-525 font-semibold text-sm md:text-[16px] mont -ml-7 '>Ahmed, Marketing Manager</h1>
                         <img src="/assets/comma.png" alt="comma" className='absolute top-6 left-6' />
                         <img src="/assets/comma.png" alt="comma" className='absolute rotate-180 right-6 bottom-6' />
 

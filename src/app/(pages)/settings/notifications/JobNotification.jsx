@@ -49,13 +49,13 @@ const JobNotification = () => {
                         className='overflow-hidden'
                     >
                         {/* active all notifications */}
-                        <div className='flex justify-between items-center py-4'>
+                        <div className='flex justify-between items-center gap-4 py-4'>
                             <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all job notifications
                             </h1>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={toggleAll}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -63,7 +63,7 @@ const JobNotification = () => {
                         </div>
 
                         {/* New Job Matches */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${newJobMatches ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     New Job Matches
@@ -72,7 +72,7 @@ const JobNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${newJobMatches ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${newJobMatches ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setNewJobMatches(!newJobMatches)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -80,7 +80,7 @@ const JobNotification = () => {
                         </div>
 
                         {/* Application Updates */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${applicationUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Application Updates
@@ -89,7 +89,7 @@ const JobNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${applicationUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${applicationUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setApplicationUpdates(!applicationUpdates)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -97,7 +97,7 @@ const JobNotification = () => {
                         </div>
 
                         {/* Job Recommendation Alerts */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${jobRecommendations ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Job Recommendation Alerts
@@ -106,7 +106,7 @@ const JobNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${jobRecommendations ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${jobRecommendations ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setJobRecommendations(!jobRecommendations)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -114,7 +114,7 @@ const JobNotification = () => {
                         </div>
 
                         {/* Saved Job Reminders */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${savedJobReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Saved Job Reminders
@@ -123,7 +123,7 @@ const JobNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${savedJobReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${savedJobReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setSavedJobReminders(!savedJobReminders)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -131,7 +131,7 @@ const JobNotification = () => {
                         </div>
 
                         {/* Employer Messages */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${employerMessages ? "text-5d5" : "text-989"}  md:text-lg capitalize font-semibold`}>
                                     Employer Messages
@@ -140,7 +140,7 @@ const JobNotification = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${employerMessages ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${employerMessages ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setEmployerMessages(!employerMessages)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>

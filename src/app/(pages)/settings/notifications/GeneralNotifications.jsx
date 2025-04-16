@@ -45,13 +45,13 @@ const GeneralNotifications = () => {
                         className='overflow-hidden'
                     >
                         {/* active all notifications */}
-                        <div className='flex justify-between items-center py-4'>
+                        <div className='flex justify-between items-center gap-4 py-4'>
                             <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all general settings
                             </h1>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex flex-1 items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={toggleAll}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -59,7 +59,7 @@ const GeneralNotifications = () => {
                         </div>
 
                         {/* Account updates */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${accountUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Account updates
@@ -68,7 +68,7 @@ const GeneralNotifications = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${accountUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${accountUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setAccountUpdates(!accountUpdates)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -76,7 +76,7 @@ const GeneralNotifications = () => {
                         </div>
 
                         {/* subscription and billing */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${subscriptionReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Subscription and billing reminders
@@ -85,7 +85,7 @@ const GeneralNotifications = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${subscriptionReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${subscriptionReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setSubscriptionReminders(!subscriptionReminders)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -93,7 +93,7 @@ const GeneralNotifications = () => {
                         </div>
 
                         {/* system announcement */}
-                        <div className='flex justify-between py-4'>
+                        <div className='flex justify-between gap-4 py-4'>
                             <div>
                                 <h1 className={`${systemAnnouncements ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     System announcements and feature updates
@@ -102,7 +102,7 @@ const GeneralNotifications = () => {
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${systemAnnouncements ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${systemAnnouncements ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={() => setSystemAnnouncements(!systemAnnouncements)}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
