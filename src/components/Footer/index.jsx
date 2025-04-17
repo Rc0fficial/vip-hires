@@ -15,7 +15,7 @@ const Footer = ({ bg }) => {
                 pathname === "/login/verify-email" ||
                 pathname === "/login/new-password"
                 ? "hidden" : ""
-            } ${bg} border-t border-gray px-6 md:px-10 w-screen overflow-hidden`}>
+            } ${bg} border-t border-gray  md:px-10 w-screen overflow-hidden`}>
             <div className=' mx-auto px-6 flex justify-between flex-wrap gap-10 items-center'>
                 <div className='flex justify-between w-full items-center'>
 
