@@ -1,15 +1,26 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
+
+// Dynamically import the editor to avoid SSR
+const Editor = dynamic(
+  () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+  { ssr: false }
+);
+
 import { EditorState, convertToRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const TextEditor = () => {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [convertedContent, setConvertedContent] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Wait until component mounts to avoid SSR issues
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleEditorChange = (state) => {
     setEditorState(state);
@@ -22,23 +33,33 @@ const TextEditor = () => {
     setConvertedContent(htmlContent);
   };
 
+  if (!isMounted) {
+    return (
+      <div className="mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="border border-gray-300 p-3 min-h-[200px]">
+          Loading editor...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="  ">
       <div className=" mx-auto bg-white rounded-lg shadow-md overflow-hidden">
        
         
-        <div className=" border-b">
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={handleEditorChange}
-            wrapperClassName="wrapper-class"
-            editorClassName="editor-class border border-gray-300 p-3 min-h-[200px]"
-            toolbarClassName="toolbar-class border-t-0 border-l-0 border-r-0"
-            toolbar={{
-              options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'link', 'emoji', 'image', 'remove', 'history'],
-            }}
-          />
-        </div>
+      <div className="border-b">
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={handleEditorChange}
+          wrapperClassName="wrapper-class"
+          editorClassName="editor-class border border-gray-300 p-3 min-h-[200px]"
+          toolbarClassName="toolbar-class border-t-0 border-l-0 border-r-0"
+          toolbar={{
+            options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'link', 'emoji', 'image', 'remove', 'history'],
+          }}
+        />
+      </div>
         
         {/* <div className="p-4">
           <h2 className="text-lg font-semibold mb-2">HTML Output:</h2>
