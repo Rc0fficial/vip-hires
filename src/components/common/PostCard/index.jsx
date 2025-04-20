@@ -58,7 +58,7 @@ const PostCard = ({ saved, isDetail, handleOpenModal, lock, text }) => {
                     Excited to announce our latest project launch! Looking forward to the amazing possibilities ahead. #Innovation #Technology
                 </p>
             }
-            <div className='flex items-center gap-2 mt-4'>
+            <div className='flex items-center flex-wrap gap-2 mt-4'>
                     <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
                         Development
                     </button>

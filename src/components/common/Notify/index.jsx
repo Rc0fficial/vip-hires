@@ -52,7 +52,7 @@ const pathname = usePathname()
 
             {/* Chat Messages */}
             <div className="p-4 space-y-4">
-              <div className="text-gray-700 bg-[#F5F5F5] p-3 rounded-xl w-fit">
+              <div className="text-gray-700 text-sm bg-[#F5F5F5] p-3 rounded-xl w-fit">
                 Hello and thanks for getting in touch with us! What can we help you with today?
               </div>
               <div className="flex flex-col items-end gap-2">

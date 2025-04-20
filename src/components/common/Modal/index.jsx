@@ -7,7 +7,7 @@ const Modal = ({ id, isOpen, onClose, onSave, children }) => {
 
   return (
     <div className="fixed inset-0 left-0  bg-black/50 top-0 z-50 flex justify-center items-center ">
-      <div className="bg-white p-6 mx-4 rounded-lg w-full max-w-[800px]">
+      <div className="bg-white p-6 mx-4 rounded-lg w-full max-w-[800px]  max-h-[90vh] overflow-y-auto">
         <div className=" flex justify-between items-center mb-6">
 
         <h2 className="capitalize md:text-[28px] font-semibold text-3d3 "> {id}</h2>
@@ -17,7 +17,7 @@ const Modal = ({ id, isOpen, onClose, onSave, children }) => {
         </span>
         </div>
         
-        {children} {/* Content (Textarea/Input) is passed from parent component */}
+        {children}
 
         <div className="flex justify-between gap-2 mt-8">
           <button
