@@ -6,7 +6,7 @@ import CameraIcon from "@/components/Icons/Camera.svg";
 import SearchIcon from "@/components/Icons/SearchIcon.svg";
 import UploadIcon from "@/components/Icons/UploadIcon.svg";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,7 @@ import StackOverflowIcon from "@/components/Icons/StackOverflowIcon.svg";
 import KaggleIcon from "@/components/Icons/KaggleIcon.svg";
 import UrlIcon from "@/components/Icons/UrlIcon.svg";
 import PhoneInputField from "@/components/PhoneInputField";
+import { countryData } from "@/app/utils/countries";
 
 // Validation Schemas
 const FirstStepSchema = z.object({
@@ -68,13 +69,13 @@ const CreateAccount = () => {
   const [step, setStep] = useState("first");
   const [formData, setFormData] = useState({});
   const [completedSteps, setCompletedSteps] = useState([]);
+  const [cityOptions, setCityOptions] = useState([]);
+ // Convert country data to options format
+ const countryOptions = Object.keys(countryData).map(country => ({
+  value: country,
+  label: country
+}));
 
-  const countryOptions = [
-    { value: "us", label: "United States" },
-    { value: "ca", label: "Canada" },
-    { value: "uk", label: "United Kingdom" },
-    { value: "au", label: "Australia" },
-  ];
 
   const skills = [
     "wireframing", "react", "product management", "ui/ux design", 
@@ -115,6 +116,26 @@ const CreateAccount = () => {
           reader.readAsDataURL(file);
         }
       };
+       // Watch country value to update cities
+       const selectedCountry = watch("country");
+
+       // Memoize city options to prevent unnecessary recalculations
+       const cityOptions =useMemo(() => {
+         if (!selectedCountry) return [];
+         const cities = countryData[selectedCountry] || [];
+         return cities.map(city => ({
+           value: city,
+           label: city
+         }));
+       }, [selectedCountry]);
+   
+       // Update city field when country changes
+       useEffect(() => {
+         if (selectedCountry) {
+           setValue("city", "");
+         }
+       }, [selectedCountry, setValue]);
+   
     const onSubmit = (data) => {
       setFormData(prev => ({ ...prev, ...data }));
       setCompletedSteps(prev => [...prev, "first"]);
@@ -123,7 +144,7 @@ const CreateAccount = () => {
 
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <h1 className="text-xl font-medium mb-8 text-3d3">
+        <h1 className="md:text-xl font-medium mb-8 text-3d3">
           Personal Information
         </h1>
         <div className="grid grid-cols-4 gap-6">
@@ -202,13 +223,15 @@ const CreateAccount = () => {
               <SelectField
                 {...field}
                 label="City"
-                options={countryOptions}
+                options={cityOptions}
+                isDisabled={!selectedCountry}
                 error={errors.city?.message}
                 onBlur={field.onBlur}
               />
             )}
           />
         </div>
+
 
         <Controller
           name="email"
@@ -284,6 +307,13 @@ const CreateAccount = () => {
           }
         }
       });
+      // Dummy data for job categories and sub-categories
+  const jobCategoriesData = {
+    "Technology": ["Frontend Development", "Backend Development", "Full Stack", "DevOps"],
+    "Design": ["UI/UX Design", "Graphic Design", "Product Design", "Motion Design"],
+    "Marketing": ["Digital Marketing", "Content Marketing", "Social Media", "SEO"],
+    "Business": ["Project Management", "Product Management", "Business Analysis", "Consulting"]
+  };
     const socialPlatforms = [
         { name: 'linkedin', icon: LinkedinIcon, label: 'LinkedIn' },
         { name: 'behance', icon: BehanceIcon, label: 'Behance' },
@@ -294,6 +324,12 @@ const CreateAccount = () => {
         { name: 'kaggle', icon: KaggleIcon, label: 'Kaggle' },
         { name: 'website', icon: UrlIcon, label: 'Website' }
       ];
+       // Convert to options format
+  const jobCategoryOptions = Object.keys(jobCategoriesData).map(category => ({
+    value: category,
+    label: category
+  }));
+
       const resumeFile = watch("resume");
       const [activeSocialPlatform, setActiveSocialPlatform] = useState(null);
   const socialLinks = watch("socialLinks");
@@ -313,7 +349,24 @@ const CreateAccount = () => {
         }
       };
     
-      
+      const selectedJobCategory = watch("jobCategory");
+
+    // Memoize sub-category options
+    const subCategoryOptions = useMemo(() => {
+      if (!selectedJobCategory) return [];
+      const subCategories = jobCategoriesData[selectedJobCategory] || [];
+      return subCategories.map(subCat => ({
+        value: subCat,
+        label: subCat
+      }));
+    }, [selectedJobCategory]);
+
+    // Reset sub-category when job category changes
+    useEffect(() => {
+      if (selectedJobCategory) {
+        setValue("subCategory", "");
+      }
+    }, [selectedJobCategory, setValue]);
     const onSubmit = (data) => {
       setFormData(prev => ({ ...prev, ...data }));
       setCompletedSteps(prev => [...prev, "second"]);
@@ -323,14 +376,14 @@ const CreateAccount = () => {
 
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <h1 className="text-xl font-medium mb-8 text-3d3">
+        <h1 className="md:text-xl font-medium mb-8 text-3d3">
           Professional Information
         </h1>
         <div className="flex flex-col gap-3">
         <label htmlFor="resumeUpload" className="text-525 leading-none">
           Add Resume
         </label>
-        <div className="h-[56px] px-3 bg-[#F6F6F6] rounded-md flex justify-center gap-2 items-center">
+        <div className="sm:h-[56px] h-18 px-3 py-2 sm:py-0 bg-[#F6F6F6] rounded-md flex justify-center flex-col sm:flex-row items-start  gap-2 sm:items-center">
           <label 
             htmlFor="resumeUpload"
             className="h-10 px-4 flex justify-center gap-2 bg-white items-center border-[0.5px] border-[#BDBDBD] rounded-md cursor-pointer"
@@ -392,7 +445,7 @@ const CreateAccount = () => {
               <SelectField
                 {...field}
                 label="Job Category"
-                options={countryOptions}
+                options={jobCategoryOptions}
                 error={errors.jobCategory?.message}
                 onBlur={field.onBlur}
               />
@@ -405,9 +458,11 @@ const CreateAccount = () => {
               <SelectField
                 {...field}
                 label="Sub Category"
-                options={countryOptions}
+                options={subCategoryOptions}
+                isDisabled={!selectedJobCategory}
                 error={errors.subCategory?.message}
                 onBlur={field.onBlur}
+                key={selectedJobCategory} // Important for proper reset
               />
             )}
           />
@@ -514,7 +569,7 @@ const CreateAccount = () => {
       <div className="flex flex-col gap-3">
         <div className='flex justify-between flex-col md:flex-row items-start md:items-center'>
           <h1 className='text-525 text-lg capitalize text-left mb-2 md:mb-0'>Account Link</h1>
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center flex-wrap gap-4'>
             {socialPlatforms.map((platform) => (
               <div 
                 key={platform.name}
@@ -544,7 +599,7 @@ const CreateAccount = () => {
         )}
       </div>
        
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between flex-wrap gap-4 items-center mt-4">
           <Button
             type="button"
             label="Back"
@@ -588,7 +643,7 @@ const CreateAccount = () => {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
-          <h1 className="text-xl font-medium mb-2 text-3d3">
+          <h1 className="md:text-xl font-medium mb-2 text-3d3">
             Professional Information
           </h1>
           <p className="capitalize text-525 mb-10">select at least 3 skills</p>
@@ -606,7 +661,7 @@ const CreateAccount = () => {
           control={control}
           render={({ field }) => (
             <>
-              <div className="border border-[#BDBDBD] rounded-md p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 h-full max-h-[484px] overflow-y-auto">
+              <div className="border border-[#BDBDBD] rounded-md p-3 md:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 h-full max-h-[484px] overflow-y-auto">
                 {skills.map((skill) => (
                   <div 
                     key={skill}
@@ -634,7 +689,7 @@ const CreateAccount = () => {
             </>
           )}
         />
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between gap-4 flex-wrap items-center mt-4">
           <Button
             type="button"
             label="Back"
@@ -669,7 +724,7 @@ const CreateAccount = () => {
           <hr
             className={`${
               completedSteps.includes("first") ? "border-green" : "border-e5e"
-            } border-t-6 w-[100px]`}
+            } border-t-6 w-18 md:w-[100px]`}
           />
           <div
             onClick={() => (completedSteps.includes("first") || step !== "first") && setStep("second")}
@@ -684,7 +739,7 @@ const CreateAccount = () => {
           <hr
             className={`border-t-6 ${
               completedSteps.includes("second") ? "border-green" : "border-e5e"
-            } w-[100px]`}
+            } w-18 md:w-[100px]`}
           />
           <div
             onClick={() => (completedSteps.includes("second") || step === "third") && setStep("third")}
@@ -698,7 +753,7 @@ const CreateAccount = () => {
           </div>
         </div>
 
-        <div className="pt-8 pb-8 bg-white mt-6 px-10 rounded-3xl shad w-full flex flex-col gap-4">
+        <div className="pt-8 pb-8 bg-white mt-6 px-4 md:px-10 rounded-3xl shad w-full flex flex-col gap-4">
           {step === "first" && <FirstStep />}
           {step === "second" && <SecondStep />}
           {step === "third" && <ThirdStep />}

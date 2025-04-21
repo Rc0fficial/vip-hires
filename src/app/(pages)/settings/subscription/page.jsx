@@ -51,7 +51,7 @@ const SubscriptionSettingPage = () => {
     
     return (
         <>
-            <div className={`col-span-2 rounded-3xl py-10 px-12 bg-white shad     `}>
+            <div className={`col-span-2 rounded-3xl py-10 px-4 md:px-12 bg-white shad     `}>
                 <h1 className='font-semibold capitalize md:text-2xl text-3d3'>subscription settings</h1>
                 <div className='flex justify-between py-4 gap-6 border-b border-dcd '>
                     <div className='flex-1'>
