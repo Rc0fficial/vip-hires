@@ -51,7 +51,7 @@ const GeneralNotifications = () => {
                             </h1>
                             {/* toggle button */}
                             <div 
-                                className={`min-w-10 h-5 rounded-full flex flex-1 items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex  items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={toggleAll}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>

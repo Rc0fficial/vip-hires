@@ -599,7 +599,7 @@ const CreateAccount = () => {
         )}
       </div>
        
-        <div className="flex justify-between flex-wrap gap-4 items-center mt-4">
+        <div className="flex justify-between  gap-4 items-center mt-4">
           <Button
             type="button"
             label="Back"
@@ -689,7 +689,7 @@ const CreateAccount = () => {
             </>
           )}
         />
-        <div className="flex justify-between gap-4 flex-wrap items-center mt-4">
+        <div className="flex justify-between gap-4  items-center mt-4">
           <Button
             type="button"
             label="Back"

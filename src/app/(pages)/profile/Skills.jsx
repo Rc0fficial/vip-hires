@@ -24,9 +24,12 @@ const Skills = ({ skills, setSkills }) => {
     return (
         <div className="rounded-2xl bg-white p-4 lg:p-10">
             <h1 className="md:text-2xl font-semibold">Skills</h1>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between gap-4 items-start ">
                 <p className='text-989 mb-6 text-xs md:text-[16px]'>List your key skills to demonstrate your expertise and improve job matching accuracy.</p>
-                <EditIcon onClick={handleOpenModal} color={"#707070"} height={32} width={32} />
+                <button onClick={handleOpenModal}>
+
+                <EditIcon  color={"#707070"} height={32} width={32} />
+                </button>
 
             </div>
             <div className="flex flex-wrap gap-4">

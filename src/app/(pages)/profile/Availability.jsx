@@ -42,17 +42,20 @@ const Availability = () => {
     return (
         <div className='rounded-2xl bg-white p-4 lg:p-10'>
             <h1 className='capitalize md:text-[28px] font-semibold text-3d3 '>Availability</h1>
-            <div className='flex justify-between'>
+            <div className='flex justify-between gap-4 items-start'>
                 <p className='text-989 mb-6 text-xs md:text-[16px]'>
                     Indicate when you're ready to start your next opportunity so recruiters can match you accordingly.
                 </p>
+                <button onClick={handleOpenModal}>
+
                 <EditIcon 
-                    onClick={handleOpenModal} 
+                     
                     color={"#707070"} 
                     height={32} 
                     width={32} 
                     className="cursor-pointer"
-                />
+                    />
+                    </button>
             </div>
             
             <div className='flex flex-wrap gap-4'>
