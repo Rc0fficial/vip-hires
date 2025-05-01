@@ -31,6 +31,7 @@ import DribbbleIcon from '@/components/Icons/DribbbleIcon.svg'
 import GithupIcon from '@/components/Icons/GithupIcon.svg'
 import KaggleIcon from '@/components/Icons/KaggleIcon.svg'
 import UrlIcon from '@/components/Icons/UrlIcon.svg'
+import PhoneInputField from '@/components/PhoneInputField'
 
 const ProfilePage = () => {
 
@@ -186,7 +187,7 @@ const ProfilePage = () => {
                         placeholder="Enter job tittle"
                         // value={formData.firstName}
                         // onChange={handleInputChange}
-                        labelClass={"text-center"}
+                        // labelClass={"text-center"}
                         type="text"
                         name="job tittle"
                     />
@@ -212,25 +213,24 @@ const ProfilePage = () => {
                         label="Email"
                         placeholder="Enter Email"
                         type="text"
-                        labelClass={"text-center"}
+                        // labelClass={"text-center"}
                         // value={formData.lastName}
                         // onChange={handleInputChange}
                         name="email"
                     />
-                    <div className='flex flex-col gap-3'>
-                        <label htmlFor="Phone" className='text-525 text-center leading-none'>Phone</label>
-                        <div className='flex gap-4'>
-                            <div className='h-12 px-4 flex justify-center gap-2 items-center border-[0.5px] border-[#BDBDBD] rounded-md'>
-                                <img src="/assets/flag.png" alt="" /> <span className='text-sm text-[#989898]'>+02</span>
-                            </div>
-                            <input type="text" placeholder='Enter Name' className='h-12 px-4 flex-1 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px]' name="" id="" />
-                        </div>
-                    </div>
+                    <PhoneInputField
+                    //  value={value}
+                    //  onChange={onChange}
+                     label="Phone"
+                    //  error={errors.phoneNumber?.message}
+                     className="w-full"
+                    />
+
                 </div>
-                <div className='flex justify-between items-center mt-3'>
+                <div className='flex justify-between gap-4 flex-col md:flex-row mt-3'>
                     <h1 className='text-525 text-lg  capitalize'>account link</h1>
 
-                    <div className='flex items-center gap-4'>
+                    <div className='flex items-center flex-wrap gap-4'>
 
                         <div className='bg-green h-8 w-8 rounded-full flex justify-center items-center'>
 

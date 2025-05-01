@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
-import {  CiRepeat, CiSearch,} from "react-icons/ci";
-import {  AiOutlineExclamationCircle } from "react-icons/ai";
+import { CiRepeat, CiSearch, } from "react-icons/ci";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import Image from "next/image";
 import GlobeIcon from "../Icons/GlobeIcon.svg";
 import { usePathname, useRouter } from "next/navigation";
@@ -236,46 +236,50 @@ const Navbar = () => {
                 >
                     {/* Top Profile Section */}
                     <Link href={'/profile'}>
-                    <div className="border border-green rounded-md p-2 mr-5 mt-12 bg-[#EBFEF5] flex items-center gap-2 mb-6">
-                        <img
-                            src="/assets/profile.png"
-                            alt="Profile"
-                            className="h-10 w-10 rounded-full"
+                        <div className="border border-green rounded-md p-2 mr-5 mt-12 bg-[#EBFEF5] flex items-center gap-2 mb-6">
+                            <img
+                                src="/assets/profile.png"
+                                alt="Profile"
+                                className="h-10 w-10 rounded-full"
                             />
-                        <div>
-                            <h1 className="font-medium text-sm text-black">Mohamed Ali</h1>
-                            <h1 className="font-medium text-xs text-[#5D5D5D]">UI/UX Designer</h1>
+                            <div>
+                                <h1 className="font-medium text-sm text-black">Mohamed Ali</h1>
+                                <h1 className="font-medium text-xs text-[#5D5D5D]">UI/UX Designer</h1>
+                            </div>
                         </div>
-                    </div>
-                            </Link>
+                    </Link>
 
                     {/* Sidebar Links */}
                     <ul className="space-y-6">
-                        <li onClick={()=>setIsOpen(false)} className={`${pathname === "/" ? "border-r-4 border-green text-green" : "text-5d5"}`}>
+                        <li onClick={() => setIsOpen(false)} className={`${pathname === "/" ? "border-r-4 border-green text-green" : "text-5d5"}`}>
                             <Link href="/" className="flex items-center gap-3 ">
-                                <FiHome  size={18} /> Home
+                                <FiHome size={18} /> Home
                             </Link>
                         </li>
 
                         <li className={``}>
                             <button
-                                onClick={() => setOpenJobs(!openJobs)}
+                                onClick={() => {
+                                    setOpenJobs(!openJobs);
+                                    setOpenPosts(false);
+                                    setOpenSetting(false);
+                                }}
                                 className={`flex items-center gap-6 w-full ${pathname.startsWith("/jobs") ? " text-green border-r-4" : "text-5d5"} `}
                             >
                                 <span className="flex items-center gap-3">
-                                    <LuBriefcase  size={18} /> Jobs
+                                    <LuBriefcase size={18} /> Jobs
                                 </span>
                                 {openJobs ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
                             </button>
                             {openJobs && (
                                 <ul className="pl-7 mt-2 space-y-4 text-xs text-5d5">
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/jobs" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/jobs">• Recommended Jobs</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs/my-applications" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/jobs/my-applications" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/jobs/my-applications">• My Application</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/jobs/saved-jobs" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/jobs/saved-jobs" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/jobs/saved-jobs">• Saved Jobs</Link>
                                     </li>
                                 </ul>
@@ -284,7 +288,11 @@ const Navbar = () => {
 
                         <li>
                             <button
-                                onClick={() => setOpenPosts(!openPosts)}
+                                onClick={() => {
+                                    setOpenPosts(!openPosts);
+                                    setOpenJobs(false);
+                                    setOpenSetting(false);
+                                }}
                                 className={`flex items-center gap-6 w-full ${pathname.startsWith("/posts") ? " text-green border-r-4" : "text-5d5"} `}
                             >
                                 <span className="flex items-center gap-3">
@@ -294,70 +302,73 @@ const Navbar = () => {
                             </button>
                             {openPosts && (
                                 <ul className="pl-7 mt-2 space-y-4 text-sm text-5d5">
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/posts/" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/posts/">• Recommended Posts</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/my-applications" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/posts/my-applications" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/posts/my-applications">• My Application</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/posts/draft-posts" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/posts/draft-posts" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/posts/draft-posts">• Saved Posts</Link>
                                     </li>
                                 </ul>
                             )}
                         </li>
 
-                        <li onClick={()=>setIsOpen(false)}>
+                        <li onClick={() => setIsOpen(false)}>
                             <Link href="/subscription" className="flex items-center gap-3 text-5d5">
                                 <LuBadgeCheck size={18} /> Subscription
                             </Link>
                         </li>
-                        <li onClick={()=>setIsOpen(false)}>
+                        <li onClick={() => setIsOpen(false)}>
                             <Link href="/help-support" className="flex items-center gap-3 text-5d5">
                                 <AiOutlineExclamationCircle size={18} /> Help & Support
                             </Link>
                         </li>
-                        <li onClick={()=>setIsOpen(false)}>
+                        <li onClick={() => setIsOpen(false)}>
                             <Link href="/language" className="flex items-center gap-3 text-5d5">
                                 <GlobeIcon height={20} width={20} color={"#5d5d5d"} /> Language
                             </Link>
                         </li>
-                        <li  className={``}>
+                        <li className={``}>
                             <button
-                                onClick={() => setOpenSetting(!openSetting)}
+                                onClick={() => {
+                                    setOpenSetting(!openSetting);
+                                    setOpenJobs(false);
+                                    setOpenPosts(false);
+                                }}
                                 className={`flex items-center gap-6 w-full ${pathname.startsWith("/settings") ? " text-green border-r-4" : "text-5d5"} `}
                             >
                                 <span className="flex items-center gap-3">
-                                    <SettingIcon height={26} width={26} color={`${pathname.startsWith("/settings") ? "#009969" : "#5d5d5d"}`}/> Setting
+                                    <SettingIcon height={26} width={26} color={`${pathname.startsWith("/settings") ? "#009969" : "#5d5d5d"}`} /> Setting
                                 </span>
                                 {openSetting ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />}
                             </button>
                             {openSetting && (
                                 <ul className="pl-7 mt-2 space-y-4 text-xs text-5d5">
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/settings" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/settings">• Sign In & Security</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/subscription" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/settings/subscription" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/settings/subscription">• Subscription Setting</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/notifications" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/settings/notifications" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/settings/notifications">• Notifications</Link>
                                     </li>
-                                    <li onClick={()=>setIsOpen(false)} className={`${pathname === "/settings/payments" ? " text-green" : "text-5d5"}`}>
+                                    <li onClick={() => setIsOpen(false)} className={`${pathname === "/settings/payments" ? " text-green" : "text-5d5"}`}>
                                         <Link href="/settings/payments">• Payment Setting </Link>
                                     </li>
                                 </ul>
                             )}
                         </li>
-                       
                     </ul>
 
                     {/* Bottom Section */}
-                    <div  className="absolute bottom-5 left-5 space-y-3 w-[calc(100%-2.5rem)]">
+                    <div className="absolute bottom-5 left-5 space-y-3 w-[calc(100%-2.5rem)]">
                         <Link href="/switch" className="flex items-center gap-3 text-5d5">
                             <SwitchAccountIcon height={24} width={24} /> Switch Account
                         </Link>
-                        <Link href="/login" onClick={()=>setIsOpen(false)} className="flex items-center gap-3 text-red-500">
+                        <Link href="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-3 text-red-500">
                             <LogOutIcon height={24} width={24} /> Log Out
                         </Link>
                     </div>
