@@ -6,7 +6,25 @@ import ShareIcon from '@/components/Icons/ShareIcon.svg'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
-const JobCard = ({ saved, isDetail, lock,text }) => {
+const JobCard = ({ 
+    saved, 
+    isDetail, 
+    lock,
+    text,
+    title,
+    employmentType,
+    experienceLevel,
+    preferredWork,
+    id,
+    postDate,
+    location,
+    handleSaveJob,
+    handleUnSaveJob,
+    
+
+
+
+}) => {
     const router = useRouter()
     const [isHovered, setIsHovered] = useState(false)
 
@@ -21,23 +39,25 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                 <div className='flex justify-between'>
                     <div>
                         <h1 className={`capitalize md:text-xl text-525 font-medium leading-[20px] ${lock ? 'text-white' : ''}`}>
-                            ui/ux designer
+                            {title}
                         </h1>
                         <h3 className={`capitalize text-gray text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
-                            Heliopolis, Cairo, Egypt
+                            {location}
                         </h3>
                         <h3 className={`capitalize text-gray text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : ''}`}>
-                            21/12/2025
+                            {postDate}
                         </h3>
                     </div>
                     {saved ? 
                         <HeartFilledIcon 
+                             onClick={handleUnSaveJob}
                             className={`cursor-pointer ${lock ? 'fill-white' : 'fill-green'}`}  
                             height={32} 
                             width={32} 
                         />
                         :    
                         <HeartIcon 
+                        onClick={handleSaveJob}
                             className={`cursor-pointer ${lock ? 'fill-white' : 'fill-989'}`}  
                             height={32} 
                             width={32} 
@@ -50,20 +70,27 @@ const JobCard = ({ saved, isDetail, lock,text }) => {
                     </p>
                 }
                 <div className='flex items-center flex-wrap gap-2 mt-4'>
-                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
-                        Remote
+                    {preferredWork?.map((level,i)=>(
+                        
+                        <button key={i} className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
+                        {level}
                     </button>
-                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
-                        Full Time
+                    ))}
+                    {employmentType?.map((type,i)=>(
+                        <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
+                        {type}
                     </button>
-                    <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
-                        Senior
+                    ))}
+                    {experienceLevel?.map((level,i)=>(
+                        <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
+                         {level}
                     </button>
+                    ))}
                 </div>
 
                 <div className='flex items-center gap-4 mt-8'>
                     <button 
-                        onClick={() => router.push('/job/1')} 
+                        onClick={() => router.push(`/job/${id}`)} 
                         className={`cursor-pointer py-2.5 rounded-md md:text-lg font-semibold px-6 flex-1 ${lock ? 'bg-white text-green' : 'bg-green text-white group-hover:text-green group-hover:bg-white'}`}
                     >
                         Details

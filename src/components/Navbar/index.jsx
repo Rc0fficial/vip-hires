@@ -15,6 +15,8 @@ import Notification from "./Notification";
 import { FaBars, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiFileText, FiHome } from "react-icons/fi";
 import { LuBadgeCheck, LuBriefcase } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUserStatus, logout } from "@/app/Store/ReduxSlice/authSlice";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
@@ -26,6 +28,7 @@ const Navbar = () => {
     const [openJobs, setOpenJobs] = useState(false);
     const [openPosts, setOpenPosts] = useState(false);
     const [openSetting, setOpenSetting] = useState(false);
+    const router = useRouter()
     const updateSize = () => {
         const isLarge = window.innerWidth <= 1024;
         setSize(isLarge ? { width: 24, height: 24 } : { width: 21, height: 20 });
@@ -36,7 +39,15 @@ const Navbar = () => {
         window.addEventListener('resize', updateSize);
         return () => window.removeEventListener('resize', updateSize);
     }, []);
+    const { user, isAuthenticated,userProfile } = useSelector((state) => state.auth);
+    // console.log(user, isAuthenticated)
+    const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(checkUserStatus())
 
+    }, [])
+
+    
     // Close dropdown when clicking outside
     useEffect(() => {
         function handleClickOutside(event) {
@@ -79,7 +90,21 @@ const Navbar = () => {
         setOpenDropdown(openDropdown === itemName ? null : itemName);
     };
 
+    const handleLogout =()=>{
+        dispatch(logout())
+        router.push('/login')
+    }
+const handleProfileEnter=()=>{
+    if(isAuthenticated){
+        setIsOpenMenu(true)
+    }
+}
 
+const handleProfileClick =()=>{
+if(!isAuthenticated){
+    router.push('/login')
+}
+}
 
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
@@ -171,7 +196,7 @@ const Navbar = () => {
                     <Notification divClass={'lg:border'} iconHeight={size.height} iconWidth={size.height} />
                     <div className="relative hidden lg:block" ref={dropdownRef}>
                         {/* Profile Image */}
-                        <button onMouseEnter={() => setIsOpenMenu(true)}>
+                        <button onMouseEnter={handleProfileEnter} onClick={handleProfileClick}>
                             <Image
                                 src="/assets/profile.png"
                                 alt="Profile"
@@ -209,12 +234,12 @@ const Navbar = () => {
                                             Switch Accounts
                                         </li>
                                     </Link>
-                                    <Link href="/login">
-                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
+                                  
+                                        <li onClick={() => {setIsOpenMenu(false),handleLogout()}} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
                                             <LogOutIcon height={24} width={24} color={"#D31510"} />
                                             Log Out
                                         </li>
-                                    </Link>
+                                   
                                 </ul>
                             </motion.div>
                         )}

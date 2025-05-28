@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Providers from "@/components/Provider";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -51,6 +52,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Toaster
+  position="top-right"
+/>
       <body className={`${poppins.className} relative flex flex-col justify-between`}>
         <Providers>
 

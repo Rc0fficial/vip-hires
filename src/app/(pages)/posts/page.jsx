@@ -1,16 +1,25 @@
 'use client'
 import { openModal } from '@/app/Store/ReduxSlice/modalSlice';
+import { fetchPosts, getPostsError, getPostsStatus, selectAllPosts } from '@/app/Store/ReduxSlice/postSlice';
 import Modal from '@/components/common/Modal';
 import PostCard from '@/components/common/PostCard'
 import StarIcon from '@/components/Icons/StarIcon';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Posts = () => {
     const dispatch = useDispatch()
-
+    const posts = useSelector(selectAllPosts);
+    const status = useSelector(getPostsStatus);
+    const error = useSelector(getPostsError);
+    console.log(posts)
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchPosts());
+        }
+    }, [status, dispatch]);
     const handleOpenModal = () => dispatch(openModal());
     return (
         <div className=''>
@@ -26,7 +35,7 @@ const Posts = () => {
                     src="/assets/post.svg"
                     alt="recommend"
                     width={253}
-                    height={189}z
+                    height={189} z
                     className="w-[253px] hidden lg:block h-[189px]"
                 />
                 <div>
@@ -42,7 +51,7 @@ const Posts = () => {
                     className="absolute right-1/3 top-0 md:top-0 w-[28px] h-[29px]"
                 />
 
-               
+
                 <Image
                     src="/assets/post-profile1.svg"
                     alt="profile"
@@ -51,7 +60,7 @@ const Posts = () => {
                     className="absolute rotate-45 right-3 md:right-6 top-6 w-[41px] h-[41px]"
                 />
 
-               
+
                 <Image
                     src="/assets/post-profile2.svg"
                     alt="profile"
@@ -60,23 +69,37 @@ const Posts = () => {
                     className="absolute right-6 md:right-1/5 bottom-0 w-[107px] h-[41px]"
                 />
             </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
-                {Array(8).fill(null).map((_, index) => (
-                    <PostCard key={index} handleOpenModal={handleOpenModal} btnTitle="Edit" />
-                ))}
-                <PostCard
-                    saved={false}
-                    isDetail={false}
-                    //   handleOpenModal={handleEdit} 
-                    lock={true}
-                    text="Subscribe now to unlock 5 more posts"
-                />
-            </div>
-            {/* <img src="/assets/posts.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto'/>
+
+            {posts?.length > 0 ?
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
+                    {posts.map((post, index) => (
+                        <PostCard 
+                        key={index} 
+                        handleOpenModal={handleOpenModal} 
+                        btnTitle="Edit"
+                        lock={post?.isLocked}
+                        title={post?.title}
+                        postDate={post?.postDate}
+                        job_categories={post?.job_categories}
+                        description={post?.description}
+                        />
+                    ))}
+                    {/* <PostCard
+                        saved={false}
+                        isDetail={false}
+                        //   handleOpenModal={handleEdit} 
+                        lock={true}
+                        text="Subscribe now to unlock 5 more posts"
+                    /> */}
+                </div>
+                :
+                <>
+                    <img src="/assets/posts.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto' />
 
 
-            <h1 className='text-center ant text-[32px] text-green'>We're Crafting Your Perfect Posts</h1>
-<p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>We’re preparing personalized posts for you based on your interests and job field. Stay tuned , great opportunities are on the way</p> */}
+                    <h1 className='text-center ant text-[32px] text-green'>We're Crafting Your Perfect Posts</h1>
+                    <p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>We’re preparing personalized posts for you based on your interests and job field. Stay tuned , great opportunities are on the way</p>
+                </>}
 
         </div>
     )

@@ -1,16 +1,22 @@
 'use client'
+import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice';
+import { getAuthHeaders } from '@/app/utils/authHeader';
 import CheckboxButton from '@/components/common/CheckBoxButton';
 import InputField from '@/components/common/InputField';
 import Modal from '@/components/common/Modal';
 import SelectField from '@/components/common/SelectField';
 import AddIcon from '@/components/Icons/AddIcon.svg';
 import EditIcon from '@/components/Icons/EditIcon.svg'
+import TrashIcon from '@/components/Icons/TrashIcon.svg';
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 
-const Education = () => {
+const Education = ({ user, userProfile }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [currentEditId, setCurrentEditId] = useState(null);
+    const dispatch = useDispatch()
     const [educations, setEducations] = useState([
         {
             id: 1,
@@ -30,10 +36,17 @@ const Education = () => {
         startYear: '',
         endYear: ''
     });
-
+    const [errors, setErrors] = useState({
+        university: false,
+        fieldOfStudy: false,
+        degree: false,
+        grade: false,
+        startYear: false,
+        endYear: false
+    });
     const countryOptions = [
         { value: 'accounting', label: 'Accounting' },
-        { value: 'computer_science', label: 'Computer Science' },
+        { value: 'computer science', label: 'Computer Science' },
         { value: 'business', label: 'Business Administration' },
         { value: 'engineering', label: 'Engineering' },
     ];
@@ -44,20 +57,22 @@ const Education = () => {
         { value: 'phd', label: 'PhD' },
         { value: 'diploma', label: 'Diploma' },
     ];
-
     const handleOpenModal = (editId = null) => {
         if (editId) {
-            const educationToEdit = educations.find(edu => edu.id === editId);
-            setFormData({
-                university: educationToEdit.university,
-                fieldOfStudy: educationToEdit.degree.split(',')[1]?.trim() || '',
-                degree: educationToEdit.degree.split('-')[0]?.trim() || '',
-                grade: educationToEdit.grade,
-                startYear: educationToEdit.years.split(' - ')[0],
-                endYear: educationToEdit.years.split(' - ')[1]
-            });
-            setIsEditing(true);
-            setCurrentEditId(editId);
+            // Find the education in userProfile.user_educations
+            const educationToEdit = userProfile.user_educations.find(edu => edu.id === editId);
+            if (educationToEdit) {
+                setFormData({
+                    university: educationToEdit.universityName || '',
+                    fieldOfStudy: educationToEdit.fieldOfStudy || '',
+                    degree: educationToEdit.degree || '',
+                    grade: educationToEdit.grades || '',
+                    startYear: educationToEdit.startYear || '',
+                    endYear: educationToEdit.endYear || ''
+                });
+                setIsEditing(true);
+                setCurrentEditId(editId);
+            }
         } else {
             setFormData({
                 university: '',
@@ -84,36 +99,90 @@ const Education = () => {
         }));
     };
 
-    const handleSelectChange = (name, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
 
-    const handleSave = () => {
-        const newEducation = {
-            id: isEditing ? currentEditId : Date.now(),
-            university: formData.university,
-            degree: `${formData.degree} - ${formData.fieldOfStudy}`,
-            grade: formData.grade,
-            years: `${formData.startYear} - ${formData.endYear}`,
-            logo: '/assets/uniLogo.png'
+
+    const handleSave = async () => {
+        // Validate all fields
+        const newErrors = {
+            university: !formData.university.trim(),
+            fieldOfStudy: !formData.fieldOfStudy,
+            degree: !formData.degree,
+            grade: !formData.grade.trim(),
+            startYear: !formData.startYear.trim(),
+            endYear: !formData.endYear.trim()
         };
 
-        if (isEditing) {
-            setEducations(educations.map(edu => 
-                edu.id === currentEditId ? newEducation : edu
-            ));
-        } else {
-            setEducations([...educations, newEducation]);
+        setErrors(newErrors);
+
+        if (Object.values(newErrors).some(error => error)) {
+            return;
         }
 
-        handleCloseModal();
+        const payload = {
+            universityName: formData.university,
+            fieldOfStudy: formData.fieldOfStudy,
+            degree: formData.degree,
+            startYear: formData.startYear,
+            endYear: formData.endYear,
+            grades: formData.grade,
+            profile: user?.profile?.id
+        };
+
+        try {
+            if (isEditing) {
+                // Update existing education
+                const response = await axios.put(
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations/${currentEditId}`,
+                    { data: payload },
+                    getAuthHeaders()
+                );
+                console.log('Update response:', response);
+            } else {
+                // Create new education
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations`,
+                    { data: payload },
+                    getAuthHeaders()
+                );
+                console.log('Create response:', response);
+            }
+
+            // Update local state
+            const newEducation = {
+                id: isEditing ? currentEditId : Date.now(),
+                university: formData.university,
+                degree: formData.degree,
+                fieldOfStudy: formData.fieldOfStudy,
+                grade: formData.grade,
+                years: `${formData.startYear} - ${formData.endYear}`,
+                logo: '/assets/uniLogo.png'
+            };
+
+            if (isEditing) {
+                setEducations(educations.map(edu =>
+                    edu.id === currentEditId ? newEducation : edu
+                ));
+            } else {
+                setEducations([...educations, newEducation]);
+            }
+            dispatch(checkUserStatus())
+            handleCloseModal();
+        } catch (error) {
+            console.error('Error saving education:', error);
+        }
     };
 
-    const handleDelete = (id) => {
-        setEducations(educations.filter(edu => edu.id !== id));
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations/${id}`,
+                getAuthHeaders()
+            );
+            dispatch(checkUserStatus())
+            setEducations(educations.filter(edu => edu.id !== id));
+        } catch (error) {
+            console.error('Error deleting education:', error);
+        }
     };
 
     return (
@@ -131,45 +200,60 @@ const Education = () => {
                     </button>
                 </div>
             </div>
-{/* 
-            {educations.map((education) => (
-                <div key={education.id} className='flex justify-between items-center mb-6 group relative'>
-                    <div className='flex items-center gap-6'>
-                        <div className='h-[108px] shad flex justify-center items-center w-[108px] rounded-full'>
-                            <img src={education.logo} alt="University logo" className="max-w-[80%] max-h-[80%]" />
+            {userProfile?.user_educations?.length > 0 ?
+
+                <>
+
+                    {userProfile?.user_educations?.map((education) => (
+                        <div key={education.id} className='flex justify-between items-center mb-6 group relative'>
+                            <div className='flex items-center gap-6'>
+                                <div className='h-[108px] shad flex justify-center items-center w-[108px] rounded-full'>
+                                    <img src='/assets/uniLogo.png' alt="University logo" className="max-w-[80%] max-h-[80%]" />
+                                </div>
+                                <div>
+                                    <h1 className='capitalize text-lg leading-[36px] text-525 font-medium'>
+                                        {education?.universityName}
+                                    </h1>
+                                    <p className='text-989 text-sm capitalize leading-[36px]'>
+                                        {education?.degree} {education?.fieldOfStudy}
+                                    </p>
+                                    <p className='capitalize text-989 text-sm leading-[36px]'>
+                                        Grade: {education?.grades}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className='flex items-center gap-4'>
+                                <h1 className='capitalize text-989 text-sm leading-[36px]'>
+                                    ({education?.startYear}-{education?.endYear})
+                                </h1>
+                                <button
+                                    onClick={() => handleOpenModal(education.id)}
+                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                    <EditIcon color="#707070" height={24} width={24} className="cursor-pointer" />
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(education.documentId)}
+                                    className="opacity-0 group-hover:opacity-100 transition-opacity "
+                                >
+                                    <TrashIcon color="#707070" height={24} width={24} className="cursor-pointer" />
+
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className='capitalize text-lg leading-[36px] text-525 font-medium'>
-                                {education.university}
-                            </h1>
-                            <p className='text-989 text-sm capitalize leading-[36px]'>
-                                {education.degree}
-                            </p>
-                            <p className='capitalize text-989 text-sm leading-[36px]'>
-                                Grade: {education.grade}
-                            </p>
-                        </div>
-                    </div>
-                    <div className='flex items-center gap-4'>
-                        <h1 className='capitalize text-989 text-sm leading-[36px]'>
-                            ({education.years})
-                        </h1>
-                        <button 
-                            onClick={() => handleOpenModal(education.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                            <EditIcon color="#707070" height={24} width={24} className="cursor-pointer" />
-                        </button>
-                    </div>
+                    ))}
+
+                </> :
+                <div onClick={() => handleOpenModal()}>
+                    <img src="/assets/education.png" alt="" className="h-[190px] w-[214px] mx-auto" />
+                    <h1 className='text-center ant md:text-[32px] text-green'>Add Your Education</h1>
+                    <p className='text-gray mt-2 text-center text-xs md:text-[16px] '>Showcase your qualifications and stand out to top employers. Add your education details now to unlock better job opportunities</p>
                 </div>
-            ))} */}
-  <img src="/assets/education.png" alt="" className="h-[190px] w-[214px] mx-auto" />
-      <h1 className='text-center ant md:text-[32px] text-green'>Add Your Education</h1>
-      <p className='text-gray mt-2 text-center text-xs md:text-[16px] '>Showcase your qualifications and stand out to top employers. Add your education details now to unlock better job opportunities</p>
-            <Modal 
-                isOpen={isModalOpen} 
-                onClose={handleCloseModal} 
-                onSave={handleSave} 
+            }
+            <Modal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onSave={handleSave}
                 id="education-modal"
                 title={isEditing ? "Edit Education" : "Add Education"}
             >
@@ -181,22 +265,26 @@ const Education = () => {
                         onChange={handleInputChange}
                         type="text"
                         name="university"
+                        required
+                        error={errors.university ? "University name is required" : ""}
                     />
 
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                         <SelectField
                             label="Field of Study"
                             value={formData.fieldOfStudy}
-                            onChange={(value) => handleSelectChange('fieldOfStudy', value)}
                             options={countryOptions}
                             name="fieldOfStudy"
+                            onChange={(e) => handleInputChange(e)}
+                            error={errors.fieldOfStudy ? "Field of study is required" : ""}
                         />
                         <SelectField
                             label="Degree"
                             value={formData.degree}
-                            onChange={(value) => handleSelectChange('degree', value)}
                             options={degreeOptions}
                             name="degree"
+                            onChange={(e) => handleInputChange(e)}
+                            error={errors.degree ? "Degree is required" : ""}
                         />
                     </div>
 
@@ -208,6 +296,8 @@ const Education = () => {
                             onChange={handleInputChange}
                             type="text"
                             name="startYear"
+                            required
+                            error={errors.startYear ? "Start year is required" : ""}
                         />
                         <InputField
                             label="End Year (or expected)"
@@ -216,6 +306,8 @@ const Education = () => {
                             onChange={handleInputChange}
                             type="text"
                             name="endYear"
+                            required
+                            error={errors.endYear ? "End year is required" : ""}
                         />
                     </div>
 
@@ -226,6 +318,8 @@ const Education = () => {
                         onChange={handleInputChange}
                         type="text"
                         name="grade"
+                        required
+                        error={errors.grade ? "Grade is required" : ""}
                     />
                 </div>
             </Modal>

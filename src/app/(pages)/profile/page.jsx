@@ -14,7 +14,7 @@ import PhotoIcon from '@/components/Icons/PhotoIcon.svg'
 import StackOverflowIcon from '@/components/Icons/StackOverflowIcon.svg'
 import UploadIcon from '@/components/Icons/UploadIcon.svg'
 import ViewIcon from '@/components/Icons/ViewIcon.svg'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Summary from './Summery'
 import Modal from '@/components/common/Modal'
 import Skills from './Skills'
@@ -32,22 +32,132 @@ import GithupIcon from '@/components/Icons/GithupIcon.svg'
 import KaggleIcon from '@/components/Icons/KaggleIcon.svg'
 import UrlIcon from '@/components/Icons/UrlIcon.svg'
 import PhoneInputField from '@/components/PhoneInputField'
+import { useDispatch, useSelector } from 'react-redux'
+import UserInfoForm from './UserInfoForm'
+import { updateProfile } from '@/app/Store/ReduxSlice/updateProfileSlice'
+import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice'
+import { countryData } from '@/app/utils/countries'
+import { uploadFileToStrapi } from '@/app/utils/strapiUpload'
+import axios from 'axios'
 
 const ProfilePage = () => {
-
-    const [summary, setSummary] = useState(
-        "Obviously IM Web Developer. Web Developer with over 3 years of experience. Experienced with all stages of the development cycle for dynamic web projects. The as opposed to using Content here, content here, making it look like readable English. Data Structures and Algorithms are the heart of programming. Initially most of the developers do not realize its importance but when you will start your career in software development, you will find your code is either taking too much time or taking too much space."
-    );
-    const [skills, setSkills] = useState([
-        "Wireframe",
-        "User Experience Research",
-        "Design",
-        "User Interface",
-        "Design Thinking",
-        "Brainstorming",
-    ]);
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
+    const dispatch = useDispatch()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [activeSocialField, setActiveSocialField] = useState(null);
+    const [cityOptions, setCityOptions] = useState([]);
+     const fileInputRef = useRef(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const [tempImage, setTempImage] = useState(null)
+    const [formData, setFormData] = useState({
+        firstName: userProfile?.firstName || '',
+        lastName: userProfile?.lastName || '',
+        jobTitle: userProfile?.jobTitle || '',
+        country: userProfile?.country || '',
+        city: userProfile?.city || '',
+        email: userProfile?.email || '',
+        phoneNumber: userProfile?.phoneNumber || '',
+        socialLinks: userProfile?.socialLinks || {
+            github: '',
+            kaggle: '',
+            medium: '',
+            behance: '',
+            website: '',
+            dribbble: '',
+            linkedin: '',
+            stackoverflow: ''
+        }
+    });
+    console.log(userProfile)
+
+    useEffect(() => {
+        if (userProfile) {
+            setFormData({
+                firstName: userProfile?.firstName || '',
+                lastName: userProfile?.lastName || '',
+                jobTitle: userProfile?.jobTitle || '',
+                country: userProfile?.country || '',
+                city: userProfile?.city || '',
+                email: userProfile?.email || '',
+                phoneNumber: userProfile?.phoneNumber || '',
+                socialLinks: userProfile?.socialLinks || {
+                    github: '',
+                    kaggle: '',
+                    medium: '',
+                    behance: '',
+                    website: '',
+                    dribbble: '',
+                    linkedin: '',
+                    stackoverflow: ''
+                }
+            });
+        }
+    }, [userProfile]);
+    // Update city options when country changes
+    useEffect(() => {
+        if (formData.country && countryData[formData.country]) {
+            const cities = countryData[formData.country].map(city => ({
+                value: city,
+                label: city
+            }));
+            setCityOptions(cities);
+
+            // Reset city if it's not in the new country's cities
+            if (formData.city && !countryData[formData.country].includes(formData.city)) {
+                setFormData(prev => ({ ...prev, city: '' }));
+            }
+        } else {
+            setCityOptions([]);
+            setFormData(prev => ({ ...prev, city: '' }));
+        }
+    }, [formData.country]);
+
+
+    // Prepare country options from countryData
+    const countryOptions = Object.keys(countryData).map(country => ({
+        value: country,
+        label: country
+    }));
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+    const handleSelectChange = (name, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSocialLinkChange = (e) => {
+        const { value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            socialLinks: {
+                ...prev.socialLinks,
+                [activeSocialField]: value
+            }
+        }));
+    };
+
+    const toggleSocialField = (field) => {
+        setActiveSocialField(activeSocialField === field ? null : field);
+    };
+
+    const getSocialIconColor = (field) => {
+        return formData.socialLinks[field] ? '#ffffff' : '#525252';
+    };
+
+
+    const getSocialIconBg = (field) => {
+        return formData.socialLinks[field] ? 'bg-green' : 'bg-bdb';
+    };
+
 
     const handleOpenModal = () => setIsModalOpen(true);
     const handleInfoOpenModal = () => setIsInfoModalOpen(true);
@@ -55,13 +165,46 @@ const ProfilePage = () => {
         setIsModalOpen(false);
         setIsInfoModalOpen(false);
     }
-    const handleSave = () => handleCloseModal();
-    const countryOptions = [
-        { value: 'us', label: 'United States' },
-        { value: 'ca', label: 'Canada' },
-        { value: 'uk', label: 'United Kingdom' },
-        { value: 'au', label: 'Australia' },
-    ];
+    const handleSave = async () => {
+        try {
+            // Prepare the update data object in the format your API expects
+            const updateData = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                jobTitle: formData.jobTitle,
+                country: formData.country,
+                city: formData.city,
+                email: formData.email,
+                phoneNumber: formData.phoneNumber,
+                socialLinks: formData.socialLinks
+            };
+
+            // Dispatch the update action
+            const resultAction = await dispatch(
+                updateProfile({
+                    id: userProfile.documentId, // assuming userProfile has the ID
+                    updateData
+                })
+            );
+
+            // Unwrap the result to handle success/failure
+            const updatedProfile = resultAction.payload;
+
+            if (updatedProfile) {
+                // Close modal on success
+                handleCloseModal();
+                // Show success notification
+                //   toast.success('Profile updated successfully');
+                // Optionally refresh user data
+                dispatch(checkUserStatus()); // if you have this thunk
+            }
+        } catch (error) {
+            // Handle error
+            // toast.error(error.message || 'Failed to update profile');
+            console.error('Update error:', error);
+        }
+    };
+
     const profileCompletionItems = [
         {
             text: "Add 5+ skills to complete your profile",
@@ -81,6 +224,60 @@ const ProfilePage = () => {
             bonus: "+25%"
         }
     ];
+
+
+     const handleSaveImage = async () => {
+    if (!tempImage) {
+      handleCloseModal()
+      return
+    }
+
+    setIsUploading(true)
+    const token = localStorage.getItem('token')
+
+    try {
+      // Delete previous image if exists
+      if (userProfile?.profileImage?.id) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/upload/files/${userProfile.profileImage.id}`,
+          { headers: { 'Authorization': `Bearer ${token}` } }
+        )
+      }
+
+      // Upload new image
+      const imageId = await uploadFileToStrapi(tempImage, token)
+
+      // Update profile with new image
+      await dispatch(updateProfile({
+        id: userProfile.documentId,
+        updateData: { profileImage: imageId }
+      })).unwrap()
+      dispatch(checkUserStatus())
+
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error updating profile image:', error)
+    } finally {
+      setIsUploading(false)
+      setTempImage(null)
+    }
+  }
+
+  const handleTakePhoto = () => {
+    // Implement camera capture functionality if needed
+    console.log('Take photo clicked')
+  }
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click()
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    setTempImage(file)
+  }
     return (
         <div className='bg-bggreen relative '>
             <img src="/assets/cover.png" alt="" className='w-screen     z-0  object-center -mt-[120px]' />
@@ -89,7 +286,7 @@ const ProfilePage = () => {
                     <PersonalInformation
                         handleOpenModal={handleOpenModal}
                         handleInfoOpenModal={handleInfoOpenModal}
-
+                        user={user} userProfile={userProfile}
                     />
                     <div className='col-span-2  h-fit  flex flex-col gap-6  '>
 
@@ -133,138 +330,85 @@ const ProfilePage = () => {
 
                         </div>
                         {/* summery */}
-                        <Summary summary={summary} setSummary={setSummary} />
+                        <Summary user={user} userProfile={userProfile} />
                         {/* reesume */}
-                        <ResumeSection />
+                        <ResumeSection user={user} userProfile={userProfile} />
                         {/* skills */}
-                        <Skills skills={skills} setSkills={setSkills} />
+                        <Skills user={user} userProfile={userProfile} />
                         {/* availability  */}
-                        <Availability />
+                        <Availability user={user} userProfile={userProfile} />
                         {/* employemnt type */}
-                        <EmploymentType />
+                        <EmploymentType user={user} userProfile={userProfile} />
                         {/* prefere job type */}
-                        <JobType />
+                        <JobType user={user} userProfile={userProfile} />
 
                         {/* Education */}
-                        <Education />
+                        <Education user={user} userProfile={userProfile} />
                     </div>
                 </div>
             </div>
 
             {/* profile change model */}
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Edit Profile Picture">
-                <img src="/assets/profile2.png" alt="" className='mb-10  mx-auto w-[200px] h-[200px] rounded-full' />
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSaveImage} id="Edit Profile Picture">
+                <img 
+        src={
+          tempImage ? URL.createObjectURL(tempImage) :
+          userProfile?.profileImage?.url ? 
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile.profileImage.url}` : 
+            "/assets/profile2.png"
+        } 
+        alt="Profile" 
+        className='mb-10 mx-auto w-[200px] h-[200px] rounded-full object-cover'
+        onError={(e) => {
+          e.target.src = "/assets/profile2.png"
+        }}
+      />
 
-                <div className='flex justify-center items-center gap-8 pb-10 border-b border-[#DCDCDC]'>
-                    <button className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md'><CameraIcon2 color={"#525252"} height={20} width={20} />Take Photo</button>
-                    <button className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md '><PhotoIcon color={"#525252"} height={20} width={20} /> Upload Photo</button>
-                </div>
+      <div className='flex justify-center items-center gap-8 pb-10 border-b border-[#DCDCDC]'>
+        <button 
+          onClick={handleTakePhoto}
+          className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md hover:bg-green hover:text-white transition-colors'
+        >
+          <CameraIcon2 color={"#525252"} height={20} width={20} />
+          Take Photo
+        </button>
+        
+        <button 
+          onClick={handleUploadClick}
+          className='w-full max-w-[160px] px-2.5 py-2.5 text-nowrap flex gap-2 justify-center items-center border-2 border-green rounded-md hover:bg-green hover:text-white transition-colors'
+        >
+          <PhotoIcon color={"#525252"} height={20} width={20} />
+          Upload Photo
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            className='hidden'
+          />
+        </button>
+      </div>
             </Modal>
-            <Modal isOpen={isInfoModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Profile Picture">
+            <Modal isOpen={isInfoModalOpen} onClose={handleCloseModal} onSave={handleSave} id="Personal Information">
 
-                <div className='flex flex-col  gap-6 border-b pb-6 border-[#DCDCDC]'>
+                <UserInfoForm
+                    user={user}
+                    userProfile={userProfile}
+                    formData={formData}
+                    setFormData={setFormData}
+                    activeSocialField={activeSocialField}
+                    setActiveSocialField={setActiveSocialField}
+                    cityOptions={cityOptions}
+                    setCityOptions={setCityOptions}
+                    countryOptions={countryOptions}
+                    handleInputChange={handleInputChange}
+                    handleSelectChange={handleSelectChange}
+                    handleSocialLinkChange={handleSocialLinkChange}
+                    toggleSocialField={toggleSocialField}
+                    getSocialIconColor={getSocialIconColor}
+                    getSocialIconBg={getSocialIconBg}
 
-                    <div className=' grid grid-cols-1 lg:grid-cols-2 items-center w-full gap-4'>
-                        <InputField
-                            label="First Name"
-                            placeholder="Enter First Name"
-                            // value={formData.firstName}
-                            // onChange={handleInputChange}
-                            type="text"
-                            name="firstName"
-                        />
-                        <InputField
-                            label="Last Name"
-                            placeholder="Enter Last Name"
-                            type="text"
-                            // value={formData.lastName}
-                            // onChange={handleInputChange}
-                            name="lastName"
-                        />
-                    </div>
-                    <InputField
-                        label="job tittle"
-                        placeholder="Enter job tittle"
-                        // value={formData.firstName}
-                        // onChange={handleInputChange}
-                        // labelClass={"text-center"}
-                        type="text"
-                        name="job tittle"
-                    />
-
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                        <SelectField
-                            label="Country"
-                            // value={formData.country}
-                            // onChange={handleInputChange}
-                            options={countryOptions}
-                            name="country"
-                        />
-                        <SelectField
-                            label="City"
-                            // value={formData.country}
-                            // onChange={handleInputChange}
-                            options={countryOptions}
-                            name="city"
-                        />
-                    </div>
-
-                    <InputField
-                        label="Email"
-                        placeholder="Enter Email"
-                        type="text"
-                        // labelClass={"text-center"}
-                        // value={formData.lastName}
-                        // onChange={handleInputChange}
-                        name="email"
-                    />
-                    <PhoneInputField
-                    //  value={value}
-                    //  onChange={onChange}
-                     label="Phone"
-                    //  error={errors.phoneNumber?.message}
-                     className="w-full"
-                    />
-
-                </div>
-                <div className='flex justify-between gap-4 flex-col md:flex-row mt-3'>
-                    <h1 className='text-525 text-lg  capitalize'>account link</h1>
-
-                    <div className='flex items-center flex-wrap gap-4'>
-
-                        <div className='bg-green h-8 w-8 rounded-full flex justify-center items-center'>
-
-
-                            <LinkedinIcon color={"#ffffff"} height={20} width={20} />
-                        </div>
-                        <div className='bg-green h-8 w-8 rounded-full flex justify-center items-center'>
-
-
-                            <BehanceIcon color={"#ffffff"} height={20} width={20} />
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
-                            <DribbbleIcon color={"#525252"} height={20} width={20} />
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-green'>
-                            <MediumIcon color={"#ffffff"} height={20} width={20} />
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
-                            <GithupIcon color={"#ffffff"} height={20} width={20} />
-
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-green'>
-                            <StackOverflowIcon color={"#ffffff"} height={20} width={20} />
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
-                            <KaggleIcon color={"#ffffff"} height={20} width={20} />
-
-                        </div>
-                        <div className='w-8 h-8 flex justify-center items-center rounded-full bg-bdb'>
-                            <UrlIcon color={"#ffffff"} height={20} width={20} />
-
-                        </div>
-                    </div>
-                </div>
+                />
 
             </Modal>
 

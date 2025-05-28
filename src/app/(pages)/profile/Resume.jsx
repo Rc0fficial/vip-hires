@@ -1,70 +1,102 @@
 'use client';
-import DownloadIcon from '@/components/Icons/DownloadIcon.svg'
-import UploadIcon from '@/components/Icons/UploadIcon.svg'
-import ViewIcon from '@/components/Icons/ViewIcon.svg'
-import { useState, useRef } from 'react';
+import DownloadIcon from '@/components/Icons/DownloadIcon.svg';
+import UploadIcon from '@/components/Icons/UploadIcon.svg';
+import ViewIcon from '@/components/Icons/ViewIcon.svg';
+import { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
+import { updateProfile } from '@/app/Store/ReduxSlice/updateProfileSlice';
+import { useDispatch } from 'react-redux';
 
-
-const ResumeSection = () => {
+const ResumeSection = ({ userProfile }) => {
+  const dispatch = useDispatch();
   const [resumeFile, setResumeFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('/assets/resume.png');
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Handle file upload
-  const handleFileUpload = (event) => {
+  // Initialize with user's current resume
+  useEffect(() => {
+    if (userProfile?.resume?.url) {
+      setPreviewUrl(`${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile.resume.url}` || '/assets/resume.png');
+    }
+  }, [userProfile]);
+
+  const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setResumeFile(file);
-      
-      // Create preview for image files
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e) => setPreviewUrl(e.target.result);
-        reader.readAsDataURL(file);
-      } else {
-        // For non-image files, use a generic icon
-        setPreviewUrl('/assets/resume.png');
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('files', file);
+    formData.append('ref', 'api::profile.profile');
+    formData.append('refId', userProfile.id);
+    formData.append('field', 'resume');
+
+    try {
+      // Delete previous resume if exists
+      if (userProfile?.resume?.id) {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/upload/files/${userProfile.resume.id}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
       }
+
+      // Upload new resume
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/upload`,
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      // Update profile with new resume data
+      const updateData = {
+        resume: data[0].id // Strapi expects the file ID for relational fields
+      };
+
+      await dispatch(updateProfile({
+        id: userProfile.documentId,
+        updateData
+      })).unwrap();
+
+      // Update local state
+      setResumeFile(file);
+      setPreviewUrl(`${process.env.NEXT_PUBLIC_STRAPI_URL}${data[0].url}`);
+      
+    } catch (error) {
+      console.error('Error uploading resume:', error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
-  // Trigger file input click
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
-  // Download resume
   const handleDownload = () => {
-    if (!resumeFile) return;
+    if (!userProfile?.resume?.url) return;
     
-    const url = URL.createObjectURL(resumeFile);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = resumeFile.name || 'resume';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const link = document.createElement('a');
+    link.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile.resume.url}`;
+    link.download = userProfile.resume.name || 'resume';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  // View resume (opens in new tab)
   const handleView = () => {
-    if (!resumeFile) return;
+    if (!userProfile?.resume?.url) return;
     
-    if (resumeFile.type.startsWith('image/')) {
-      // For images, open directly
-      const url = URL.createObjectURL(resumeFile);
-      window.open(url, '_blank');
-      URL.revokeObjectURL(url);
-    } else if (resumeFile.type === 'application/pdf') {
-      // For PDFs, use PDF.js or open in new tab
-      const url = URL.createObjectURL(resumeFile);
-      window.open(url, '_blank');
-      URL.revokeObjectURL(url);
-    } else {
-      // For other file types, download instead
-      handleDownload();
-    }
+    window.open(`${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile.resume.url}`, '_blank');
   };
 
   return (
@@ -89,52 +121,56 @@ const ResumeSection = () => {
           <div className='flex justify-between mb-9'>
             <div>
               <h1 className='capitalize md:text-[28px] font-semibold text-3d3'>
-                {resumeFile ? resumeFile.name : 'Resume'}
+                {(userProfile?.resume?.name?.slice(0, 10) || 'Resume'.slice(0, 10)) + '...'}
               </h1>
               <p className='text-989 text-xs md:text-[16px]'>
-                {resumeFile ? `${(resumeFile.size / 1024).toFixed(2)} KB` : '154.03 KB'}
+                {userProfile?.resume?.size ? `${(userProfile.resume.size / 1024).toFixed(2)} KB` : 'No file uploaded'}
               </p>
             </div>
             <p className='text-989 text-xs md:text-[16px]'>
-              {resumeFile ? new Date(resumeFile.lastModified).toLocaleDateString() : '31/5/2023'}
+              {userProfile?.resume?.createdAt ? new Date(userProfile.resume.createdAt).toLocaleDateString() : ''}
             </p>
           </div>
           
           <div className='flex items-center flex-wrap gap-4'>
             <button 
               onClick={handleView}
-              disabled={!resumeFile}
+              disabled={!userProfile?.resume}
               className={`flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
-                !resumeFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
+                !userProfile?.resume ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
               }`}
             >
-              <ViewIcon color={!resumeFile ? "#999" : "#009969"} height={24} width={24} />
+              <ViewIcon color={!userProfile?.resume ? "#999" : "#009969"} height={24} width={24} />
               Preview
             </button>
             
             <button 
               onClick={handleDownload}
-              disabled={!resumeFile}
+              disabled={!userProfile?.resume}
               className={`flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
-                !resumeFile ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
+                !userProfile?.resume ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
               }`}
             >
-              <DownloadIcon color={!resumeFile ? "#999" : "#009969"} height={24} width={24} />
+              <DownloadIcon color={!userProfile?.resume ? "#999" : "#009969"} height={24} width={24} />
               Download
             </button>
             
             <button 
               onClick={handleUploadClick}
-              className='flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 hover:bg-green hover:text-white'
+              disabled={isUploading}
+              className={`flex w-full justify-center text-sm md:text-[16px] items-center rounded-full border border-green text-green py-2 px-6 gap-3 ${
+                isUploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green hover:text-white'
+              }`}
             >
               <UploadIcon color="#009969" height={24} width={24} />
-              Upload
+              {isUploading ? 'Uploading...' : 'Upload'}
               <input
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileUpload}
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 className='hidden'
+                disabled={isUploading}
               />
             </button>
           </div>

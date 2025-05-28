@@ -10,7 +10,8 @@ const InputField = ({
   labelClass,
   error,
   onBlur,
-  name
+  name,
+  disabled
 }) => {
   return (
     <div className="flex flex-col gap-3">
@@ -27,6 +28,7 @@ const InputField = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        disabled={disabled}
         className={`h-10 md:h-12 px-4 rounded-md border-[#BDBDBD] placeholder:text-[#989898] border-[0.5px] ${
           error ? "border-red-500" : ""
         }`}

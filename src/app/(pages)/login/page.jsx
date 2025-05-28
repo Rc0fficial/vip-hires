@@ -5,15 +5,52 @@ import LinkedinIcon from "@/components/Icons/LinkedinIcon.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUserStatus } from "@/app/Store/ReduxSlice/authSlice";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    router.push('/login/create-account');
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(checkUserStatus());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+  const handleGoogleLogin = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`;
   };
 
+  const handleLinkedInLogin = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/linkedin`;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local`, {
+        identifier: email,
+        password,
+      });
+
+      const { jwt, user } = response.data;
+      localStorage.setItem("token", jwt);
+      router.push('/');
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Login failed. Please try again.");
+    }
+  };
   return (
     <AuthLayout
       title="Nice To See You Again"
@@ -24,6 +61,7 @@ export default function LoginPage() {
           <label htmlFor="email">Email</label>
           <input
             type="email"
+            name="email"
             className="px-4 py-3 rounded-md bg-transparent focus:outline-0 border border-[#BDBDBD]"
             placeholder="Enter Email"
             required
@@ -34,6 +72,7 @@ export default function LoginPage() {
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            name="password"
             className="px-4 py-3 rounded-md bg-transparent focus:outline-0 border border-[#BDBDBD]"
             placeholder="Enter Password"
             required
@@ -59,21 +98,31 @@ export default function LoginPage() {
           Signin
         </button>
         <hr className="border-t border-[#B6B6B6] w-full "/>
-        <button className="w-full rounded-md text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
-                  <Image
-                    src="/assets/googleIcon.svg"
-                    alt="google icon"
-                    width={28}
-                    height={29}
-                    className="w-[28px] h-[29px]"
-                  /> Sign in with Google
-                </button>
-                <button className="w-full rounded-md text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
-                  <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
-                    <LinkedinIcon color={"#ffffff"} width={20} height={20} />
-                  </span>{" "}
-                  Sign in with LinkedIn
-                </button>
+
+        <button 
+          type="button"
+          onClick={handleGoogleLogin}
+          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3"
+        >
+          <Image
+            src="/assets/googleIcon.svg"
+            alt="google icon"
+            width={28}
+            height={29}
+            className="w-[28px] h-[29px]"
+          /> Sign in with Google
+        </button>
+
+        <button 
+          type="button"
+          onClick={handleLinkedInLogin}
+          className="w-full rounded-md cursor-pointer text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3"
+        >
+          <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
+            <LinkedinIcon color="#ffffff" width={20} height={20} />
+          </span> 
+          Sign in with LinkedIn
+        </button>
 
         <p className="capitalize text-525 text-xs text-center">
           Don't have an account?{" "}

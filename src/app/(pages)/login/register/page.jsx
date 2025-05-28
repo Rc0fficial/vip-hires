@@ -4,11 +4,45 @@ import { AuthLayout } from "@/components/Auth";
 import LinkedinIcon from "@/components/Icons/LinkedinIcon.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function RegisterPage() {
-  const handleSubmit = (e) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmPassword = e.target['confirm-password'].value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`, {
+        username: email,
+        email,
+        password
+      });
+
+      const { jwt } = response.data;
+      localStorage.setItem("token", jwt);
+      router.push("/login/create-account");
+    } catch (error) {
+      console.error("Registration Error:", error);
+      alert("Registration failed. Please try again.");
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`;
+  };
+
+  const handleLinkedInLogin = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/linkedin`;
   };
 
   return (
@@ -24,6 +58,7 @@ export default function RegisterPage() {
         <div className="text-525 flex flex-col gap-4 mb-4">
           <label htmlFor="email">Email</label>
           <input
+            name="email"
             type="email"
             className="px-4 py-3 rounded-md bg-transparent focus:outline-0 border border-[#BDBDBD]"
             placeholder="Enter Email"
@@ -34,6 +69,7 @@ export default function RegisterPage() {
         <div className="text-525 flex flex-col gap-4 mb-5">
           <label htmlFor="password">Password</label>
           <input
+            name="password"
             type="password"
             className="px-4 py-3 rounded-md bg-transparent focus:outline-0 border border-[#BDBDBD]"
             placeholder="Enter Password"
@@ -44,6 +80,7 @@ export default function RegisterPage() {
         <div className="text-525 flex flex-col gap-4 mb-5">
           <label htmlFor="confirm-password">Confirm Password</label>
           <input
+            name="confirm-password"
             type="password"
             className="px-4 py-3 rounded-md bg-transparent focus:outline-0 border border-[#BDBDBD]"
             placeholder="Confirm Password"
@@ -58,7 +95,12 @@ export default function RegisterPage() {
           Signup
         </button>
         <hr className="border-t border-[#B6B6B6] w-full " />
-        <button className="w-full rounded-md text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3">
+
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3"
+        >
           <Image
             src="/assets/googleIcon.svg"
             alt="google icon"
@@ -67,10 +109,15 @@ export default function RegisterPage() {
             className="w-[28px] h-[29px]"
           /> Sign in with Google
         </button>
-        <button className="w-full rounded-md text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3">
+
+        <button
+          type="button"
+          onClick={handleLinkedInLogin}
+          className="w-full rounded-md cursor-pointer text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3"
+        >
           <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
-            <LinkedinIcon color={"#ffffff"} width={20} height={20} />
-          </span>{" "}
+            <LinkedinIcon color="#ffffff" width={20} height={20} />
+          </span>
           Sign in with LinkedIn
         </button>
 
