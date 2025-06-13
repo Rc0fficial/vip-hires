@@ -105,10 +105,10 @@ if(!isAuthenticated){
     router.push('/login')
 }
 }
-
+console.log(userProfile)
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
-            <nav className="flex items-center justify-between p-6 mx-auto">
+            <nav className="flex items-center justify-between  p-6 mx-auto">
                 {/* Mobile Menu Icon */}
                 <FaBars
                     size={24}
@@ -198,11 +198,11 @@ if(!isAuthenticated){
                         {/* Profile Image */}
                         <button onMouseEnter={handleProfileEnter} onClick={handleProfileClick}>
                             <Image
-                                src="/assets/profile.png"
+                                src={userProfile?.profileImage?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile?.profileImage?.url}` : "/assets/profile.png" }
                                 alt="Profile"
                                 width={45}
                                 height={45}
-                                className="rounded-full cursor-pointer"
+                                className="rounded-full h-12 w-12 cursor-pointer object-center"
                             />
                         </button>
 

@@ -17,7 +17,8 @@ const PostCard = ({
     title,
     postDate,
     description,
-    job_categories
+    job_categories,
+    handleSavePost
 
 }) => {
     const router = useRouter()
@@ -47,12 +48,14 @@ const PostCard = ({
                 </div>
                 {saved ? 
                     <TrashIcon 
-                        className={`cursor-pointer ${lock ? 'text-white' : ''}`}  
+                    onClick={handleSavePost}
+                        className={`cursor-pointer ${lock ? 'text-white' : 'fill-989'}`}  
                         height={32} 
                         width={32} 
                     />
                     :    
                     <HeartIcon 
+                    onClick={handleSavePost}
                         className={`cursor-pointer ${lock ? 'fill-white' : 'fill-989 '}`}  
                         height={32} 
                         width={32} 

@@ -10,6 +10,14 @@ import axios from "axios";
 export default function RegisterPage() {
   const router = useRouter();
 
+  const generateUniqueUsername = (email) => {
+    // Extract the part before @ from email
+    const baseUsername = email.split('@')[0];
+    // Add a random 4-digit number to ensure uniqueness
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    return `${baseUsername}_${randomSuffix}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -23,7 +31,7 @@ export default function RegisterPage() {
 
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`, {
-        username: email,
+        username: generateUniqueUsername(email), // Auto-generate username
         email,
         password
       });
@@ -35,8 +43,7 @@ export default function RegisterPage() {
       console.error("Registration Error:", error);
       alert("Registration failed. Please try again.");
     }
-  };
-
+  }
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`;
   };

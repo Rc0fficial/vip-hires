@@ -49,7 +49,7 @@ const Skills = ({ userProfile }) => {
         
         try {
             await dispatch(updateProfileField({
-                id: userProfile.id,
+                id: userProfile.documentId,
                 fieldName: 'skills',
                 value: updatedSkills
             })).unwrap();

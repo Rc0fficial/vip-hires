@@ -11,7 +11,7 @@ export const checkUserStatus = createAsyncThunk(
     try {
       // Fetch User Data
       const userResponse = await axios.get(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/me?populate[profile][populate][job_category]=true`,
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/me?populate=*`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +34,18 @@ export const checkUserStatus = createAsyncThunk(
         );
 
         const profileData = profileResponse.data?.data;
-        userProfile = profileData.length > 0 ? profileData[0] : {};
+        // console.log(user)
+        // console.log(profileData)
+
+        // Find the profile that matches the user's ID (skip index 0 if needed)
+        if (profileData && profileData.length > 0) {
+          // Option 1: Skip index 0 if needed (uncomment if required)
+          // const filteredProfiles = profileData.filter((_, index) => index !== 0);
+          // userProfile = filteredProfiles.find(p => p.attributes.user?.data?.id === user.id) || {};
+
+          // Option 2: Directly find the user's profile (recommended)
+          userProfile = profileData.find(p => p?.users_permissions_user?.id === user?.id) || {};
+        }
       } catch (profileError) {
         console.warn("Profile not found or failed to fetch:", profileError);
       }

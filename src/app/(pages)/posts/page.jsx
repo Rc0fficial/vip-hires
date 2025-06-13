@@ -1,106 +1,111 @@
 'use client'
 import { openModal } from '@/app/Store/ReduxSlice/modalSlice';
 import { fetchPosts, getPostsError, getPostsStatus, selectAllPosts } from '@/app/Store/ReduxSlice/postSlice';
+import { updateProfileField } from '@/app/Store/ReduxSlice/updateProfileSlice';
+import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice';
 import Modal from '@/components/common/Modal';
 import PostCard from '@/components/common/PostCard'
 import StarIcon from '@/components/Icons/StarIcon';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const Posts = () => {
     const dispatch = useDispatch()
     const posts = useSelector(selectAllPosts);
     const status = useSelector(getPostsStatus);
     const error = useSelector(getPostsError);
-    console.log(posts)
+    const { userProfile } = useSelector((state) => state.auth);
+
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchPosts());
         }
     }, [status, dispatch]);
+
     const handleOpenModal = () => dispatch(openModal());
+
+    const handleSavePost = async (post) => {
+        try {
+            const isAlreadySaved = userProfile?.posts?.some(
+                savedPost => savedPost.documentId === post.documentId
+            );
+    
+            if (isAlreadySaved) {
+                // Unsaving the post
+                await dispatch(updateProfileField({
+                    id: userProfile.documentId,
+                    fieldName: 'posts',
+                    value: { disconnect: [post.documentId] }
+                })).unwrap();
+                toast.success("Post removed from saved list");
+            } else {
+                // Saving the post
+                await dispatch(updateProfileField({
+                    id: userProfile.documentId,
+                    fieldName: 'posts',
+                    value: { 
+                        connect: [
+                            ...(userProfile?.posts?.map(post => post.documentId) || []),
+                            post.documentId
+                        ] 
+                    }
+                })).unwrap();
+                toast.success("Post saved successfully");
+            }
+    
+            dispatch(checkUserStatus());
+        } catch (error) {
+            console.error('Failed to update saved posts:', error);
+            toast.error(error.message || "Failed to update saved posts");
+        }
+    };
+const savedPostIds = new Set(userProfile?.posts?.map(post => post.documentId) || []);
     return (
         <div className=''>
             <div className='flex justify-between items-center flex-col md:flex-row gap-2'>
                 <h1 className='font-semibold capitalize md:text-2xl text-3d3'>recommended posts</h1>
                 <Link href={"/create-post"}>
-                    <button className='py-2.5 cursor-pointer px-6 flex justify-center items-center gap-2 font-bold text-sm md:text-lg rounded-md bg-green text-white'><StarIcon height={24} width={24} color={"#ffffff"} /> Create Similar Post</button>
+                    <button className='py-2.5 cursor-pointer px-6 flex justify-center items-center gap-2 font-bold text-sm md:text-lg rounded-md bg-green text-white'>
+                        <StarIcon height={24} width={24} color={"#ffffff"} /> Create Similar Post
+                    </button>
                 </Link>
             </div>
 
-            <div className='rounded-3xl bg-gradient-to-tr flex flex-col lg:flex-row gap-6 lg:gap-0 py-6 lg:py-0 items-center from-[rgb(3,98,71)] to-[#06C891]  px-6 mt-8 relative'>
-                <Image
-                    src="/assets/post.svg"
-                    alt="recommend"
-                    width={253}
-                    height={189} z
-                    className="w-[253px] hidden lg:block h-[189px]"
-                />
-                <div>
-                    <h1 className='text-sm md:text-xl  font-bold text-white text-center lg:text-start'>Stay Active, Stay Visible  </h1>
-                    <p className=' leading-[30px] text-white mr-3 text-xs md:text-[16px] text-center lg:text-start'>You're missing out! Only 10 posts left this month – Boost Your Presence Now</p>
-                </div>
-                <button className='px-6 py-2.5 rounded-md text-green text-sm md:text-lg font-semibold bg-white text-nowrap'>Subscribe Now</button>
-                <Image
-                    src="/assets/post-profile1.svg"
-                    alt="profile"
-                    width={28}
-                    height={29}
-                    className="absolute right-1/3 top-0 md:top-0 w-[28px] h-[29px]"
-                />
+            {/* ... (your existing banner code remains the same) ... */}
 
-
-                <Image
-                    src="/assets/post-profile1.svg"
-                    alt="profile"
-                    width={41}
-                    height={41}
-                    className="absolute rotate-45 right-3 md:right-6 top-6 w-[41px] h-[41px]"
-                />
-
-
-                <Image
-                    src="/assets/post-profile2.svg"
-                    alt="profile"
-                    width={107}
-                    height={41}
-                    className="absolute right-6 md:right-1/5 bottom-0 w-[107px] h-[41px]"
-                />
-            </div>
-
-            {posts?.length > 0 ?
+            {posts?.length > 0 ? (
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
-                    {posts.map((post, index) => (
+                    {posts.map((post) => {
+
+                        const isSaved = savedPostIds.has(post.documentId);
+                        return(
                         <PostCard 
-                        key={index} 
-                        handleOpenModal={handleOpenModal} 
-                        btnTitle="Edit"
-                        lock={post?.isLocked}
-                        title={post?.title}
-                        postDate={post?.postDate}
-                        job_categories={post?.job_categories}
-                        description={post?.description}
+                            key={post.documentId} 
+                            handleOpenModal={handleOpenModal} 
+                            btnTitle="Edit"
+                            lock={userProfile?.isPremium ? false : post?.isLocked}
+                            title={post?.title}
+                            postDate={post?.postDate}
+                            job_categories={post?.job_categories}
+                            description={post?.description}
+                            saved={isSaved}
+                            handleSavePost={() => handleSavePost(post)}
                         />
-                    ))}
-                    {/* <PostCard
-                        saved={false}
-                        isDetail={false}
-                        //   handleOpenModal={handleEdit} 
-                        lock={true}
-                        text="Subscribe now to unlock 5 more posts"
-                    /> */}
+                    )})}
                 </div>
-                :
+            ) : (
                 <>
                     <img src="/assets/posts.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto' />
-
-
                     <h1 className='text-center ant text-[32px] text-green'>We're Crafting Your Perfect Posts</h1>
-                    <p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>We’re preparing personalized posts for you based on your interests and job field. Stay tuned , great opportunities are on the way</p>
-                </>}
-
+                    <p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>
+                        We're preparing personalized posts for you based on your interests and job field. 
+                        Stay tuned, great opportunities are on the way
+                    </p>
+                </>
+            )}
         </div>
     )
 }

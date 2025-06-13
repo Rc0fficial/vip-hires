@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { updateProfile } from '@/app/Store/ReduxSlice/updateProfileSlice';
 import { useDispatch } from 'react-redux';
+import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice';
 
 const ResumeSection = ({ userProfile }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ResumeSection = ({ userProfile }) => {
   // Initialize with user's current resume
   useEffect(() => {
     if (userProfile?.resume?.url) {
-      setPreviewUrl(`${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile.resume.url}` || '/assets/resume.png');
+      setPreviewUrl('/assets/resume.png');
     }
   }, [userProfile]);
 
@@ -69,7 +70,8 @@ const ResumeSection = ({ userProfile }) => {
 
       // Update local state
       setResumeFile(file);
-      setPreviewUrl(`${process.env.NEXT_PUBLIC_STRAPI_URL}${data[0].url}`);
+      // setPreviewUrl(`${process.env.NEXT_PUBLIC_STRAPI_URL}${data[0].url}`);
+    dispatch(checkUserStatus())
       
     } catch (error) {
       console.error('Error uploading resume:', error);

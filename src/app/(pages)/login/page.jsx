@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserStatus } from "@/app/Store/ReduxSlice/authSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { trackDevice } from "@/components/DeviceTracker";
 
 export default function LoginPage() {
   const router = useRouter();
-
+  const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
@@ -32,25 +33,39 @@ export default function LoginPage() {
   const handleLinkedInLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/linkedin`;
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const email = e.target.email.value;
+  const password = e.target.password.value;
 
-    try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local`, {
-        identifier: email,
-        password,
-      });
+  try {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local?populate=*`, {
+      identifier: email,
+      password,
+    });
 
-      const { jwt, user } = response.data;
-      localStorage.setItem("token", jwt);
+    const { jwt, user } = response.data;
+    localStorage.setItem("token", jwt);
+
+    if (user) {
+      const userResponse = await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/me?populate=devices`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      
+      await trackDevice(user.id, rememberMe, jwt, userResponse.data.devices);
+      dispatch(checkUserStatus())
       router.push('/');
-    } catch (error) {
-      console.error("Login Error:", error);
-      alert("Login failed. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert("Login failed. Please try again.");
+  }
+};
   return (
     <AuthLayout
       title="Nice To See You Again"
@@ -81,7 +96,12 @@ export default function LoginPage() {
 
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-5">
-            <input type="checkbox" className="h-4 w-4" />
+            <input
+              type="checkbox"
+              className="h-4 w-4"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
             <label htmlFor="remember" className="text-[#989898]">
               Remember me
             </label>
@@ -97,9 +117,9 @@ export default function LoginPage() {
         >
           Signin
         </button>
-        <hr className="border-t border-[#B6B6B6] w-full "/>
+        <hr className="border-t border-[#B6B6B6] w-full " />
 
-        <button 
+        <button
           type="button"
           onClick={handleGoogleLogin}
           className="w-full rounded-md cursor-pointer text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3"
@@ -113,14 +133,14 @@ export default function LoginPage() {
           /> Sign in with Google
         </button>
 
-        <button 
+        <button
           type="button"
           onClick={handleLinkedInLogin}
           className="w-full rounded-md cursor-pointer text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3"
         >
           <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
             <LinkedinIcon color="#ffffff" width={20} height={20} />
-          </span> 
+          </span>
           Sign in with LinkedIn
         </button>
 

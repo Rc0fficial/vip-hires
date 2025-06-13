@@ -72,14 +72,14 @@ const UserInfoForm = ({ userProfile,formData,setFormData,activeSocialField ,setA
                     <SelectField
                         label="Country"
                         value={formData.country}
-                        onChange={(value) => handleSelectChange('country', value)}
+                        onChange={handleInputChange}
                         options={countryOptions}
                         name="country"
                     />
                     <SelectField
                         label="City"
                         value={formData.city}
-                        onChange={(value) => handleSelectChange('city', value)}
+                        onChange={handleInputChange}
                         options={cityOptions}
                         name="city"
                         disabled={!formData.country}

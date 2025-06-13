@@ -5,6 +5,7 @@ import { updateProfileField } from '@/app/Store/ReduxSlice/updateProfileSlice'
 import JobCard from '@/components/common/JobCard'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 
 const JobsPage = () => {
@@ -12,55 +13,63 @@ const JobsPage = () => {
     const jobs = useSelector(selectAllJobs);
     const status = useSelector(getJobsStatus);
     const error = useSelector(getJobsError);
-  const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchJobs());
         }
     }, [status, dispatch]);
 
-    
-const handleSaveJob = async (job) => {
-  try {
-    // First check if the job is already saved to prevent duplicates
-    const isAlreadySaved = userProfile?.savedJobs?.some(
-      savedJob => savedJob.documentId === job.documentId
-    );
 
-    if (isAlreadySaved) {
-      // Optionally show a message that job is already saved
-      return;
-    }
+    const handleSaveJob = async (job) => {
+        try {
+            const isAlreadySaved = userProfile?.jobs?.some(
+                savedJob => savedJob.documentId === job.documentId
+            );
 
-    // Prepare the update payload in the required format
-    const updatePayload= {
-      
-        
-          connect: [
-            ...(userProfile?.savedJobs?.map(job => job.documentId) || []), // Existing IDs
-            job.documentId // New ID to add
-          ]
-  
-     
+            if (isAlreadySaved) {
+                // Unsaving the job
+                const updatePayload = {
+                    disconnect: [job.documentId]
+                };
+
+                await dispatch(updateProfileField({
+                    id: userProfile.documentId,
+                    fieldName: 'jobs',
+                    value: updatePayload
+                })).unwrap();
+
+                toast.success("Job removed from saved list");
+            } else {
+                // Saving the job
+                const updatePayload = {
+                    connect: [
+                        ...(userProfile?.jobs?.map(job => job.documentId) || []),
+                        job.documentId
+                    ]
+                };
+
+                await dispatch(updateProfileField({
+                    id: userProfile.documentId,
+                    fieldName: 'jobs',
+                    value: updatePayload
+                })).unwrap();
+
+                toast.success("Job saved successfully");
+            }
+
+            dispatch(fetchJobs());
+            dispatch(checkUserStatus());
+        } catch (error) {
+            console.error('Failed to update job:', error);
+            toast.error(error.message || "Failed to update job");
+        }
     };
 
-    await dispatch(updateProfileField({
-      id: userProfile.documentId,
-      fieldName: 'jobs', // Make sure this matches your Strapi model
-      value: updatePayload
-    })).unwrap();
 
-    // Refresh the jobs list and user profile
-    dispatch(fetchJobs());
-    dispatch(checkUserStatus());
-    
-    // Optionally show success notification
-  } catch (error) {
-    console.error('Failed to save job:', error);
-    // Optionally show error notification to user
-  }
-};
-
+    console.log(jobs)
+    console.log(userProfile?.jobs)
+    const savedJobIds = new Set(userProfile?.jobs?.map(job => job.documentId) || []);
     return (
         <div className=''>
             <h1 className='font-semibold capitalize md:text-2xl text-3d3'>recommended jobs</h1>
@@ -106,21 +115,26 @@ const handleSaveJob = async (job) => {
             </div>
             {jobs?.length > 0 ?
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10'>
-                    {jobs?.map((job, index) => (
-                        <JobCard
-                            key={index}
+                    {jobs.map((job, index) => {
+                        // Determine if job is saved outside the JobCard component
+                        const isSaved = savedJobIds.has(job.documentId);
 
-                            title={job.jobTitle}
-                            employmentType={job?.employmentType}
-                            experienceLevel={job?.employmentType}
-                            preferredWork={job?.preferredWork}
-                            id={job?.documentId}
-                            lock={job?.isLocked}
-                            postDate={job?.postDate}
-                            handleSaveJob ={()=>handleSaveJob(job)}
-                        />
-                    ))}
-                    {/* <JobCard lock={true} text={"Subscribe now to unlock 10 more jobs"} /> */}
+                        return (
+                            <JobCard
+                                key={job.documentId || index}
+                                title={job.jobTitle}
+                                employmentType={job?.employmentType}
+                                experienceLevel={job?.employmentType}
+                                preferredWork={job?.preferredWork}
+                                id={job?.documentId}
+                                lock={userProfile?.isPremium ? false : job?.isLocked}
+                                postDate={job?.postDate}
+                                saved={isSaved}  // Pass the pre-calculated value
+                                handleSaveJob={() => handleSaveJob(job)}
+                            />
+                        );
+                    })}
+
                 </div>
                 :
                 <>

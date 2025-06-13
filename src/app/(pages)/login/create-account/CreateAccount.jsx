@@ -25,6 +25,7 @@ import { checkUserStatus } from "@/app/Store/ReduxSlice/authSlice";
 import axios from "axios";
 import { uploadFileToStrapi } from "@/app/utils/strapiUpload";
 import { fetchCategories, getCategoriesStatus, selectAllCategories } from "@/app/Store/ReduxSlice/categoriesSlice";
+import { createInitialNotificationSettings } from "@/app/utils/createInitialNotificationSettings";
 
 const FirstStepSchema = z.object({
   firstName: z.string()
@@ -121,7 +122,7 @@ const CreateAccount = () => {
     });
     const [previewImage, setPreviewImage] = useState(null);
     const profileImage = watch("profileImage");
-    const { user, isAuthenticated } = useSelector((state) => state.auth);
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
     // console.log(user, isAuthenticated)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -677,10 +678,10 @@ const CreateAccount = () => {
         selectedSkills: []
       }
     });
+    const dispatch = useDispatch()
 
     const router = useRouter();
-    const { user, isAuthenticated } = useSelector((state) => state.auth);
-
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
 
     const onSubmit = async (data) => {
       // Merge formData and new data
@@ -697,7 +698,6 @@ const CreateAccount = () => {
         preferedWork: [preferedWork],
         users_permissions_user: user?.id
       };
-
       const token = localStorage.getItem("token");
 
       try {
@@ -729,7 +729,7 @@ const CreateAccount = () => {
           ...uploadedFiles
         };
 
-        console.log("Complete Form Data:", completeFormData);
+        console.log("Complete Form Data:", userProfile);
 
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/profiles`,
@@ -743,7 +743,42 @@ const CreateAccount = () => {
 
         console.log("Response Data:", response.data);
         setCompletedSteps((prev) => [...prev, "third"]);
+        // 2. Create notification settings for the new user
+        if(response.data?.data?.id){
+
+          const initialSettings = {
+            general: {
+            activeAll: false,
+            accountUpdates: false,
+            subscriptionBilling: false,
+            systemAnnouncements: false
+          },
+          job: {
+            activeAll: false,
+            newJobMatches: false,
+            applicationUpdates: false,
+            jobRecommendations: false,
+            savedJobReminders: false,
+            employerMessages: false
+          },
+          post: {
+            activeAll: false,
+            newRecommendedPosts: false,
+            submittedPostStatus: false,
+            draftPostUpdates: false
+          },
+          profile: response?.data?.data?.documentId
+        };
+        console.log(initialSettings)
+        
+        const response2 = await axios.post(
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/notification-settings`,
+          { data: initialSettings }
+        );
+        // await createInitialNotificationSettings(userProfile.id);
+        dispatch(checkUserStatus())
         router.push("/");
+      }
       } catch (error) {
         console.error("Error submitting form:", error?.response?.data || error);
         // Add user-friendly error handling here

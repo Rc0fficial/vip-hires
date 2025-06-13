@@ -60,7 +60,7 @@ const Education = ({ user, userProfile }) => {
     const handleOpenModal = (editId = null) => {
         if (editId) {
             // Find the education in userProfile.user_educations
-            const educationToEdit = userProfile.user_educations.find(edu => edu.id === editId);
+            const educationToEdit = userProfile.user_educations.find(edu => edu.documentId === editId);
             if (educationToEdit) {
                 setFormData({
                     university: educationToEdit.universityName || '',
@@ -104,12 +104,12 @@ const Education = ({ user, userProfile }) => {
     const handleSave = async () => {
         // Validate all fields
         const newErrors = {
-            university: !formData.university.trim(),
+            university: !formData.university,
             fieldOfStudy: !formData.fieldOfStudy,
             degree: !formData.degree,
-            grade: !formData.grade.trim(),
-            startYear: !formData.startYear.trim(),
-            endYear: !formData.endYear.trim()
+            grade: !formData.grade,
+            startYear: !formData.startYear,
+            endYear: !formData.endYear
         };
 
         setErrors(newErrors);
@@ -132,7 +132,7 @@ const Education = ({ user, userProfile }) => {
             if (isEditing) {
                 // Update existing education
                 const response = await axios.put(
-                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations/${currentEditId}`,
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/user-educations/${currentEditId}`,
                     { data: payload },
                     getAuthHeaders()
                 );
@@ -140,7 +140,7 @@ const Education = ({ user, userProfile }) => {
             } else {
                 // Create new education
                 const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations`,
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/user-educations`,
                     { data: payload },
                     getAuthHeaders()
                 );
@@ -175,7 +175,7 @@ const Education = ({ user, userProfile }) => {
     const handleDelete = async (id) => {
         try {
             await axios.delete(
-                `${process.env.NEXT_PUBLIC_STRAPI_URL}/user-educations/${id}`,
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/user-educations/${id}`,
                 getAuthHeaders()
             );
             dispatch(checkUserStatus())
@@ -227,7 +227,7 @@ const Education = ({ user, userProfile }) => {
                                     ({education?.startYear}-{education?.endYear})
                                 </h1>
                                 <button
-                                    onClick={() => handleOpenModal(education.id)}
+                                    onClick={() => handleOpenModal(education.documentId)}
                                     className="opacity-0 group-hover:opacity-100 transition-opacity"
                                 >
                                     <EditIcon color="#707070" height={24} width={24} className="cursor-pointer" />

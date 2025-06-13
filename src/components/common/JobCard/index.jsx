@@ -50,7 +50,7 @@ const JobCard = ({
                     </div>
                     {saved ? 
                         <HeartFilledIcon 
-                             onClick={handleUnSaveJob}
+                             onClick={handleSaveJob}
                             className={`cursor-pointer ${lock ? 'fill-white' : 'fill-green'}`}  
                             height={32} 
                             width={32} 

@@ -1,22 +1,88 @@
 'use client'
 import DownArrowSvg from '@/components/Icons/DownArrowIcon.svg'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { updateNotificationSettings } from './useNotificationSetting'
+import { useDispatch } from 'react-redux'
+import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice'
 
-const GeneralNotifications = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [allActive, setAllActive] = useState(false)
-    const [accountUpdates, setAccountUpdates] = useState(false)
-    const [subscriptionReminders, setSubscriptionReminders] = useState(false)
-    const [systemAnnouncements, setSystemAnnouncements] = useState(false)
+const GeneralNotifications = ({ settings, onUpdate }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [localSettings, setLocalSettings] = useState({
+        allActive: false,
+        accountUpdates: false,
+        subscriptionReminders: false,
+        systemAnnouncements: false
+    });
+const dispatch = useDispatch()
+    // Initialize local state when settings prop changes
+    useEffect(() => {
+        if (settings) {
+            setLocalSettings({
+                allActive: settings.general?.activeAll || false,
+                accountUpdates: settings.general?.accountUpdates || false,
+                subscriptionReminders: settings.general?.subscriptionBilling || false,
+                systemAnnouncements: settings.general?.systemAnnouncements || false
+            });
+        }
+    }, [settings]);
 
-    const toggleAll = () => {
-        const newState = !allActive
-        setAllActive(newState)
-        setAccountUpdates(newState)
-        setSubscriptionReminders(newState)
-        setSystemAnnouncements(newState)
-    }
+    const toggleAll = async () => {
+        const newState = !localSettings.allActive;
+        const updatedSettings = {
+            ...localSettings,
+            allActive: newState,
+            accountUpdates: newState,
+            subscriptionReminders: newState,
+            systemAnnouncements: newState
+        };
+        
+        setLocalSettings(updatedSettings);
+        await saveSettings(updatedSettings);
+    };
+
+    const handleToggle = async (field) => {
+        const updatedSettings = {
+            ...localSettings,
+            [field]: !localSettings[field]
+        };
+        
+        // If turning off a specific setting, ensure "allActive" is also turned off
+        if (updatedSettings[field] === false && updatedSettings.allActive === true) {
+            updatedSettings.allActive = false;
+        }
+        
+        setLocalSettings(updatedSettings);
+        await saveSettings(updatedSettings);
+    };
+
+    const saveSettings = async (updatedLocalSettings) => {
+        try {
+            const generalSettings = {
+                activeAll: updatedLocalSettings.allActive,
+                accountUpdates: updatedLocalSettings.accountUpdates,
+                subscriptionBilling: updatedLocalSettings.subscriptionReminders,
+                systemAnnouncements: updatedLocalSettings.systemAnnouncements
+            };
+            
+            const response = await updateNotificationSettings(settings.documentId, {
+                general: generalSettings
+            });
+            
+            onUpdate(prev => ({
+                ...prev,
+                general: generalSettings
+            }));
+            dispatch(checkUserStatus())
+            return response;
+        } catch (error) {
+            console.error('Error saving settings:', error);
+            // Optionally revert local state on error
+            setLocalSettings({
+                ...localSettings
+            });
+        }
+    };
 
     return (
         <div className='border-b border-[#DCDCDC] '>
@@ -46,12 +112,12 @@ const GeneralNotifications = () => {
                     >
                         {/* active all notifications */}
                         <div className='flex justify-between items-center gap-4 py-4'>
-                            <h1 className={`${allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
+                            <h1 className={`${localSettings.allActive ? "text-5d5" : "text-989"} md:text-xl capitalize font-semibold`}>
                                 active all general settings
                             </h1>
                             {/* toggle button */}
                             <div 
-                                className={`min-w-10 h-5 rounded-full flex  items-center px-1 cursor-pointer ${allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${localSettings.allActive ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
                                 onClick={toggleAll}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
@@ -61,15 +127,15 @@ const GeneralNotifications = () => {
                         {/* Account updates */}
                         <div className='flex justify-between gap-4 py-4'>
                             <div>
-                                <h1 className={`${accountUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
+                                <h1 className={`${localSettings.accountUpdates ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Account updates
                                 </h1>
                                 <h4 className='text-989 text-xs md:text-sm capitalize'>Get alerts for password changes, security issues, and login activity.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${accountUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
-                                onClick={() => setAccountUpdates(!accountUpdates)}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${localSettings.accountUpdates ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                onClick={() => handleToggle('accountUpdates')}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
                             </div>
@@ -78,15 +144,15 @@ const GeneralNotifications = () => {
                         {/* subscription and billing */}
                         <div className='flex justify-between gap-4 py-4'>
                             <div>
-                                <h1 className={`${subscriptionReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
+                                <h1 className={`${localSettings.subscriptionReminders ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     Subscription and billing reminders
                                 </h1>
                                 <h4 className='text-989 text-xs md:text-sm capitalize'>Stay informed on renewals, payments, and billing issues.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${subscriptionReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
-                                onClick={() => setSubscriptionReminders(!subscriptionReminders)}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${localSettings.subscriptionReminders ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                onClick={() => handleToggle('subscriptionReminders')}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
                             </div>
@@ -95,15 +161,15 @@ const GeneralNotifications = () => {
                         {/* system announcement */}
                         <div className='flex justify-between gap-4 py-4'>
                             <div>
-                                <h1 className={`${systemAnnouncements ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
+                                <h1 className={`${localSettings.systemAnnouncements ? "text-5d5" : "text-989"} md:text-lg capitalize font-semibold`}>
                                     System announcements and feature updates
                                 </h1>
                                 <h4 className='text-989 text-xs md:text-sm capitalize'>Get notified about new features and important changes.</h4>
                             </div>
                             {/* toggle button */}
                             <div 
-                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${systemAnnouncements ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
-                                onClick={() => setSystemAnnouncements(!systemAnnouncements)}
+                                className={`min-w-10 h-5 rounded-full flex items-center px-1 cursor-pointer ${localSettings.systemAnnouncements ? 'bg-green justify-end' : 'bg-dcd justify-start'}`}
+                                onClick={() => handleToggle('systemAnnouncements')}
                             >
                                 <div className='h-4 w-4 rounded-full bg-white'></div>
                             </div>

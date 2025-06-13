@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '@/components/common/Modal'
 import InputField from '@/components/common/InputField'
 import AddIcon from '@/components/Icons/AddIcon.svg'
@@ -12,17 +12,19 @@ import { loginUser } from '@/app/Store/ReduxSlice/loginSlice'
 import toast from 'react-hot-toast'
 import { updateProfileField } from '@/app/Store/ReduxSlice/updateProfileSlice'
 import { checkUserStatus } from '@/app/Store/ReduxSlice/authSlice'
+import TrashIcon from '@/components/Icons/TrashIcon.svg'
+import axios from 'axios'
 
 const SettingPage = () => {
-  const [phones, setPhones] = useState([{ number: '' }])
+
   const [errors, setErrors] = useState({}) // Start with one empty email field
-  const [showEmail,setShowEmail]=useState(false)
+  const [showEmail, setShowEmail] = useState(false)
   const [formData, setFormData] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
-  
+
   const dispatch = useDispatch();
   // const [errors, setErrors] = useState({});
   const [password, setPassword] = useState("")
@@ -31,23 +33,19 @@ const SettingPage = () => {
   const [passwordModel, setPasswordModel] = useState(false)
   const [securityModel, setSecurityModel] = useState(false)
   const [pendingAction, setPendingAction] = useState(null) // Track which action to perform after security check
-  const { user, isAuthenticated ,userProfile} = useSelector((state) => state.auth);
+  const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
   const router = useRouter()
   const [secondaryEmail, setSecondaryEmail] = useState(userProfile?.secondary_email || ''); // Start with one empty email field
-
-
-  const handlePhoneChange = (index, value) => {
-    const updatedPhones = [...phones]
-    updatedPhones[index] = { number: value }
-    setPhones(updatedPhones)
-
-    // Clear error when changing
-    if (errors[`phone_${index}`]) {
-      const newErrors = { ...errors }
-      delete newErrors[`phone_${index}`]
-      setErrors(newErrors)
+  const [secondaryPhoneNumber, setSecondaryPhoneNumber] = useState(userProfile?.secondary_phone || '');
+  const [showPhoneInput, setShowPhoneInput] = useState(false);
+  useEffect(() => {
+    if (userProfile) {
+      setSecondaryEmail(userProfile?.secondary_email)
+      setSecondaryPhoneNumber(userProfile?.secondary_phone)
     }
-  }
+  }, [userProfile])
+
+
 
 
   const handlePasswordChange = (e) => {
@@ -58,51 +56,13 @@ const SettingPage = () => {
     }));
   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.currentPassword) {
-      newErrors.currentPassword = 'Current password is required';
-    }
-    if (!formData.newPassword) {
-      newErrors.newPassword = 'New password is required';
-    } else if (formData.newPassword.length < 6) {
-      newErrors.newPassword = 'Password must be at least 6 characters';
-    }
-    if (formData.confirmPassword !== formData.newPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
- const handleShowEmail=()=>{
-  setShowEmail(true)
- }
-
-  const handleAddEmail = () => {
-  };
-
-  const handleAddPhone = () => {
-    setPhones([...phones, { number: '' }])
+  const handleShowEmail = () => {
+    setShowEmail(true)
   }
-  const validatePhones = () => {
-    const newErrors = {}
-    let isValid = true
 
-    phones.forEach((phone, index) => {
-      if (!phone.number) {
-        newErrors[`phone_${index}`] = 'Phone number is required'
-        isValid = false
-      } else if (!validatePhoneNumber(phone.number)) {
-        newErrors[`phone_${index}`] = 'Invalid phone number'
-        isValid = false
-      }
-    })
 
-    setErrors(newErrors)
-    return isValid
-  }
 
   // Security verification handlers
   const handleSecurityVerified = async () => {
@@ -223,29 +183,147 @@ const SettingPage = () => {
     setPendingAction(null);
   }
 
-  const handleSaveEmail = async() => {
-     try {
-          await dispatch(updateProfileField({
-            id: userProfile.documentId,
-            fieldName: 'secondary_email',
-            value: secondaryEmail
-          })).unwrap();
+  const handleSaveEmail = async () => {
+    try {
+      await dispatch(updateProfileField({
+        id: userProfile.documentId,
+        fieldName: 'secondary_email',
+        value: secondaryEmail
+      })).unwrap();
 
-          dispatch(checkUserStatus())
-          handleCloseEmailModel()
-        } catch (error) {
-          console.error('Failed to update summary:', error);
-        }
-  }
-  const handleSavePhone = () => handleClosePhoneModel()
-  const handleSavePassword = () => handleClosePasswordModel()
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (validatePhones()) {
-      // Submit logic here
-      console.log('Valid phone numbers:', phones)
+      dispatch(checkUserStatus())
+      handleCloseEmailModel()
+    } catch (error) {
+      console.error('Failed to update summary:', error);
     }
   }
+
+  const handleDeleteSecondaryEmail = async () => {
+    try {
+      await dispatch(updateProfileField({
+        id: userProfile.documentId,
+        fieldName: 'secondary_email',
+        value: null  // Set to null instead of empty string
+      })).unwrap();
+
+      dispatch(checkUserStatus());
+      setShowEmail(false)
+      setSecondaryEmail(''); // Clear local state
+    } catch (error) {
+      console.error('Failed to delete secondary email:', error);
+    }
+  };
+  // Handle save phone number
+  const handleSavePhone = async () => {
+    try {
+      await dispatch(updateProfileField({
+        id: userProfile.documentId,
+        fieldName: 'secondary_phone',
+        value: secondaryPhoneNumber
+      })).unwrap();
+
+      dispatch(checkUserStatus());
+      handleClosePhoneModel();
+      setShowPhoneInput(false);
+    } catch (error) {
+      console.error('Failed to update phone:', error);
+    }
+  };
+
+  // Handle delete secondary phone
+  const handleDeletePhone = async () => {
+    try {
+      await dispatch(updateProfileField({
+        id: userProfile.documentId,
+        fieldName: 'secondary_phone',
+        value: null
+      })).unwrap();
+
+      dispatch(checkUserStatus());
+      setSecondaryPhoneNumber('');
+      setShowPhoneInput(false);
+    } catch (error) {
+      console.error('Failed to delete phone:', error);
+    }
+  };
+  const changePassword = async (currentPassword, newPassword, confirmPassword) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/change-password`,
+        {
+          currentPassword,
+          password: newPassword,
+          passwordConfirmation: confirmPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response?.data?.error || error.message;
+    }
+  };
+  const handleSavePassword = async () => {
+    // Validate inputs first
+    if (!formData.currentPassword || !formData.newPassword || !formData.confirmPassword) {
+      setErrors({
+        currentPassword: !formData.currentPassword ? 'Current password is required' : '',
+        newPassword: !formData.newPassword ? 'New password is required' : '',
+        confirmPassword: !formData.confirmPassword ? 'Please confirm your new password' : '',
+      });
+      return;
+    }
+
+    if (formData.newPassword !== formData.confirmPassword) {
+      setErrors({
+        ...errors,
+        confirmPassword: 'Passwords do not match',
+      });
+      return;
+    }
+
+    if (formData.newPassword.length < 8) {
+      setErrors({
+        ...errors,
+        newPassword: 'Password must be at least 8 characters',
+      });
+      return;
+    }
+
+    try {
+      // Call the change password API
+      await changePassword(
+        formData.currentPassword,
+        formData.newPassword,
+        formData.confirmPassword
+      );
+
+      // Success handling
+      toast.success('Password changed successfully');
+      handleClosePasswordModel();
+      setFormData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      });
+    } catch (error) {
+      // Error handling
+      toast.error(error.message || 'Failed to change password');
+      console.error('Password change error:', error);
+    }
+  };
+  const maskPhoneNumber = (phoneNumber) => {
+    if (!phoneNumber || phoneNumber.length < 3) return phoneNumber;
+
+    const firstTwo = phoneNumber.substring(0, 2);
+    const lastOne = phoneNumber.substring(phoneNumber.length - 1);
+    const stars = '*'.repeat(phoneNumber.length - 3);
+
+    return `${firstTwo}${stars}${lastOne}`;
+  };
   return (
     <>
       <div className={`col-span-2 rounded-3xl py-10 px-5 md:px-12  bg-white shad`}>
@@ -253,12 +331,16 @@ const SettingPage = () => {
         <div className='mt-6 md:mt-10'>
           <div onClick={handleSecureEmailClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
             <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>email address</h1>
-            <h3 className='text-989 text-sm md:text-lg'>moha************.com</h3>
+            <h3 className='text-989 text-sm md:text-lg'>{userProfile?.email
+              ? maskPhoneNumber(userProfile.email)
+              : 'Not provided'}</h3>
           </div>
 
           <div onClick={handleSecurePhoneClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
             <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>phone number</h1>
-            <h3 className='text-989 text-sm md:text-lg'>01*********9</h3>
+            <h3 className='text-989 text-sm md:text-lg'>{userProfile?.phoneNumber
+              ? maskPhoneNumber(userProfile.phoneNumber)
+              : 'Not provided'}</h3>
           </div>
 
           <div onClick={handleSecurePasswordClick} className='flex flex-col md:flex-row gap-2 cursor-pointer justify-between pt-4 pb-6 border-b border-dcd'>
@@ -270,9 +352,11 @@ const SettingPage = () => {
             href={'/settings/logged-in-devices'}
             onClick={(e) => handleSecureDevicesClick(e, 'devices')}
           >
-            <div className='flex justify-between  flex-col md:flex-row gap-2 cursor-pointer pt-4 pb-6 border-b border-dcd'>
+            <div className='flex justify-between flex-col md:flex-row gap-2 cursor-pointer pt-4 pb-6 border-b border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Logged in Devices</h1>
-              <h3 className='text-989  text-sm md:text-lg'>3 devices</h3>
+              <h3 className='text-989 text-sm md:text-lg'>
+                {user?.devices?.filter(device => !device.isRemembered).length || 0} devices
+              </h3>
             </div>
           </Link>
 
@@ -280,113 +364,158 @@ const SettingPage = () => {
             href={'/settings/remember-devices'}
             onClick={(e) => handleSecureDevicesClick(e, 'remembered-devices')}
           >
-            <div className='flex justify-between  flex-col md:flex-row gap-2 pt-4 pb-6 cursor-pointer border-dcd'>
+            <div className='flex justify-between flex-col md:flex-row gap-2 pt-4 pb-6 cursor-pointer border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Devices that remember your password</h1>
-              <h3 className='text-989 text-sm md:text-lg'>3 devices</h3>
+              <h3 className='text-989 text-sm md:text-lg'>
+                {user?.devices?.filter(device => device.isRemembered).length || 0} devices
+              </h3>
             </div>
           </Link>
         </div>
       </div>
 
-      {/* email address model */}
-      <Modal isOpen={emailModel} onClose={handleCloseEmailModel} onSave={handleSaveEmail} id="Email Address">
-        <div className=' -mt-6'>
 
-
+      {/* Email Address Modal */}
+      <Modal
+        isOpen={emailModel}
+        onClose={handleCloseEmailModel}
+        onSave={handleSaveEmail}
+        id="Email Address"
+      >
+        <div className="-mt-6">
           <h4 className='text-989 mb-6'>Emails you've added</h4>
           <div className='flex flex-col gap-6'>
+            {/* Primary Email */}
             <InputField
               label={'Primary Email'}
-              // placeholder={`example${index + 1}@gmail.com`}
               type="email"
               value={user?.email}
-              // onChange={(e) => handleEmailChange(index, e.target.value)}
-              // name={`email_${index}`}
               disabled={true}
               error={""}
             />
-           {showEmail &&
-              <InputField
-              label={`Secondary Email`}
-              placeholder={`secondary@gmail.com`}
-              type="email"
-              value={secondaryEmail}
-              onChange={(e) => setSecondaryEmail(e.target.value)}
-              name={`secondaryEmail`}
-              error={""}
-              />
-            }
-           {userProfile?.secondary_email &&
-              <InputField
-              label={`Secondary Email`}
-              placeholder={`secondary@gmail.com`}
-              type="email"
-              value={secondaryEmail}
-              onChange={(e) => setSecondaryEmail(e.target.value)}
-              name={`secondaryEmail`}
-              error={""}
-              />
-            }
-         
+
+            {/* Secondary Email Field */}
+            {(showEmail || userProfile?.secondary_email) && (
+              <div className="relative">
+                <InputField
+                  label={'Secondary Email'}
+                  placeholder={'secondary@gmail.com'}
+                  type="email"
+                  value={secondaryEmail}
+                  onChange={(e) => setSecondaryEmail(e.target.value)}
+                  name={'secondaryEmail'}
+                  error={""}
+                />
+                {userProfile?.secondary_email && (
+                  <button
+                    onClick={handleDeleteSecondaryEmail}
+                    className="absolute right-2 top-10 flex items-center text-red-500 hover:text-red-700"
+                    title="Delete secondary email"
+                  >
+                    <TrashIcon color="#707070" height={24} width={24} className="cursor-pointer my-auto" /> {/* Replace with your delete icon component */}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
-          {userProfile?.secondary_email ===""&&
-          <button
-          onClick={handleShowEmail}
-          className="px-4 py-2 border border-green flex justify-center items-center gap-2 text-green text-lg font-semibold w-full max-w-[240px] rounded-full mt-8"
-          >
-            <AddIcon height={24} width={24} color={"#009969"} />
-            Add Email address
-          </button>
-          }
+
+          {/* Add Email Button */}
+          {!showEmail && !userProfile?.secondary_email && (
+            <button
+              onClick={handleShowEmail}
+              className="px-4 py-2 border border-green flex justify-center items-center gap-2 text-green text-lg font-semibold w-full max-w-[240px] rounded-full mt-8"
+            >
+              <AddIcon height={24} width={24} color={"#009969"} />
+              Add Email address
+            </button>
+          )}
         </div>
       </Modal>
       {/* Phone model */}
-      <Modal isOpen={phoneModel} onClose={handleClosePhoneModel} onSave={handleSavePhone} id="Phone Number">
-        <div className=' -mt-6'>
 
+      <Modal
+        isOpen={phoneModel}
+        onClose={handleClosePhoneModel}
+        onSave={handleSavePhone}
+        id="Phone Number"
+      >
+        <div className="-mt-6">
+          <h4 className='text-989 mb-6 text-xs md:text-[16px]'>
+            Phone numbers you've added, your primary number is the one for resetting password.
+          </h4>
 
-          <h4 className='text-989 mb-6 text-xs md:text-[16px]'>Phone numbers you've added , your primary number is the one for resetting password .</h4>
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-6">
-              {phones.map((phone, index) => (
+          <div className="flex flex-col gap-6">
+            {/* Primary Phone (non-editable) */}
+            <PhoneInputField
+              value={userProfile?.phoneNumber || ''}
+              label="Primary Phone"
+              disabled={true}
+              error={errors?.primaryPhone}
+            />
+
+            {/* Secondary Phone Input (shown when adding or when exists) */}
+            {(showPhoneInput || userProfile?.secondary_phone) && (
+              <div className="relative">
                 <PhoneInputField
-                  key={index}
-                  value={phone.number}
-                  onChange={(value) => handlePhoneChange(index, value)}
-                  label={`Phone ${index + 1}`}
-                  error={errors[`phone_${index}`]}
+                  value={secondaryPhoneNumber}
+                  onChange={(value) => setSecondaryPhoneNumber(value)}
+                  label="Secondary Phone"
+                  error={errors?.secondaryPhone}
                 />
-              ))}
-            </div>
+                {userProfile?.secondary_phone && (
+                  <button
+                    type="button"
+                    onClick={handleDeletePhone}
+                    className="absolute right-2 top-10 flex items-center text-red-500 hover:text-red-700"
+                    title="Delete phone number"
+                  >
+                    <TrashIcon color="#707070" height={24} width={24} className="cursor-pointer my-auto" /> {/* Replace with your delete icon component */}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
 
+          {/* Add Phone Button (shown when no secondary phone exists) */}
+          {!showPhoneInput && !userProfile?.secondary_phone && (
             <button
               type="button"
-              onClick={handleAddPhone}
+              onClick={() => setShowPhoneInput(true)}
               className="px-4 py-2 border-2 border-green flex justify-center items-center gap-2 text-green text-sm md:text-lg font-semibold w-full max-w-[260px] rounded-full mt-8"
             >
               <AddIcon height={24} width={24} color={"#009969"} />
               Add Phone Number
             </button>
+          )}
 
+          {/* Save Button (only shown when editing) */}
+          {(showPhoneInput || userProfile?.secondary_phone) && (
             <button
-              type="submit"
+              type="button"
+              onClick={handleSavePhone}
               className="mt-6 px-6 py-2 md:py-3 bg-green text-xs md:text-[16px] text-white rounded-lg font-semibold"
             >
               Save Changes
             </button>
-          </form>
+          )}
         </div>
       </Modal>
 
 
+
       {/* Change Password model */}
-      <Modal isOpen={passwordModel} onClose={handleClosePasswordModel} onSave={handleSavePassword} id="Change Password">
-        <div className=' -mt-6'>
-
-
-          <h4 className='text-989 mb-6'>Create a new password that is at least 8 characters long.</h4>
-          <div className='flex flex-col gap-6'>
-
+      <Modal
+        isOpen={passwordModel}
+        onClose={handleClosePasswordModel}
+        onSave={handleSavePassword}
+        id="Change Password"
+      // isProcessing={isProcessing} // Add this if you have a loading state
+      >
+        <div className="-mt-6">
+          <h4 className="text-989 mb-6">
+            Create a new password that is at least 8 characters long.
+          </h4>
+          <div className="flex flex-col gap-6">
             <InputField
               label="Current Password"
               type="password"
@@ -416,9 +545,7 @@ const SettingPage = () => {
               placeholder="Re-enter new password"
               error={errors.confirmPassword}
             />
-
           </div>
-
         </div>
       </Modal>
 
@@ -431,16 +558,17 @@ const SettingPage = () => {
       >
         <div className='-mt-6'>
           <h4 className='text-989 text-xs md:text-[16px] mb-6'>For security reasons, please enter your password to continue.</h4>
-          <div className='flex flex-col gap-6'>
+          <form onSubmit={handleSecurityVerified} className='flex flex-col gap-6'>
             <InputField
               label="Password"
               type="password"
               name="password"
+              autoFocus={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
             />
-          </div>
+          </form>
         </div>
       </SecurityModel>
 

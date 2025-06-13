@@ -1,7 +1,8 @@
 'use client'
 import RepeatArrowIcon from '@/components/Icons/RepeatArrowIcon.svg'
 import DynamicTable from '@/components/Table';
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const SubscriptionSettingPage = () => {
     const [isAutoSubscribe, setIsAutoSubscribe] = useState(true);
@@ -9,6 +10,10 @@ const SubscriptionSettingPage = () => {
     const toggleAutoSubscribe = () => {
         setIsAutoSubscribe(!isAutoSubscribe);
     };
+ 
+    // Payment method selection state
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
+   
     const columns = [
         { header: 'Subscription Plan', accessor: 'plan' },
         { header: 'Status', accessor: 'status' },
@@ -19,36 +24,60 @@ const SubscriptionSettingPage = () => {
         { header: 'Date Of Expired', accessor: 'ExpireDate' },
       ];
     
-      const data = [
-        {
-          plan: 'Pro Plan',
-          status: <span className="px-2 py-1 text-xs text-[#17C653] bg-[#17C6531A] rounded-full">Active</span>,
-          duration: '1 Month',
-          amount: '$19.99',
-          paymentMethod: 'Credit Card',
-          purchasedDate:"10-03-2025",
-          ExpireDate:"10-03-2026",
-        },
-        {
-          plan: 'Pro Plan',
-          status: <span className="px-2 py-1 text-xs text-[#707070] bg-[#70707026] rounded-full">Expired</span>,
-          duration: '1 Year',
-          amount: '$49.99',
-          paymentMethod: 'PayPal',
-          purchasedDate:"10-03-2025",
-          ExpireDate:"10-03-2026",
-        },
-        {
-          plan: 'Unlimited Plan',
-          status: <span className="px-2 py-1 text-xs text-[#FF6B6B] bg-[#FF6B6B1A] rounded-full">Canceled</span>,
-          duration: '1 Year',
-          amount: '$99.99',
-          paymentMethod: 'Bank Transfer',
-          purchasedDate:"10-03-2025",
-          ExpireDate:"10-03-2026",
-        },
-      ];
+    //   const data = [
+    //     {
+    //       plan: 'Pro Plan',
+    //       status: <span className="px-2 py-1 text-xs text-[#17C653] bg-[#17C6531A] rounded-full">Active</span>,
+    //       duration: '1 Month',
+    //       amount: '$19.99',
+    //       paymentMethod: 'Credit Card',
+    //       purchasedDate:"10-03-2025",
+    //       ExpireDate:"10-03-2026",
+    //     },
+    //     {
+    //       plan: 'Pro Plan',
+    //       status: <span className="px-2 py-1 text-xs text-[#707070] bg-[#70707026] rounded-full">Expired</span>,
+    //       duration: '1 Year',
+    //       amount: '$49.99',
+    //       paymentMethod: 'PayPal',
+    //       purchasedDate:"10-03-2025",
+    //       ExpireDate:"10-03-2026",
+    //     },
+    //     {
+    //       plan: 'Unlimited Plan',
+    //       status: <span className="px-2 py-1 text-xs text-[#FF6B6B] bg-[#FF6B6B1A] rounded-full">Canceled</span>,
+    //       duration: '1 Year',
+    //       amount: '$99.99',
+    //       paymentMethod: 'Bank Transfer',
+    //       purchasedDate:"10-03-2025",
+    //       ExpireDate:"10-03-2026",
+    //     },
+    //   ];
+
+  const data = userProfile?.plans?.map((plan) => ({
+
     
+  plan: plan?.name || 'N/A',
+  status: (
+    <span className={`px-2 py-1 text-xs rounded-full ${
+      userProfile?.isPremium 
+        ? "text-[#17C653] bg-[#17C6531A]" 
+        : "text-[#707070] bg-[#70707026]"
+    }`}>
+      {userProfile?.isPremium ? 'Active' : 'Expired'}
+    </span>
+  ),
+  duration: plan?.billing_period || 'N/A',
+  amount: `$${plan?.price || '0.00'}`,
+  paymentMethod: 'Credit Card', // You might need to get this from payment data
+  purchasedDate: new Date(plan?.createdAt).toLocaleDateString() || 'N/A',
+  ExpireDate: userProfile?.premiumExpiresAt 
+    ? new Date(userProfile.premiumExpiresAt).toLocaleDateString() 
+    : 'N/A'
+})) || [];
+
+    
+
     return (
         <>
             <div className={`col-span-2 rounded-3xl py-10 px-4 md:px-12 bg-white shad     `}>
