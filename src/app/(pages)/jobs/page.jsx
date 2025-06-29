@@ -4,6 +4,7 @@ import { fetchJobs, getJobsError, getJobsStatus, selectAllJobs } from '@/app/Sto
 import { updateProfileField } from '@/app/Store/ReduxSlice/updateProfileSlice'
 import JobCard from '@/components/common/JobCard'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +13,7 @@ const JobsPage = () => {
     const dispatch = useDispatch();
     const jobs = useSelector(selectAllJobs);
     const status = useSelector(getJobsStatus);
+    const router = useRouter()
     const error = useSelector(getJobsError);
     const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
     useEffect(() => {
@@ -23,8 +25,12 @@ const JobsPage = () => {
 
     const handleSaveJob = async (job) => {
         try {
-            const isAlreadySaved = userProfile?.jobs?.some(
-                savedJob => savedJob.documentId === job.documentId
+           if(!isAuthenticated){
+            router.push('/login')
+           }else{
+
+               const isAlreadySaved = userProfile?.jobs?.some(
+                   savedJob => savedJob.documentId === job.documentId
             );
 
             if (isAlreadySaved) {
@@ -48,18 +54,19 @@ const JobsPage = () => {
                         job.documentId
                     ]
                 };
-
+                
                 await dispatch(updateProfileField({
                     id: userProfile.documentId,
                     fieldName: 'jobs',
                     value: updatePayload
                 })).unwrap();
-
+                
                 toast.success("Job saved successfully");
             }
-
+            
             dispatch(fetchJobs());
             dispatch(checkUserStatus());
+        }
         } catch (error) {
             console.error('Failed to update job:', error);
             toast.error(error.message || "Failed to update job");
@@ -67,8 +74,7 @@ const JobsPage = () => {
     };
 
 
-    console.log(jobs)
-    console.log(userProfile?.jobs)
+   
     const savedJobIds = new Set(userProfile?.jobs?.map(job => job.documentId) || []);
     return (
         <div className=''>

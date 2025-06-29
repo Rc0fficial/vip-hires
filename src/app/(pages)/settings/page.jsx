@@ -355,7 +355,10 @@ const SettingPage = () => {
             <div className='flex justify-between flex-col md:flex-row gap-2 cursor-pointer pt-4 pb-6 border-b border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Logged in Devices</h1>
               <h3 className='text-989 text-sm md:text-lg'>
-                {user?.devices?.filter(device => !device.isRemembered).length || 0} devices
+                {[...new Set(user?.devices
+                  ?.filter(device => !device.isRemembered)
+                  ?.map(device => device.documentId)
+                )].length || 0} devices
               </h3>
             </div>
           </Link>
@@ -367,7 +370,11 @@ const SettingPage = () => {
             <div className='flex justify-between flex-col md:flex-row gap-2 pt-4 pb-6 cursor-pointer border-dcd'>
               <h1 className='text-525 capitalize text-sm md:text-lg font-semibold'>Devices that remember your password</h1>
               <h3 className='text-989 text-sm md:text-lg'>
-                {user?.devices?.filter(device => device.isRemembered).length || 0} devices
+                {[...new Set(user?.devices
+                  ?.filter(device => device.isRemembered)
+                  ?.map(device => device.documentId)
+                )].length || 0} devices
+                
               </h3>
             </div>
           </Link>

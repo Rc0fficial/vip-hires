@@ -33,7 +33,7 @@ export default function RegisterPage() {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`, {
         username: generateUniqueUsername(email), // Auto-generate username
         email,
-        password
+        password,
       });
 
       const { jwt } = response.data;

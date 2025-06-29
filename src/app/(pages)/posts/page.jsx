@@ -11,14 +11,15 @@ import Link from 'next/link';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const Posts = () => {
     const dispatch = useDispatch()
     const posts = useSelector(selectAllPosts);
     const status = useSelector(getPostsStatus);
     const error = useSelector(getPostsError);
-    const { userProfile } = useSelector((state) => state.auth);
-
+    const { userProfile, isAuthenticated } = useSelector((state) => state.auth);
+    const router = useRouter()
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchPosts());
@@ -29,40 +30,47 @@ const Posts = () => {
 
     const handleSavePost = async (post) => {
         try {
-            const isAlreadySaved = userProfile?.posts?.some(
-                savedPost => savedPost.documentId === post.documentId
-            );
-    
-            if (isAlreadySaved) {
-                // Unsaving the post
-                await dispatch(updateProfileField({
-                    id: userProfile.documentId,
-                    fieldName: 'posts',
-                    value: { disconnect: [post.documentId] }
-                })).unwrap();
-                toast.success("Post removed from saved list");
+            if (!isAuthenticated) {
+                router.push('/login')
             } else {
-                // Saving the post
-                await dispatch(updateProfileField({
-                    id: userProfile.documentId,
-                    fieldName: 'posts',
-                    value: { 
-                        connect: [
-                            ...(userProfile?.posts?.map(post => post.documentId) || []),
-                            post.documentId
-                        ] 
-                    }
-                })).unwrap();
-                toast.success("Post saved successfully");
+
+
+                const isAlreadySaved = userProfile?.posts?.some(
+                    savedPost => savedPost.documentId === post.documentId
+                );
+
+                if (isAlreadySaved) {
+                    // Unsaving the post
+                    await dispatch(updateProfileField({
+                        id: userProfile.documentId,
+                        fieldName: 'posts',
+                        value: { disconnect: [post.documentId] }
+                    })).unwrap();
+                    toast.success("Post removed from saved list");
+                } else {
+                    // Saving the post
+                    await dispatch(updateProfileField({
+                        id: userProfile.documentId,
+                        fieldName: 'posts',
+                        value: {
+                            connect: [
+                                ...(userProfile?.posts?.map(post => post.documentId) || []),
+                                post.documentId
+                            ]
+                        }
+                    })).unwrap();
+                    toast.success("Post saved successfully");
+                }
+
+                dispatch(checkUserStatus());
             }
-    
-            dispatch(checkUserStatus());
+
         } catch (error) {
             console.error('Failed to update saved posts:', error);
             toast.error(error.message || "Failed to update saved posts");
         }
     };
-const savedPostIds = new Set(userProfile?.posts?.map(post => post.documentId) || []);
+    const savedPostIds = new Set(userProfile?.posts?.map(post => post.documentId) || []);
     return (
         <div className=''>
             <div className='flex justify-between items-center flex-col md:flex-row gap-2'>
@@ -81,27 +89,28 @@ const savedPostIds = new Set(userProfile?.posts?.map(post => post.documentId) ||
                     {posts.map((post) => {
 
                         const isSaved = savedPostIds.has(post.documentId);
-                        return(
-                        <PostCard 
-                            key={post.documentId} 
-                            handleOpenModal={handleOpenModal} 
-                            btnTitle="Edit"
-                            lock={userProfile?.isPremium ? false : post?.isLocked}
-                            title={post?.title}
-                            postDate={post?.postDate}
-                            job_categories={post?.job_categories}
-                            description={post?.description}
-                            saved={isSaved}
-                            handleSavePost={() => handleSavePost(post)}
-                        />
-                    )})}
+                        return (
+                            <PostCard
+                                key={post.documentId}
+                                handleOpenModal={handleOpenModal}
+                                btnTitle="Edit"
+                                lock={userProfile?.isPremium ? false : post?.isLocked}
+                                title={post?.title}
+                                postDate={post?.postDate}
+                                job_categories={post?.job_categories}
+                                description={post?.description}
+                                saved={isSaved}
+                                handleSavePost={() => handleSavePost(post)}
+                            />
+                        )
+                    })}
                 </div>
             ) : (
                 <>
                     <img src="/assets/posts.gif" alt="" className='h-full w-full max-w-[512px] mah-h-[512px] mx-auto' />
                     <h1 className='text-center ant text-[32px] text-green'>We're Crafting Your Perfect Posts</h1>
                     <p className='text-gray mt-2 text-center max-w-[640px] mx-auto'>
-                        We're preparing personalized posts for you based on your interests and job field. 
+                        We're preparing personalized posts for you based on your interests and job field.
                         Stay tuned, great opportunities are on the way
                     </p>
                 </>

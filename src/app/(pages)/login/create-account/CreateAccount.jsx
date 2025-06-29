@@ -5,7 +5,7 @@ import SelectField from "@/components/common/SelectField";
 import CameraIcon from "@/components/Icons/Camera.svg";
 import SearchIcon from "@/components/Icons/SearchIcon.svg";
 import UploadIcon from "@/components/Icons/UploadIcon.svg";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
@@ -424,7 +424,7 @@ const CreateAccount = () => {
       console.log(data)
       setStep("third");
     };
-
+console.log(errors)
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <h1 className="md:text-xl font-medium mb-8 text-3d3">
@@ -683,108 +683,122 @@ const CreateAccount = () => {
     const router = useRouter();
     const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
 
-    const onSubmit = async (data) => {
-      // Merge formData and new data
-      const mergedData = { ...formData, ...data };
+  const onSubmit = async (data) => {
+  // Merge formData and new data
+  const mergedData = { ...formData, ...data };
 
-      // Extract fields needed for processing
-      const { selectedSkills, profileImage, resume, jobCategory, availability, preferedWork, employmentType, ...rest } = mergedData;
-      const processedData = {
-        ...rest,
-        job_category: Number(jobCategory), // Convert to number and rename
-        skills: selectedSkills,
-        availability: [availability],
-        employmentType: [employmentType],
-        preferedWork: [preferedWork],
-        users_permissions_user: user?.id
-      };
-      const token = localStorage.getItem("token");
+  // Extract fields needed for processing
+  const { selectedSkills, profileImage, resume, jobCategory, availability, preferedWork, employmentType, ...rest } = mergedData;
+  
+  try {
+    
+    const currentToken = localStorage.getItem("token");
 
-      try {
-        // Upload files first (if they exist)
-        const uploadPromises = [];
+  
 
-        if (profileImage) {
-          uploadPromises.push(
-            uploadFileToStrapi(profileImage, token)
-              .then(id => ({ profileImage: id }))
-          );
-        }
-
-        if (resume) {
-          uploadPromises.push(
-            uploadFileToStrapi(resume, token)
-              .then(id => ({ resume: id }))
-          );
-        }
-
-        // Wait for all uploads to complete
-        const uploadResults = await Promise.all(uploadPromises);
-        const uploadedFiles = uploadResults.reduce((acc, curr) => ({ ...acc, ...curr }), {});
-
-        // Create final payload
-        const completeFormData = {
-          ...processedData,
-
-          ...uploadedFiles
-        };
-
-        console.log("Complete Form Data:", userProfile);
-
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/profiles`,
-          { data: completeFormData },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        console.log("Response Data:", response.data);
-        setCompletedSteps((prev) => [...prev, "third"]);
-        // 2. Create notification settings for the new user
-        if(response.data?.data?.id){
-
-          const initialSettings = {
-            general: {
-            activeAll: false,
-            accountUpdates: false,
-            subscriptionBilling: false,
-            systemAnnouncements: false
-          },
-          job: {
-            activeAll: false,
-            newJobMatches: false,
-            applicationUpdates: false,
-            jobRecommendations: false,
-            savedJobReminders: false,
-            employerMessages: false
-          },
-          post: {
-            activeAll: false,
-            newRecommendedPosts: false,
-            submittedPostStatus: false,
-            draftPostUpdates: false
-          },
-          profile: response?.data?.data?.documentId
-        };
-        console.log(initialSettings)
-        
-        const response2 = await axios.post(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/notification-settings`,
-          { data: initialSettings }
-        );
-        // await createInitialNotificationSettings(userProfile.id);
-        dispatch(checkUserStatus())
-        router.push("/");
-      }
-      } catch (error) {
-        console.error("Error submitting form:", error?.response?.data || error);
-        // Add user-friendly error handling here
-      }
+    // Prepare the processed data with the user ID
+    const processedData = {
+      ...rest,
+      job_category: Number(jobCategory),
+      skills: selectedSkills,
+      availability: [availability],
+      employmentType: [employmentType],
+      preferedWork: [preferedWork],
+      users_permissions_user: user.documentId
     };
 
+    // Upload files first (if they exist)
+    const uploadPromises = [];
+
+    if (profileImage) {
+      uploadPromises.push(
+        uploadFileToStrapi(profileImage, currentToken)
+          .then(id => ({ profileImage: id }))
+      );
+    }
+
+    if (resume) {
+      uploadPromises.push(
+        uploadFileToStrapi(resume, currentToken)
+          .then(id => ({ resume: id }))
+      );
+    }
+
+    // Wait for all uploads to complete
+    const uploadResults = await Promise.all(uploadPromises);
+    const uploadedFiles = uploadResults.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+    // Create final payload
+    const completeFormData = {
+      ...processedData,
+      ...uploadedFiles
+    };
+
+    // Create profile
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/profiles`,
+      { data: completeFormData },
+      {
+        headers: {
+          Authorization: `Bearer ${currentToken}`,
+        },
+      }
+    );
+
+    setCompletedSteps((prev) => [...prev, "third"]);
+
+    // Create notification settings for the new user
+    if (response.data?.data?.id) {
+      const initialSettings = {
+        general: {
+          activeAll: false,
+          accountUpdates: false,
+          subscriptionBilling: false,
+          systemAnnouncements: false
+        },
+        job: {
+          activeAll: false,
+          newJobMatches: false,
+          applicationUpdates: false,
+          jobRecommendations: false,
+          savedJobReminders: false,
+          employerMessages: false
+        },
+        post: {
+          activeAll: false,
+          newRecommendedPosts: false,
+          submittedPostStatus: false,
+          draftPostUpdates: false
+        },
+        profile: response.data.data.id
+      };
+      
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/notification-settings`,
+        { data: initialSettings },
+        {
+          headers: {
+            Authorization: `Bearer ${currentToken}`,
+          },
+        }
+      );
+      
+      dispatch(checkUserStatus());
+      
+      // Clear Google tokens from URL after successful submission
+      window.history.replaceState({}, document.title, window.location.pathname);
+      router.push("/");
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error?.response?.data || error);
+    alert(error.message || "Profile creation failed. Please try again.");
+    
+    // If it's an authentication error, redirect to login
+    if (error.message.includes("authentication") || error.message.includes("session")) {
+      router.push("/login");
+    }
+  }
+};
 
 
     return (
