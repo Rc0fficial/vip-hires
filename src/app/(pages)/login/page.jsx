@@ -118,12 +118,11 @@ export default function LoginPage() {
           Signin
         </button>
         <hr className="border-t border-[#B6B6B6] w-full " />
-
+<Link href={`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/connect/google`}>
         <button
           type="button"
-          onClick={handleGoogleLogin}
           className="w-full rounded-md cursor-pointer text-white md:text-xl bg-3d3 font-semibold py-2.5 mb-4 mt-7 flex justify-center items-center gap-3"
-        >
+          >
           <Image
             src="/assets/googleIcon.svg"
             alt="google icon"
@@ -132,6 +131,7 @@ export default function LoginPage() {
             className="w-[28px] h-[29px]"
           /> Sign in with Google
         </button>
+            </Link>
 
         <button
           type="button"

@@ -8,11 +8,12 @@ const nextConfig = {
       port: '1337',
       pathname: '/uploads/**',
     },
-    {
-      protocol: 'https',
-      hostname: 'your-production-strapi-domain.com',
-      pathname: '/uploads/**',
-    },
+     {
+        protocol: 'http',
+        hostname: '172.104.230.171',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
   ],
 }
 };
