@@ -1,10 +1,10 @@
 // app/login/reset-password/page.js
 "use client";
 import { AuthLayout } from "@/components/Auth";
-import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
+import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -29,10 +29,12 @@ export default function ResetPasswordPage() {
   };
 
   return (
+    <Suspense fallback={<Spinner/>}>
+
     <AuthLayout
       title="forgetting your password!"
       subtitle="enter your email to receive verification code"
-    >
+      >
       <form onSubmit={handleSubmit}>
 
         <div className="text-525 flex flex-col gap-4 mb-4">
@@ -57,5 +59,6 @@ export default function ResetPasswordPage() {
 
       </form>
     </AuthLayout>
+          </Suspense>
   );
 }

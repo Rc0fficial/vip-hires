@@ -8,8 +8,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserStatus } from "@/app/Store/ReduxSlice/authSlice";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { trackDevice } from "@/components/DeviceTracker";
+import Spinner from "@/components/Spinner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -67,6 +68,8 @@ export default function LoginPage() {
   }
 };
   return (
+    <Suspense fallback={<Spinner/>}>
+
     <AuthLayout
       title="Nice To See You Again"
       showSocialLogin={true}
@@ -137,7 +140,7 @@ export default function LoginPage() {
           type="button"
           onClick={handleLinkedInLogin}
           className="w-full rounded-md cursor-pointer text-525 md:text-xl shad bg-white font-semibold py-2.5 mb-6 flex justify-center items-center gap-3"
-        >
+          >
           <span className="h-[28px] w-[28px] flex justify-center items-center rounded-full bg-blue-500">
             <LinkedinIcon color="#ffffff" width={20} height={20} />
           </span>
@@ -152,5 +155,6 @@ export default function LoginPage() {
         </p>
       </form>
     </AuthLayout>
+          </Suspense>
   );
 }

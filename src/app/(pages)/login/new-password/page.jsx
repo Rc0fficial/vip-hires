@@ -1,20 +1,26 @@
 // app/login/new-password/page.js
 "use client";
 import { AuthLayout } from "@/components/Auth";
+import Spinner from "@/components/Spinner";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { LoaderIcon } from "react-hot-toast";
 
 export default function NewPasswordPage() {
+  return (
+    <Suspense fallback={<LoaderIcon/>}>
+      <PasswordResetForm />
+    </Suspense>
+  );
+}
+
+const PasswordResetForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [validToken, setValidToken] = useState(false);
   const router = useRouter();
-  const params = useSearchParams()
-  const  code  = params.get('code');
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +31,9 @@ export default function NewPasswordPage() {
 
     setLoading(true);
     try {
+      // Get the code from URL when form is submitted
+      const code = new URLSearchParams(window.location.search).get('code');
+      
       await axios.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/reset-password`, {
         code,
         password,
@@ -38,7 +47,7 @@ export default function NewPasswordPage() {
       setLoading(false);
     }
   };
- 
+
   return (
     <AuthLayout
       title="Create a new password"
@@ -79,4 +88,4 @@ export default function NewPasswordPage() {
       </form>
     </AuthLayout>
   );
-}
+};
