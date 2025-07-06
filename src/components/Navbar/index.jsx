@@ -4,7 +4,7 @@ import { CiRepeat, CiSearch, } from "react-icons/ci";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import Image from "next/image";
 import GlobeIcon from "../Icons/GlobeIcon.svg";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from "next/link";
 import UserIcon from "../Icons/UserIcon.svg";
@@ -15,6 +15,9 @@ import Notification from "./Notification";
 import { FaBars, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiFileText, FiHome } from "react-icons/fi";
 import { LuBadgeCheck, LuBriefcase } from "react-icons/lu";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUserStatus, logout } from "@/app/Store/ReduxSlice/authSlice";
+import axios from "axios";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
@@ -26,6 +29,46 @@ const Navbar = () => {
     const [openJobs, setOpenJobs] = useState(false);
     const [openPosts, setOpenPosts] = useState(false);
     const [openSetting, setOpenSetting] = useState(false);
+    const router = useRouter()
+const dispatch = useDispatch()
+    const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
+
+    const params = useSearchParams();
+
+useEffect(() => {
+    const googleToken = params.get("access_token");
+    if (!googleToken) return; // not a Google signup
+
+    (async () => {
+        try {
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/google/callback`,
+                { params: { access_token: googleToken } }
+            );
+
+            localStorage.setItem("token", data.jwt);
+            localStorage.setItem("userId", data.user.id.toString());
+            
+            // Dispatch to check user profile status
+            await dispatch(checkUserStatus());
+            
+            // Now check the userProfile from Redux state
+            if (userProfile?.firstName) {
+                // User has a profile, redirect to dashboard/home
+                router.replace("/dashboard");
+            } else {
+                // User doesn't have a profile, redirect to create account
+                router.replace("/login/create-account");
+            }
+            
+        } catch (err) {
+            console.error("Google → Strapi exchange failed", err);
+            router.replace("/login"); // fallback
+        }
+    })();
+}, [params, router ]); 
+
+
     const updateSize = () => {
         const isLarge = window.innerWidth <= 1024;
         setSize(isLarge ? { width: 24, height: 24 } : { width: 21, height: 20 });
@@ -36,6 +79,13 @@ const Navbar = () => {
         window.addEventListener('resize', updateSize);
         return () => window.removeEventListener('resize', updateSize);
     }, []);
+    // console.log(user, isAuthenticated)
+    
+    useEffect(() => {
+        dispatch(checkUserStatus())
+
+    }, [])
+
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -79,11 +129,25 @@ const Navbar = () => {
         setOpenDropdown(openDropdown === itemName ? null : itemName);
     };
 
+    const handleLogout = () => {
+        dispatch(logout())
+        router.push('/login')
+    }
+    const handleProfileEnter = () => {
+        if (isAuthenticated) {
+            setIsOpenMenu(true)
+        }
+    }
 
+    const handleProfileClick = () => {
+        if (!isAuthenticated) {
+            router.push('/login')
+        }
+    }
 
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
-            <nav className="flex items-center justify-between p-6 mx-auto">
+            <nav className="flex items-center justify-between  p-6 mx-auto">
                 {/* Mobile Menu Icon */}
                 <FaBars
                     size={24}
@@ -171,13 +235,13 @@ const Navbar = () => {
                     <Notification divClass={'lg:border'} iconHeight={size.height} iconWidth={size.height} />
                     <div className="relative hidden lg:block" ref={dropdownRef}>
                         {/* Profile Image */}
-                        <button onMouseEnter={() => setIsOpenMenu(true)}>
+                        <button onMouseEnter={handleProfileEnter} onClick={handleProfileClick}>
                             <Image
-                                src="/assets/profile.png"
+                                src={userProfile?.profileImage?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile?.profileImage?.url}` : "/assets/profile.png"}
                                 alt="Profile"
                                 width={45}
                                 height={45}
-                                className="rounded-full cursor-pointer"
+                                className="rounded-full h-12 w-12 cursor-pointer object-center"
                             />
                         </button>
 
@@ -209,12 +273,12 @@ const Navbar = () => {
                                             Switch Accounts
                                         </li>
                                     </Link>
-                                    <Link href="/login">
-                                        <li onClick={() => setIsOpenMenu(false)} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
-                                            <LogOutIcon height={24} width={24} color={"#D31510"} />
-                                            Log Out
-                                        </li>
-                                    </Link>
+
+                                    <li onClick={() => { setIsOpenMenu(false), handleLogout() }} className="px-4 cursor-pointer py-4 text-[#D31510] hover:bg-gray-100 flex items-center">
+                                        <LogOutIcon height={24} width={24} color={"#D31510"} />
+                                        Log Out
+                                    </li>
+
                                 </ul>
                             </motion.div>
                         )}

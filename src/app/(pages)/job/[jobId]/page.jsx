@@ -1,4 +1,5 @@
-import {Suspense} from'react'
+'use client'
+import {Suspense, useEffect} from'react'
 import HeartIcon from '@/components/Icons/HeartIcon.svg'
 import LinkIcon from '@/components/Icons/LinkIcon.svg'
 import UrlIcon from '@/components/Icons/UrlIcon.svg'
@@ -11,8 +12,26 @@ import ExpierenceLvlIcon from '@/components/Icons/ExpierenceLvlIcon.svg'
 import SalaryIcon from '@/components/Icons/SalaryIcon.svg'
 import TimeIcon from '@/components/Icons/TimeIcon.svg'
 import Notify from '@/components/common/Notify'
+import { useParams } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearCurrentJob, fetchJobById, getJobsError, getSingleJobStatus, selectCurrentJob } from '@/app/Store/ReduxSlice/jobsSlice'
 
 const JobDetailPage = () => {
+     const { jobId } = useParams();
+  const dispatch = useDispatch();
+  const job = useSelector(selectCurrentJob);
+  const status = useSelector(getSingleJobStatus);
+  const error = useSelector(getJobsError);
+
+  useEffect(() => {
+    dispatch(fetchJobById(jobId));
+    
+    return () => {
+      dispatch(clearCurrentJob());
+    };
+  }, [jobId, dispatch]);
+  console.log(job)
+
     return (
         <Suspense fallback={"Loading..."}>
 
@@ -25,34 +44,34 @@ const JobDetailPage = () => {
 
                             <div className='flex justify-between pb-4 border-b border-dcd mb-4'>
 
-                                <h1 className='capitalize md:text-2xl text-3d3 group-hover:text-white font-medium leading-[20px] '>ui/ux designer</h1>
+                                <h1 className='capitalize md:text-2xl text-3d3 group-hover:text-white font-medium leading-[20px] '>{job?.jobTitle}</h1>
                                 <HeartIcon className="fill-989 " height={32} width={32} />
 
                             </div>
                             <div className="space-y-5 text-gray-700 text-xs md:text-[16px]">
                                 <p className='text-525 capitalize flex items-center gap-2'>
                                     <LocationIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">Location :</span> Egypt, Cairo, Naser City
+                                    <span className=" text-989">Location :</span> {job?.location}
                                 </p>
                                 <p className='text-525 capitalize flex items-center gap-2 text-xs md:text-[16px]'>
                                     <JobLocationIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">job location :</span> on site
+                                    <span className=" text-989">job location :</span>  {job?.preferredWork?.join(', ') || 'Not specified'}
                                 </p>
                                 <p className='text-525 capitalize flex items-center gap-2 text-xs md:text-[16px]'>
                                     <EmploymentTypeIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">employment type :</span>full time
+                                    <span className=" text-989">employment type :</span> {job?.employmentType?.join(', ') || 'Not specified'}
                                 </p>
                                 <p className='text-525 capitalize flex items-center gap-2 text-xs md:text-[16px]'>
                                     <ExpierenceLvlIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">experience level :</span> senior
+                                    <span className=" text-989 capitalize">experience level :</span>  {job?.experienceLevel?.join(', ') || 'Not specified'}
                                 </p>
                                 <p className='text-525 capitalize flex items-center gap-2 text-xs md:text-[16px]'>
                                     <SalaryIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">salary :</span> 20,000 EGP
+                                    <span className=" text-989">salary :</span> {job?.salary}
                                 </p>
                                 <p className='text-525 capitalize flex items-center gap-2 text-xs md:text-[16px]'>
                                     <TimeIcon className="fill-989 " height={24} width={24} />
-                                    <span className=" text-989">post date :</span> 21/12/2025
+                                    <span className=" text-989">post date :</span> {job?.postDate}
                                 </p>
 
                             </div>
@@ -67,7 +86,7 @@ const JobDetailPage = () => {
                         <Notify className={"-mb-10"}/>
                     </div>
                     <div className="col-span-2 mt-6 md:mt-0">
-                        <JobDetail />
+                        <JobDetail job={job} />
                     </div>
                 </div>
             </div>

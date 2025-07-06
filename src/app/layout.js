@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Providers from "@/components/Provider";
+import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -53,12 +55,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.className} relative flex flex-col justify-between`}>
         <Providers>
-
-
-          <Navbar />
+          <Suspense fallback={<div>Loading navbar...</div>}>
+            <Navbar />
+          </Suspense>
+          
           {children}
-          <Footer bg={"bg-bggreen"} />
+          
+          <Suspense fallback={<div>Loading footer...</div>}>
+            <Footer bg={"bg-bggreen"} />
+          </Suspense>
         </Providers>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

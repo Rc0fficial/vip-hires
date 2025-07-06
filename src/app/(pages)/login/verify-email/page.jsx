@@ -1,7 +1,10 @@
 // app/login/verify-email/page.js
 "use client";
 import { AuthLayout } from "@/components/Auth";
+import Spinner from "@/components/Spinner";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
 export default function EmailVerificationPage() {
   const router = useRouter();
@@ -12,38 +15,20 @@ export default function EmailVerificationPage() {
   };
 
   return (
+    <Suspense fallback={<Spinner/>}>
+
     <AuthLayout
-      title="OTP Code"
-      subtitle="enter OTP code you received"
-    >
-      <form onSubmit={handleSubmit}>
-        <div className="flex justify-between gap-2 mb-5">
-          {[...Array(6)].map((_, index) => (
-            <input
-              key={index}
-              type="text"
-              maxLength="1"
-              className="w-10 h-12 text-center md:text-lg border border-[#BDBDBD] rounded-md bg-transparent focus:outline-0"
-              placeholder="-"
-              required
-            />
-          ))}
-        </div>
-
-        <button
-          type="submit"
-          className="w-full rounded-md cursor-pointer text-white md:text-xl bg-green font-semibold py-[15px] mb-12"
-        >
-          Verify Code
-        </button>
-
-        <p className="capitalize text-525 text-xs text-center">
-          didn't get the verification code yet?{" "}
-          <a href="#" className="text-[#007AFF]">
-            Resend Code
-          </a>
-        </p>
-      </form>
+      title="Check Your Email"
+      subtitle="We've sent a password reset link to your email address."
+      >
+        
+     
+      <p>Please check your inbox and follow the instructions.</p>
+      <Link href={'/login'}>
+      <p className="text-blue-700 cursor-pointer mt-5">Go to Login</p>
+      </Link>
+      
     </AuthLayout>
+      </Suspense>
   );
 }

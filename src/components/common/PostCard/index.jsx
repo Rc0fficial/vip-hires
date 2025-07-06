@@ -8,7 +8,19 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Modal from '../Modal'
 
-const PostCard = ({ saved, isDetail, handleOpenModal, lock, text }) => {
+const PostCard = ({ 
+    saved, 
+    isDetail, 
+    handleOpenModal, 
+    lock, 
+    text,
+    title,
+    postDate,
+    description,
+    job_categories,
+    handleSavePost
+
+}) => {
     const router = useRouter()
     const [isHovered, setIsHovered] = useState(false)
 
@@ -27,21 +39,23 @@ const PostCard = ({ saved, isDetail, handleOpenModal, lock, text }) => {
                     />
                     <div>
                         <h1 className={`capitalize lg:text-xl font-medium leading-[20px] ${lock ? 'text-white' : 'text-525 '}`}>
-                            ui/ux designer
+                            {title}
                         </h1>
                         <h3 className={`capitalize text-sm md:text-[16px] leading-[20px] mt-2 ${lock ? 'text-white' : 'text-gray '}`}>
-                            21/12/2025
+                            {postDate}
                         </h3>
                     </div>
                 </div>
                 {saved ? 
                     <TrashIcon 
-                        className={`cursor-pointer ${lock ? 'text-white' : ''}`}  
+                    onClick={handleSavePost}
+                        className={`cursor-pointer ${lock ? 'text-white' : 'fill-989'}`}  
                         height={32} 
                         width={32} 
                     />
                     :    
                     <HeartIcon 
+                    onClick={handleSavePost}
                         className={`cursor-pointer ${lock ? 'fill-white' : 'fill-989 '}`}  
                         height={32} 
                         width={32} 
@@ -55,16 +69,19 @@ const PostCard = ({ saved, isDetail, handleOpenModal, lock, text }) => {
                         ? 'text-white border-white' 
                         : 'text-gray border-[#EFEFEF]  '
                 }`}>
-                    Excited to announce our latest project launch! Looking forward to the amazing possibilities ahead. #Innovation #Technology
-                </p>
+                {description}</p>
             }
             <div className='flex items-center flex-wrap gap-2 mt-4'>
+                {job_categories[0]?.categoryName &&
                     <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-green border-white' : 'bg-[#2198261A] border-[#219826] text-[#219826] group-hover:bg-white'}`}>
-                        Development
+                        {job_categories[0]?.categoryName || ""}
                     </button>
+                    }
+                    {job_categories[1]?.categoryName &&
                     <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
-                        Industry Insight
+                        {job_categories[1]?.categoryName|| ""}
                     </button>
+                    }
                     
                 </div>
             <div className='flex items-center gap-4 mt-8'>
