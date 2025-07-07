@@ -30,43 +30,43 @@ const Navbar = () => {
     const [openPosts, setOpenPosts] = useState(false);
     const [openSetting, setOpenSetting] = useState(false);
     const router = useRouter()
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const { user, isAuthenticated, userProfile } = useSelector((state) => state.auth);
 
     const params = useSearchParams();
 
-useEffect(() => {
-    const googleToken = params.get("access_token");
-    if (!googleToken) return; // not a Google signup
+    useEffect(() => {
+        const googleToken = params.get("access_token");
+        if (!googleToken) return; // not a Google signup
 
-    (async () => {
-        try {
-            const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/google/callback`,
-                { params: { access_token: googleToken } }
-            );
+        (async () => {
+            try {
+                const { data } = await axios.get(
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/google/callback`,
+                    { params: { access_token: googleToken } }
+                );
 
-            localStorage.setItem("token", data.jwt);
-            localStorage.setItem("userId", data.user.id.toString());
-            
-            // Dispatch to check user profile status
-            await dispatch(checkUserStatus());
-            
-            // Now check the userProfile from Redux state
-            if (userProfile?.firstName) {
-                // User has a profile, redirect to dashboard/home
-                router.replace("/dashboard");
-            } else {
-                // User doesn't have a profile, redirect to create account
-                router.replace("/login/create-account");
+                localStorage.setItem("token", data.jwt);
+                localStorage.setItem("userId", data.user.id.toString());
+
+                // Dispatch to check user profile status
+                await dispatch(checkUserStatus());
+
+                // Now check the userProfile from Redux state
+                if (userProfile?.firstName) {
+                    // User has a profile, redirect to dashboard/home
+                    router.replace("/dashboard");
+                } else {
+                    // User doesn't have a profile, redirect to create account
+                    router.replace("/login/create-account");
+                }
+
+            } catch (err) {
+                console.error("Google → Strapi exchange failed", err);
+                router.replace("/login"); // fallback
             }
-            
-        } catch (err) {
-            console.error("Google → Strapi exchange failed", err);
-            router.replace("/login"); // fallback
-        }
-    })();
-}, [params, router ]); 
+        })();
+    }, [params, router]);
 
 
     const updateSize = () => {
@@ -80,7 +80,7 @@ useEffect(() => {
         return () => window.removeEventListener('resize', updateSize);
     }, []);
     // console.log(user, isAuthenticated)
-    
+
     useEffect(() => {
         dispatch(checkUserStatus())
 
@@ -132,6 +132,7 @@ useEffect(() => {
     const handleLogout = () => {
         dispatch(logout())
         router.push('/login')
+        setIsOpen(false) 
     }
     const handleProfileEnter = () => {
         if (isAuthenticated) {
@@ -144,6 +145,15 @@ useEffect(() => {
             router.push('/login')
         }
     }
+    
+    const handleMobileProfileClick = () => {
+        if (!isAuthenticated) {
+            router.push('/login')
+        }else{
+            router.push('/profile')
+        }
+    }
+
 
     return (
         <div className={`${ishidden ? "hidden" : "block"} bg-white/80 shadow-md  md:px-10 sticky top-0 z-50`}>
@@ -298,20 +308,23 @@ useEffect(() => {
                     className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform ${isOpen ? '-translate-x-0' : '-translate-x-full'
                         } transition-transform duration-300 ease-in-out pl-5 z-50`}
                 >
+
                     {/* Top Profile Section */}
-                    <Link href={'/profile'}>
-                        <div className="border border-green rounded-md p-2 mr-5 mt-12 bg-[#EBFEF5] flex items-center gap-2 mb-6">
+                  
+                        <div onClick={handleMobileProfileClick} className="border border-green rounded-md p-2 mr-5 mt-12 bg-[#EBFEF5] flex items-center gap-2 mb-6">
                             <img
-                                src="/assets/profile.png"
+                                src={userProfile?.profileImage?.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${userProfile?.profileImage?.url}` : "/assets/profile.png"}
                                 alt="Profile"
                                 className="h-10 w-10 rounded-full"
                             />
                             <div>
-                                <h1 className="font-medium text-sm text-black">Mohamed Ali</h1>
-                                <h1 className="font-medium text-xs text-[#5D5D5D]">UI/UX Designer</h1>
+                                <h1 className="font-medium text-sm text-black">{isAuthenticated ? `${userProfile?.firstName} ${userProfile?.lastName}`:"Login"}</h1>
+                                {userProfile &&
+                                <h1 className="font-medium text-xs text-[#5D5D5D]">{userProfile?.subCategory}</h1>
+                                }
                             </div>
                         </div>
-                    </Link>
+                   
 
                     {/* Sidebar Links */}
                     <ul className="space-y-6">
@@ -432,9 +445,9 @@ useEffect(() => {
                         <Link href="/switch" className="flex items-center gap-3 text-5d5">
                             <SwitchAccountIcon height={24} width={24} /> Switch Account
                         </Link>
-                        <Link href="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-3 text-red-500">
-                            <LogOutIcon height={24} width={24} /> Log Out
-                        </Link>
+                        <div  onClick={handleLogout} className="flex items-center gap-3 text-red-500">
+                            <LogOutIcon  height={24} width={24} /> Log Out
+                        </div>
                     </div>
                 </div>
             </nav>

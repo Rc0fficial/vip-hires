@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { getAuthHeaders } from '@/app/utils/authHeader';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 const LoggedInDevicesPage = () => {
     const { user, token } = useSelector((state) => state.auth);
@@ -53,6 +54,9 @@ const LoggedInDevicesPage = () => {
     }
 
     return (
+        <ProtectedRoute>
+
+        
         <div className={`col-span-2 rounded-3xl py-10 px-12 bg-white shad`}>
             <h1 className='font-semibold capitalize md:text-2xl text-3d3'>logged in devices</h1>
             <h4 className='text-989 mb-6 text-xs md:text-[16px] mt-3'>
@@ -108,6 +112,7 @@ const LoggedInDevicesPage = () => {
                 )}
             </div>
         </div>
+    </ProtectedRoute>
     )
 }
 

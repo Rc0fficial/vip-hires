@@ -77,12 +77,12 @@ const JobCard = ({
                     </button>
                     ))}
                     {employmentType?.map((type,i)=>(
-                        <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
+                        <button key={i} className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#4672CA] border-white' : 'bg-[#4672CA1A] border-[#4672CA] text-[#4672CA] group-hover:bg-white'}`}>
                         {type}
                     </button>
                     ))}
                     {experienceLevel?.map((level,i)=>(
-                        <button className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
+                        <button key={i} className={`capitalize leading-[20px] text-xs md:text-[16px] rounded-full py-1 px-3.5 border ${lock ? 'bg-white text-[#CE9232] border-white' : 'bg-[#CE92321A] border-[#CE9232] text-[#CE9232] group-hover:bg-white'}`}>
                          {level}
                     </button>
                     ))}
