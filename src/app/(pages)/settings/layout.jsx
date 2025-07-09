@@ -28,14 +28,9 @@ const JobsLayout = ({ children }) => {
 
   // Function to handle navigation with security check
   const handleNavigation = async (route) => {
-    if (secureRoutes.includes(route)) {
-
-
-      setPendingRoute(route);
-      setSecurityModel(true);
-    } else {
+   
       router.push(route);
-    }
+    
     // Close sidebar on mobile after navigation
     if (window.innerWidth < 1024) {
       setSidebarOpen(false);
